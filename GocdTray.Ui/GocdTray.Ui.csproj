@@ -52,6 +52,9 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\AssemblyInfo.common.cs">
+      <Link>Properties\AssemblyInfo.common.cs</Link>
+    </Compile>
     <Compile Include="ViewModel\AboutViewModel.cs" />
     <Compile Include="ViewModel\ComponentVersionInfo.cs" />
     <Compile Include="ViewModel\StatusViewModel.cs" />
