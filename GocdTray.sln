@@ -16,6 +16,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Root", "Root", "{C826096A-9
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GocdTray.Test", "GocdTray.Test\GocdTray.Test.csproj", "{B242B11F-C43E-44E0-9B6A-87D430215B45}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GocdTray.Rest", "GocdTray.Rest\GocdTray.Rest.csproj", "{6DD649F1-CA3D-4DBA-AF7D-E5789CDE176F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +34,14 @@ Global
 		{EC9652C9-AEEC-48EA-BD5D-F00E3C80EABB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC9652C9-AEEC-48EA-BD5D-F00E3C80EABB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC9652C9-AEEC-48EA-BD5D-F00E3C80EABB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B242B11F-C43E-44E0-9B6A-87D430215B45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B242B11F-C43E-44E0-9B6A-87D430215B45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B242B11F-C43E-44E0-9B6A-87D430215B45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B242B11F-C43E-44E0-9B6A-87D430215B45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6DD649F1-CA3D-4DBA-AF7D-E5789CDE176F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DD649F1-CA3D-4DBA-AF7D-E5789CDE176F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DD649F1-CA3D-4DBA-AF7D-E5789CDE176F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DD649F1-CA3D-4DBA-AF7D-E5789CDE176F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
