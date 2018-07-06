@@ -52,6 +52,7 @@
     </Compile>
     <Compile Include="GocdRest.cs" />
     <Compile Include="GoDashboard.cs" />
+    <Compile Include="GoEmbedded.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RestResult.cs" />
     <Compile Include="StringExtensions.cs" />
