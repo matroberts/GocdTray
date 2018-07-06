@@ -47,6 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\AssemblyInfo.common.cs">
+      <Link>Properties\AssemblyInfo.common.cs</Link>
+    </Compile>
     <Compile Include="GocdRest.cs" />
     <Compile Include="GoDashboard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
