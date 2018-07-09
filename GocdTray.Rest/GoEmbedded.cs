@@ -8,24 +8,24 @@ namespace GocdTray.Rest
         public T _embedded { get; set; }
     }
 
-    public class PipelineGroupsList
+    public class GoPipelineGroupsList
     {
         [JsonProperty("pipeline_groups")]
-        public List<PipelineGroup> PipelineGroups { get; set; }
+        public List<GoPipelineGroup> PipelineGroups { get; set; }
     }
 
-    public class PipelineGroup
+    public class GoPipelineGroup
     {
         public string Name { get; set; }
-        public PipelineList _embedded { get; set; }
+        public GoPipelineList _embedded { get; set; }
     }
 
-    public class PipelineList
+    public class GoPipelineList
     {
-        public List<Pipeline> pipelines { get; set; }
+        public List<GoPipeline> pipelines { get; set; }
     }
 
-    public class Pipeline
+    public class GoPipeline
     {
         public string Name { get; set; }
     }

@@ -12,9 +12,13 @@ namespace GocdTray.Rest
         public bool HasData { get; set; }
         public RestError Error { get; set; }
 
-        public static implicit operator RestResult<T>(T data) => new RestResult<T> { HasData = true, Data = data };
-        public static implicit operator RestResult<T>(RestError error) => new RestResult<T> { HasData = false, Data = default(T), Error = error };
+        public static RestResult<T> Valid(T data) => new RestResult<T> { HasData = true, Data = data };
+        public static RestResult<T> Invalid(string errorMessage, int statusCode) => new RestResult<T> {HasData = false, Data = default(T), Error = new RestError(statusCode, errorMessage)};
+
+        public override string ToString() => HasData ? Data.ToString() : Error.ToString();
     }
+
+    //$"Response status code does not indicate success: ({(int)response.StatusCode}) {response.StatusCode.ToString()}"
 
     public class RestError
     {
@@ -25,5 +29,6 @@ namespace GocdTray.Rest
         }
         public string Message { get; set; } = string.Empty;
         public int StatusCode { get; set; } = 200;
+        public override string ToString() => Message;
     }
 }

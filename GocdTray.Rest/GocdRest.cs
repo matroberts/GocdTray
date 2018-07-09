@@ -10,65 +10,73 @@ using System.Threading.Tasks;
 
 namespace GocdTray.Rest
 {
-    public class RestClient
+    public interface IRestClient : IDisposable
     {
-        // httpClient
-
-        // baseuri is the primary key
-        public RestClient(string baseuri, string username, string password, bool ignoreCertificatErrors = true)
-        {
-            
-        }
-
-        public string Get(string relativeUri, string acceptHeaders = null)
-        {
-            return null;
-        }
+        RestResult<T> Get<T>(string relativeUri, string acceptHeaders = null);
     }
 
-    public class GocdServer
+    public class RestClient : IRestClient
     {
-        private readonly string baseuri;
-        private readonly string username;
-        private readonly string password;
-        private readonly bool ignoreCertificatErrors;
+        private readonly HttpClient httpClient;
 
-        public GocdServer(string baseuri, string username, string password, bool ignoreCertificatErrors = true)
+        public RestClient(string baseuri, string username, string password, bool ignoreCertificatErrors = true, HttpMessageHandler httpMessageHandler = null)
         {
-            this.baseuri = baseuri;
-            this.username = username;
-            this.password = password;
-            this.ignoreCertificatErrors = ignoreCertificatErrors;
-        }
-
-        public RestResult<GoDashboard> GetDashboard()
-        {
-            var webRequestHandler = new WebRequestHandler();
-            if (ignoreCertificatErrors)
+            if (httpMessageHandler == null)
             {
-                webRequestHandler.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true;
+                var webRequestHandler = new WebRequestHandler();
+                if (ignoreCertificatErrors)
+                {
+                    webRequestHandler.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true;
+                }
+                httpMessageHandler = webRequestHandler;
             }
 
-            var client = new HttpClient(webRequestHandler) { BaseAddress = new Uri(baseuri) };
-            var byteArray = Encoding.ASCII.GetBytes($"{username}:{password}");
+            httpClient = new HttpClient(httpMessageHandler) { BaseAddress = new Uri(baseuri) };
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.ASCII.GetBytes($"{username}:{password}")));
+        }
 
-            var request = new HttpRequestMessage(HttpMethod.Get, "/go/api/dashboard");
-            request.Headers.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
-            request.Headers.Add("Accept", "application/vnd.go.cd.v1+json");
+        public RestResult<T> Get<T>(string relativeUri, string acceptHeaders = null)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, relativeUri);
+            if(acceptHeaders!= null)
+                request.Headers.Add("Accept", acceptHeaders);
 
-            var response = client.SendAsync(request).GetAwaiter().GetResult();
+            var response = httpClient.SendAsync(request).GetAwaiter().GetResult();
             if (response.IsSuccessStatusCode)
             {
                 Console.WriteLine(response.Content.ReadAsStringAsync().GetAwaiter().GetResult());
-                var data = response.Content.ReadAsStringAsync().FromJsonAsync<GoDashboard>();
-                return data.GetAwaiter().GetResult();
+                var data = response.Content.ReadAsStringAsync().FromJsonAsync<T>();
+                return RestResult<T>.Valid(data.GetAwaiter().GetResult());
             }
             else
             {
-                return new RestError((int) response.StatusCode, response.StatusCode.ToString());
+                return RestResult<T>.Invalid(response.StatusCode.ToString(), (int)response.StatusCode);
             }
         }
 
+        public void Dispose()
+        {
+            httpClient?.Dispose();
+        }
+    }
 
+    public class GocdServer : IDisposable
+    {
+        private readonly IRestClient restClient;
+
+        public GocdServer(IRestClient restClient)
+        {
+            this.restClient = restClient;
+        }
+
+        public RestResult<GoEmbedded<GoPipelineGroupsList>> GetDashboard()
+        {
+            return restClient.Get<GoEmbedded<GoPipelineGroupsList>>("/go/api/dashboard", "application/vnd.go.cd.v1+json");
+        }
+
+        public void Dispose()
+        {
+            restClient?.Dispose();
+        }
     }
 }

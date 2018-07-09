@@ -18,10 +18,11 @@ namespace GocdTray.Test
         [Test]
         public void RealConnection()
         {
-            var gocdServer = new GocdServer(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, AppConfig.IgnoreCertificateErrors);
+            var restClient = new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, AppConfig.IgnoreCertificateErrors);
+            var gocdServer = new GocdServer(restClient);
             var result = gocdServer.GetDashboard();
             
-            Assert.That(result.HasData);
+            Assert.That(result.HasData, result.ToString());
             Console.WriteLine(result.Data);
 
         }
@@ -228,7 +229,7 @@ namespace GocdTray.Test
   }
 }";
 
-            var result = json.FromJson<GoEmbedded<PipelineGroupsList>>();
+            var result = json.FromJson<GoEmbedded<GoPipelineGroupsList>>();
 
             Assert.That(result._embedded.PipelineGroups.Count, Is.EqualTo(2));
 
@@ -241,6 +242,13 @@ namespace GocdTray.Test
             Assert.That(result._embedded.PipelineGroups[1]._embedded.pipelines.Count, Is.EqualTo(0));
 
         }
+
+        // Post process object to get what i want
+        // Sort out http shite to make it testable
+        // Reorg project
+
+        // invliad urls
+        // if it throws exceptions (e.g. cert not vliad)
 
         // Http client setup
         // Need to vary accept header on call by call basis
