@@ -4,7 +4,6 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using GocdTray.App;
 using GocdTray.Rest;
@@ -16,15 +15,6 @@ namespace GocdTray.Test.Rest
     [TestFixture]
     public class RestClientTests
     {
-        public class HttpClientHandlerFakeWithFunc : HttpMessageHandler
-        {
-            public Func<HttpRequestMessage, CancellationToken, Task<HttpResponseMessage>> SendAsyncFunc { get; set; }
-            protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
-            {
-                return SendAsyncFunc(request, cancellationToken);
-            }
-        }
-
         public class TestObject
         {
             public string Name { get; set; }

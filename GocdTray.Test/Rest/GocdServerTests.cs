@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using GocdTray.App;
 using GocdTray.Rest;
+using GocdTray.Rest.Dto;
 using NUnit.Framework;
 
 namespace GocdTray.Test.Rest
@@ -232,11 +233,13 @@ namespace GocdTray.Test.Rest
 
             #endregion
             var httpClientHandler = new HttpClientHandlerFake { HttpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(jsonResult) } };
-            var restClient = new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, AppConfig.IgnoreCertificateErrors, httpClientHandler);
 
             // Act
-            var gocdServer = new GocdServer(restClient);
-            var result = gocdServer.GetPipelines();
+            RestResult<GoEmbedded<GoPipelineGroupsList>> result;
+            using (var gocdServer = new GocdServer(new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, AppConfig.IgnoreCertificateErrors, httpClientHandler)))
+            {
+                result = gocdServer.GetPipelines();
+            }
 
             // Assert
             Assert.That(httpClientHandler.RequestUri.ToString(), Does.EndWith("/go/api/dashboard"));
