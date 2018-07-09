@@ -14,9 +14,30 @@ namespace GocdTray.Rest
             this.restClient = restClient;
         }
 
-        public RestResult<GoEmbedded<GoPipelineGroupsList>> GetPipelines()
+        public RestResult<List<Pipeline>> GetPipelines()
         {
-            return restClient.Get<GoEmbedded<GoPipelineGroupsList>>("/go/api/dashboard", "application/vnd.go.cd.v1+json");
+            var result = restClient.Get<GoEmbedded<GoPipelineGroupsList>>("/go/api/dashboard", "application/vnd.go.cd.v1+json");
+            if (result.HasData)
+            {
+                var pipelines = new List<Pipeline>();
+                foreach (var dtoPipelineGroup in result.Data._embedded.PipelineGroups)
+                {
+                    var pipelineGroupName = dtoPipelineGroup.Name;
+                    foreach (var dtoPipeline in dtoPipelineGroup._embedded.pipelines)
+                    {
+                        pipelines.Add(new Pipeline()
+                        {
+                            PipelineGroupName = pipelineGroupName,
+                            Name = dtoPipeline.Name
+                        });
+                    }
+                }
+                return RestResult<List<Pipeline>>.Valid(pipelines);
+            }
+            else
+            {
+                return RestResult<List<Pipeline>>.Invalid(result.ErrorMessage);
+            }
         }
 
         public void Dispose()

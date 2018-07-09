@@ -235,7 +235,7 @@ namespace GocdTray.Test.Rest
             var httpClientHandler = new HttpClientHandlerFake { HttpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(jsonResult) } };
 
             // Act
-            RestResult<GoEmbedded<GoPipelineGroupsList>> result;
+            RestResult<List<Pipeline>> result;
             using (var gocdServer = new GocdServer(new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, AppConfig.IgnoreCertificateErrors, httpClientHandler)))
             {
                 result = gocdServer.GetPipelines();
@@ -247,15 +247,13 @@ namespace GocdTray.Test.Rest
             Assert.That(httpClientHandler.AcceptHeaders.Single().ToString(), Is.EqualTo("application/vnd.go.cd.v1+json"));
 
             Assert.That(result.HasData, result.ToString());
-            Assert.That(result.Data._embedded.PipelineGroups.Count, Is.EqualTo(2));
+            Assert.That(result.Data.Count, Is.EqualTo(2));
 
-            Assert.That(result.Data._embedded.PipelineGroups[0].Name, Is.EqualTo("Build"));
-            Assert.That(result.Data._embedded.PipelineGroups[0]._embedded.pipelines.Count, Is.EqualTo(2));
-            Assert.That(result.Data._embedded.PipelineGroups[0]._embedded.pipelines[0].Name, Is.EqualTo("DirectaTrunk"));
-            Assert.That(result.Data._embedded.PipelineGroups[0]._embedded.pipelines[1].Name, Is.EqualTo("DirectaTrunk-Msi"));
+            Assert.That(result.Data[0].PipelineGroupName, Is.EqualTo("Build"));
+            Assert.That(result.Data[0].Name, Is.EqualTo("DirectaTrunk"));
 
-            Assert.That(result.Data._embedded.PipelineGroups[1].Name, Is.EqualTo("Test"));
-            Assert.That(result.Data._embedded.PipelineGroups[1]._embedded.pipelines.Count, Is.EqualTo(0));
+            Assert.That(result.Data[1].PipelineGroupName, Is.EqualTo("Build"));
+            Assert.That(result.Data[1].Name, Is.EqualTo("DirectaTrunk-Msi"));
         }
 
         // connect to go.cd and get the data back wot i want in an object
