@@ -37,20 +37,30 @@ namespace GocdTray.Rest
 
         public RestResult<T> Get<T>(string relativeUri, string acceptHeaders = null)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, relativeUri);
-            if(acceptHeaders!= null)
-                request.Headers.Add("Accept", acceptHeaders);
+            try
+            {
+                var request = new HttpRequestMessage(HttpMethod.Get, relativeUri);
+                if (acceptHeaders != null)
+                    request.Headers.Add("Accept", acceptHeaders);
 
-            var response = httpClient.SendAsync(request).GetAwaiter().GetResult();
-            if (response.IsSuccessStatusCode)
-            {
-                Console.WriteLine(response.Content.ReadAsStringAsync().GetAwaiter().GetResult());
-                var data = response.Content.ReadAsStringAsync().FromJsonAsync<T>();
-                return RestResult<T>.Valid(data.GetAwaiter().GetResult());
+                var response = httpClient.SendAsync(request).GetAwaiter().GetResult();
+                if (response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine(response.Content.ReadAsStringAsync().GetAwaiter().GetResult());
+                    var data = response.Content.ReadAsStringAsync().FromJsonAsync<T>();
+                    return RestResult<T>.Valid(data.GetAwaiter().GetResult());
+                }
+                else
+                {
+                    return RestResult<T>.Invalid($"Response status code does not indicate success: {(int)response.StatusCode} ({response.StatusCode.ToString()}).");
+                }
             }
-            else
+            catch (Exception e)
             {
-                return RestResult<T>.Invalid(response.StatusCode.ToString(), (int)response.StatusCode);
+                var errorMessage = e.Message;
+                if (e.InnerException != null)
+                    errorMessage += " " + e.InnerException.Message;
+                return RestResult<T>.Invalid(errorMessage);
             }
         }
 

@@ -12,7 +12,6 @@ namespace GocdTray.Test.Rest
     [TestFixture]
     public class GocdServerTests
     {
-        // connect to go.cd and get the data back wot i want in an object
 
         [Test]
         public void RealConnection()
@@ -256,20 +255,10 @@ namespace GocdTray.Test.Rest
             Assert.That(result.Data._embedded.PipelineGroups[1]._embedded.pipelines.Count, Is.EqualTo(0));
         }
 
+        // connect to go.cd and get the data back wot i want in an object
+
         // Post process object to get what i want
-        // Sort out http shite to make it testable
-        // Reorg project
 
-        // invliad urls
-        // if it throws exceptions (e.g. cert not vliad)
 
-        // Http client setup
-        // Need to vary accept header on call by call basis
-        // How deal with failure to connect, or interuption?
-        // Not doing it now but may want to connect to more than one go.cd
-        // Need to process the return data, and test the processing
-        // async
-        // request errors - catach exceptions
-        // response errors - validation object
     }
 }
