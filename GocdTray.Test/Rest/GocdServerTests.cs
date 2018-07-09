@@ -255,10 +255,6 @@ namespace GocdTray.Test.Rest
             Assert.That(result.Data[1].PipelineGroupName, Is.EqualTo("Build"));
             Assert.That(result.Data[1].Name, Is.EqualTo("DirectaTrunk-Msi"));
         }
-
-        // connect to go.cd and get the data back wot i want in an object
-
-        // Post process object to get what i want
         // How deal with failure to connect, or interuption?
         // Not doing it now but may want to connect to more than one go.cd
         // Need to process the return data, and test the processing
