@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using GocdTray.App;
+using GocdTray.App.Abstractions;
 using GocdTray.Rest;
 using GocdTray.Rest.Dto;
 using NUnit.Framework;

@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GocdTray.Test", "GocdTray.T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GocdTray.Rest", "GocdTray.Rest\GocdTray.Rest.csproj", "{6DD649F1-CA3D-4DBA-AF7D-E5789CDE176F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GocdTray.App.Abstractions", "GocdTray.App.Abstractions\GocdTray.App.Abstractions.csproj", "{4CBA91D2-E815-4C0D-9D84-AA0D1CE419D2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +44,10 @@ Global
 		{6DD649F1-CA3D-4DBA-AF7D-E5789CDE176F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6DD649F1-CA3D-4DBA-AF7D-E5789CDE176F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6DD649F1-CA3D-4DBA-AF7D-E5789CDE176F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CBA91D2-E815-4C0D-9D84-AA0D1CE419D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CBA91D2-E815-4C0D-9D84-AA0D1CE419D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CBA91D2-E815-4C0D-9D84-AA0D1CE419D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CBA91D2-E815-4C0D-9D84-AA0D1CE419D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

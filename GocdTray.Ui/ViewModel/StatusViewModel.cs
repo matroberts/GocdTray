@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows.Media;
 
 namespace GocdTray.Ui.ViewModel
 {
@@ -8,57 +10,53 @@ namespace GocdTray.Ui.ViewModel
     {
         public StatusViewModel()
         {
-            StatusFlags = new System.Collections.ObjectModel.ObservableCollection<KeyValuePair<string,string>>();
+            StatusFlags = new ObservableCollection<KeyValuePair<string,string>>();
         }
 
-        private System.Windows.Media.ImageSource _icon;
-
-        public System.Windows.Media.ImageSource Icon
+        private ImageSource icon;
+        public ImageSource Icon
         {
             get
             {
-                return _icon;
+                return icon;
             }
             set
             {
-                _icon = value;
+                icon = value;
                 OnPropertyChanged("Icon");
             }
         }
 
-        private bool _isRunning = false;
-
+        private bool isRunning = false;
         public bool IsRunning
         {
             get
             {
-                return _isRunning;
+                return isRunning;
             }
             set
             {
-                _isRunning = value;
+                isRunning = value;
                 OnPropertyChanged("IsRunning");
             }
         }
 
-        private System.Collections.ObjectModel.ObservableCollection<KeyValuePair<string,string>> _statusFlags;
-
-        public System.Collections.ObjectModel.ObservableCollection<KeyValuePair<string, string>> StatusFlags
+        private ObservableCollection<KeyValuePair<string,string>> statusFlags;
+        public ObservableCollection<KeyValuePair<string, string>> StatusFlags
         {
             get
             {
-                return _statusFlags;
+                return statusFlags;
             }
             set
             {
-                _statusFlags = value;
+                statusFlags = value;
                 OnPropertyChanged("StatusFlags");
             }
         }
-
         public void SetStatusFlags(List<KeyValuePair<string, string>> flags)
         {
-            StatusFlags = new System.Collections.ObjectModel.ObservableCollection<KeyValuePair<string, string>>(flags);
+            StatusFlags = new ObservableCollection<KeyValuePair<string, string>>(flags);
         }
     }
 }

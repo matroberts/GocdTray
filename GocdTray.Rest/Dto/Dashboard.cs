@@ -5,29 +5,29 @@ using Newtonsoft.Json;
 
 namespace GocdTray.Rest.Dto
 {
-    public class GoEmbedded<T>
+    public class DtoEmbedded<T>
     {
         public T _embedded { get; set; }
     }
 
-    public class GoPipelineGroupsList
+    public class DtoPipelineGroupsList
     {
         [JsonProperty("pipeline_groups")]
-        public List<GoPipelineGroup> PipelineGroups { get; set; }
+        public List<DtoPipelineGroup> PipelineGroups { get; set; }
     }
 
-    public class GoPipelineGroup
+    public class DtoPipelineGroup
     {
         public string Name { get; set; }
-        public GoPipelineList _embedded { get; set; }
+        public DtoPipelineList _embedded { get; set; }
     }
 
-    public class GoPipelineList
+    public class DtoPipelineList
     {
-        public List<GoPipeline> pipelines { get; set; }
+        public List<DtoPipeline> pipelines { get; set; }
     }
 
-    public class GoPipeline
+    public class DtoPipeline
     {
         public string Name { get; set; }
     }

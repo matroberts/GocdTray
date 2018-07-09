@@ -67,6 +67,10 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GocdTray.App.Abstractions\GocdTray.App.Abstractions.csproj">
+      <Project>{4cba91d2-e815-4c0d-9d84-aa0d1ce419d2}</Project>
+      <Name>GocdTray.App.Abstractions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GocdTray.App\GocdTray.App.csproj">
       <Project>{d60e24f0-fc47-4490-acd6-3157c26aff39}</Project>
       <Name>GocdTray.App</Name>

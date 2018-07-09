@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using GocdTray.App.Abstractions;
 using GocdTray.Rest.Dto;
 
 namespace GocdTray.Rest
@@ -16,7 +17,7 @@ namespace GocdTray.Rest
 
         public RestResult<List<Pipeline>> GetPipelines()
         {
-            var result = restClient.Get<GoEmbedded<GoPipelineGroupsList>>("/go/api/dashboard", "application/vnd.go.cd.v1+json");
+            var result = restClient.Get<DtoEmbedded<DtoPipelineGroupsList>>("/go/api/dashboard", "application/vnd.go.cd.v1+json");
             if (result.HasData)
             {
                 var pipelines = new List<Pipeline>();
