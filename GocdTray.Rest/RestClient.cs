@@ -59,24 +59,4 @@ namespace GocdTray.Rest
             httpClient?.Dispose();
         }
     }
-
-    public class GocdServer : IDisposable
-    {
-        private readonly IRestClient restClient;
-
-        public GocdServer(IRestClient restClient)
-        {
-            this.restClient = restClient;
-        }
-
-        public RestResult<GoEmbedded<GoPipelineGroupsList>> GetDashboard()
-        {
-            return restClient.Get<GoEmbedded<GoPipelineGroupsList>>("/go/api/dashboard", "application/vnd.go.cd.v1+json");
-        }
-
-        public void Dispose()
-        {
-            restClient?.Dispose();
-        }
-    }
 }

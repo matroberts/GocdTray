@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 
-namespace GocdTray.Rest
+namespace GocdTray.Rest.Dto
 {
     public class GoEmbedded<T>
     {

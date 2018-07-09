@@ -1,17 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Runtime.InteropServices;
-using System.Text;
 using GocdTray.App;
 using GocdTray.Rest;
 using NUnit.Framework;
 
-namespace GocdTray.Test
+namespace GocdTray.Test.Rest
 {
     [TestFixture]
-    public class TestConnectingGocd
+    public class GocdServerTests
     {
         // connect to go.cd and get the data back wot i want in an object
 
@@ -20,17 +19,19 @@ namespace GocdTray.Test
         {
             var restClient = new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, AppConfig.IgnoreCertificateErrors);
             var gocdServer = new GocdServer(restClient);
-            var result = gocdServer.GetDashboard();
+            var result = gocdServer.GetPipelines();
             
             Assert.That(result.HasData, result.ToString());
             Console.WriteLine(result.Data);
-
         }
 
         [Test]
-        public void GetDashboard_ResultIsDeserialisedCorrectly()
+        public void GetPipelines_DeserialisesTheDataCorrectly()
         {
-            string json = @"{
+            // Arrange
+            #region jsonResult
+
+            string jsonResult = @"{
   ""_links"": {
     ""self"": {
       ""href"": ""https://devbuild03:8154/go/api/dashboard""
@@ -228,19 +229,31 @@ namespace GocdTray.Test
     ]
   }
 }";
+            
 
-            var result = json.FromJson<GoEmbedded<GoPipelineGroupsList>>();
+            #endregion
+            var httpClientHandler = new HttpClientHandlerFake { HttpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(jsonResult) } };
+            var restClient = new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, AppConfig.IgnoreCertificateErrors, httpClientHandler);
 
-            Assert.That(result._embedded.PipelineGroups.Count, Is.EqualTo(2));
+            // Act
+            var gocdServer = new GocdServer(restClient);
+            var result = gocdServer.GetPipelines();
 
-            Assert.That(result._embedded.PipelineGroups[0].Name, Is.EqualTo("Build"));
-            Assert.That(result._embedded.PipelineGroups[0]._embedded.pipelines.Count, Is.EqualTo(2));
-            Assert.That(result._embedded.PipelineGroups[0]._embedded.pipelines[0].Name, Is.EqualTo("DirectaTrunk"));
-            Assert.That(result._embedded.PipelineGroups[0]._embedded.pipelines[1].Name, Is.EqualTo("DirectaTrunk-Msi"));
+            // Assert
+            Assert.That(httpClientHandler.RequestUri.ToString(), Does.EndWith("/go/api/dashboard"));
+            Assert.That(httpClientHandler.AcceptHeaders.Count, Is.EqualTo(1));
+            Assert.That(httpClientHandler.AcceptHeaders.Single().ToString(), Is.EqualTo("application/vnd.go.cd.v1+json"));
 
-            Assert.That(result._embedded.PipelineGroups[1].Name, Is.EqualTo("Test"));
-            Assert.That(result._embedded.PipelineGroups[1]._embedded.pipelines.Count, Is.EqualTo(0));
+            Assert.That(result.HasData, result.ToString());
+            Assert.That(result.Data._embedded.PipelineGroups.Count, Is.EqualTo(2));
 
+            Assert.That(result.Data._embedded.PipelineGroups[0].Name, Is.EqualTo("Build"));
+            Assert.That(result.Data._embedded.PipelineGroups[0]._embedded.pipelines.Count, Is.EqualTo(2));
+            Assert.That(result.Data._embedded.PipelineGroups[0]._embedded.pipelines[0].Name, Is.EqualTo("DirectaTrunk"));
+            Assert.That(result.Data._embedded.PipelineGroups[0]._embedded.pipelines[1].Name, Is.EqualTo("DirectaTrunk-Msi"));
+
+            Assert.That(result.Data._embedded.PipelineGroups[1].Name, Is.EqualTo("Test"));
+            Assert.That(result.Data._embedded.PipelineGroups[1]._embedded.pipelines.Count, Is.EqualTo(0));
         }
 
         // Post process object to get what i want
