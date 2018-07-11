@@ -1,8 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Reflection;
+using System.Windows;
 using System.Windows.Forms;
+using System.Windows.Interop;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace GocdTray.App
 {
@@ -14,8 +20,8 @@ namespace GocdTray.App
 
             _deviceManager = deviceManager;
 
-            _components = new System.ComponentModel.Container();
-            _notifyIcon = new System.Windows.Forms.NotifyIcon(_components)
+            _components = new Container();
+            _notifyIcon = new NotifyIcon(_components)
             {
                 ContextMenuStrip = new ContextMenuStrip(),
                 Icon = Properties.Resources.NotReadyIcon,
@@ -33,26 +39,23 @@ namespace GocdTray.App
             _statusViewModel.Icon = AppIcon;
             _aboutViewModel.Icon = _statusViewModel.Icon;
 
-            _hiddenWindow = new System.Windows.Window();
+            _hiddenWindow = new Window();
             _hiddenWindow.Hide();
         }
 
-        System.Windows.Media.ImageSource AppIcon
+        ImageSource AppIcon
         {
             get
             {
-                System.Drawing.Icon icon = (_deviceManager.Status == DeviceStatus.Running) ? Properties.Resources.ReadyIcon : Properties.Resources.NotReadyIcon;
-                return System.Windows.Interop.Imaging.CreateBitmapSourceFromHIcon(
-                    icon.Handle, 
-                    System.Windows.Int32Rect.Empty, 
-                    System.Windows.Media.Imaging.BitmapSizeOptions.FromEmptyOptions());
+                Icon icon = (_deviceManager.Status == DeviceStatus.Running) ? Properties.Resources.ReadyIcon : Properties.Resources.NotReadyIcon;
+                return Imaging.CreateBitmapSourceFromHIcon(icon.Handle, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
             }
         }
 
         // This allows code to be run on a GUI thread
-        private System.Windows.Window _hiddenWindow;
+        private Window _hiddenWindow;
 
-        private System.ComponentModel.IContainer _components;
+        private IContainer _components;
         // The Windows system tray class
         private NotifyIcon _notifyIcon;  
         IDeviceManager _deviceManager;
@@ -118,7 +121,6 @@ namespace GocdTray.App
                     _notifyIcon.Icon = Properties.Resources.NotReadyIcon;
                     break;
             }
-            System.Windows.Media.ImageSource icon = AppIcon;
             if (_aboutView != null)
             {
                 _aboutView.Icon = AppIcon;
@@ -161,7 +163,7 @@ namespace GocdTray.App
                 _statusView.DataContext = _statusViewModel;
 
                 _statusView.Closing += ((arg_1, arg_2) => _statusView = null);
-                _statusView.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
+                _statusView.WindowStartupLocation = WindowStartupLocation.CenterScreen;
                 _statusView.Show();
                 UpdateStatusView();
             }
@@ -184,7 +186,7 @@ namespace GocdTray.App
                 _aboutView = new GocdTray.Ui.View.AboutView();
                 _aboutView.DataContext = _aboutViewModel;
                 _aboutView.Closing += ((arg_1, arg_2) => _aboutView = null);
-                _aboutView.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
+                _aboutView.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
                 _aboutView.Show();
             }
@@ -211,7 +213,7 @@ namespace GocdTray.App
         
         private void exitItem_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            System.Windows.Forms.Application.Exit();
         }
 
         private void notifyIcon_DoubleClick(object sender, EventArgs e)
@@ -263,7 +265,7 @@ namespace GocdTray.App
             }
         }
 
-        private void ContextMenuStrip_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        private void ContextMenuStrip_Opening(object sender, CancelEventArgs e)
         {
             e.Cancel = false;
 
