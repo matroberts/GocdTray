@@ -28,7 +28,6 @@ namespace GocdTray.App
         public delegate void StatusChangeEvent();
         public event StatusChangeEvent OnStatusChange;
 
-        public string DeviceName { get; private set; }
         public DeviceStatus Status { get; private set; }
 
         public List<Pipeline> Pipelines { get; set; } = new List<Pipeline>();
@@ -39,8 +38,6 @@ namespace GocdTray.App
             {
                 Status = DeviceStatus.Initialised;
             }
-
-            DeviceName = "Death Star";
             gocdServer = new GocdServer(new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, AppConfig.IgnoreCertificateErrors));
         }
 

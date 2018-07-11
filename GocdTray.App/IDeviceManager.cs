@@ -7,7 +7,6 @@ namespace GocdTray.App
 {
     public interface IDeviceManager
     {
-        string DeviceName { get; }
         DeviceStatus Status { get; }
         List<Pipeline> Pipelines { get; }
         void Initialise();

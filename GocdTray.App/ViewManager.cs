@@ -69,7 +69,7 @@ namespace GocdTray.App
         {
             _hiddenWindow.Dispatcher.Invoke(delegate
             {
-                _notifyIcon.BalloonTipText = _deviceManager.DeviceName + ": " + text;
+                _notifyIcon.BalloonTipText = text;
                 // The timeout is ignored on recent Windows
                 _notifyIcon.ShowBalloonTip(3000);
             });
@@ -90,30 +90,30 @@ namespace GocdTray.App
             switch (_deviceManager.Status)
             {
                 case DeviceStatus.Initialised:
-                    _notifyIcon.Text = _deviceManager.DeviceName + ": Ready";
+                    _notifyIcon.Text = "Ready";
                     _notifyIcon.Icon = Properties.Resources.NotReadyIcon;
                     DisplayStatusMessage("Idle");
                     break;
                 case DeviceStatus.Running:
-                    _notifyIcon.Text = _deviceManager.DeviceName + ": Running";
+                    _notifyIcon.Text = "Running";
                     _notifyIcon.Icon = Properties.Resources.ReadyIcon;
                     DisplayStatusMessage("Running");
                     break;
                 case DeviceStatus.Starting:
-                    _notifyIcon.Text = _deviceManager.DeviceName + ": Starting";
+                    _notifyIcon.Text = "Starting";
                     _notifyIcon.Icon = Properties.Resources.NotReadyIcon;
                     DisplayStatusMessage("Starting");
                     break;
                 case DeviceStatus.Uninitialised:
-                    _notifyIcon.Text = _deviceManager.DeviceName + ": Not Ready";
+                    _notifyIcon.Text = "Not Ready";
                     _notifyIcon.Icon = Properties.Resources.NotReadyIcon;
                     break;
                 case DeviceStatus.Error:
-                    _notifyIcon.Text = _deviceManager.DeviceName + ": Error Detected";
+                    _notifyIcon.Text = "Error Detected";
                     _notifyIcon.Icon = Properties.Resources.NotReadyIcon;
                     break;
                 default:
-                    _notifyIcon.Text = _deviceManager.DeviceName + ": -";
+                    _notifyIcon.Text = "-";
                     _notifyIcon.Icon = Properties.Resources.NotReadyIcon;
                     break;
             }
@@ -191,10 +191,7 @@ namespace GocdTray.App
                 _aboutView.Activate();
             }
             _aboutView.Icon = AppIcon;
-
-            _aboutViewModel.AddVersionInfo("Hardware", _deviceManager.DeviceName);
             _aboutViewModel.AddVersionInfo("Version", Assembly.GetExecutingAssembly().GetName().Version.ToString());
-            _aboutViewModel.AddVersionInfo("Serial Number", "142573462354");
         }
 
         private void showHelpItem_Click(object sender, EventArgs e)
