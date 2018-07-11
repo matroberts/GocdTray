@@ -30,5 +30,30 @@ namespace GocdTray.Rest.Dto
     public class DtoPipeline
     {
         public string Name { get; set; }
+        public DtoInstanceList _embedded { get; set; }
+    }
+
+    public class DtoInstanceList
+    {
+        public List<DtoInstance> instances { get; set; }
+    }
+
+    public class DtoInstance
+    {
+        public string label { get; set; }
+        public DateTime schedule_at { get; set; }
+        public string triggered_by { get; set; }
+        public DtoStageList _embedded { get; set; }
+    }
+
+    public class DtoStageList
+    {
+        public List<DtoStage> stages { get; set; }
+    }
+
+    public class DtoStage
+    {
+        public string name { get; set; }
+        public string status { get; set; }
     }
 }

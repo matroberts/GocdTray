@@ -26,11 +26,31 @@ namespace GocdTray.Rest
                     var pipelineGroupName = dtoPipelineGroup.Name;
                     foreach (var dtoPipeline in dtoPipelineGroup._embedded.pipelines)
                     {
-                        pipelines.Add(new Pipeline()
+                        var pipeline = new Pipeline()
                         {
                             PipelineGroupName = pipelineGroupName,
                             Name = dtoPipeline.Name
-                        });
+                        };
+                        pipelines.Add(pipeline);
+                        foreach (var dtoInstance in dtoPipeline._embedded.instances)
+                        {
+                            var instance = new PipelineInstance
+                            {
+                                Label = dtoInstance.label,
+                                TriggeredBy = dtoInstance.triggered_by,
+                                ScheduledAt = dtoInstance.schedule_at
+                            };
+                            pipeline.PipelineInstances.Add(instance);
+                            foreach (var dtoStage in dtoInstance._embedded.stages)
+                            {
+                                var stage = new Stage
+                                {
+                                    Name = dtoStage.name,
+                                    Status = dtoStage.status.ToEnum<BuildStatus>()
+                                };
+                                instance.Stages.Add(stage);
+                            }
+                        }    
                     }
                 }
                 return RestResult<List<Pipeline>>.Valid(pipelines);
