@@ -80,11 +80,6 @@ namespace GocdTray.App
         {
             if ((_statusViewModel != null) && (_deviceManager != null))
             {
-                List<KeyValuePair<string, bool>> flags = _deviceManager.StatusFlags;
-                List<KeyValuePair<string, string>> statusItems = flags.Select(n => new KeyValuePair<string, string>(n.Key, n.Value.ToString())).ToList();
-                statusItems.Insert(0, new KeyValuePair<string, string>("Device", _deviceManager.DeviceName));
-                statusItems.Insert(1, new KeyValuePair<string, string>("Status", _deviceManager.Status.ToString()));
-
                 _statusViewModel.PopulateTable(_deviceManager.Pipelines);
             }
         }

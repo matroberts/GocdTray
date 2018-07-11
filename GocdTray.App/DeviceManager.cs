@@ -28,40 +28,8 @@ namespace GocdTray.App
         public delegate void StatusChangeEvent();
         public event StatusChangeEvent OnStatusChange;
 
-        #region IDeviceManager
-
         public string DeviceName { get; private set; }
         public DeviceStatus Status { get; private set; }
-        public List<KeyValuePair<string, bool>> StatusFlags
-        {
-            get
-            {
-                List<KeyValuePair<string, bool>> statusFlags = new List<KeyValuePair<string, bool>>();
-
-                switch (Status)
-                {
-                    case DeviceStatus.Running:
-                        statusFlags.Add(new KeyValuePair<string, bool>("Warp Drive Online", true));
-                        statusFlags.Add(new KeyValuePair<string, bool>("Impulse Engines Online", true));
-                        statusFlags.Add(new KeyValuePair<string, bool>("Shields Ready", true));
-                        statusFlags.Add(new KeyValuePair<string, bool>("Tea Maker Operational", true));
-                        break;
-                    case DeviceStatus.Error:
-                        statusFlags.Add(new KeyValuePair<string, bool>("System Foobared", true));
-                        statusFlags.Add(new KeyValuePair<string, bool>("Sympathy Required", true));
-                        break;
-                    case DeviceStatus.Uninitialised:
-                        break;
-                    case DeviceStatus.Initialised:
-                        statusFlags.Add(new KeyValuePair<string, bool>("Warp Drive Online", false));
-                        statusFlags.Add(new KeyValuePair<string, bool>("Impulse Engines Online", false));
-                        statusFlags.Add(new KeyValuePair<string, bool>("Shields Ready", false));
-                        statusFlags.Add(new KeyValuePair<string, bool>("Tea Maker Operational", true));
-                        break;
-                }
-                return statusFlags;
-            }
-        }
 
         public List<Pipeline> Pipelines { get; set; } = new List<Pipeline>();
 
@@ -130,7 +98,5 @@ namespace GocdTray.App
             Status = DeviceStatus.Uninitialised;
             gocdServer.Dispose();
         }
-
-        #endregion
     }
 }

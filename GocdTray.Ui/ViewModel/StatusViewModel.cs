@@ -11,7 +11,6 @@ namespace GocdTray.Ui.ViewModel
     {
         public StatusViewModel()
         {
-            StatusFlags = new ObservableCollection<KeyValuePair<string,string>>();
             Pipelines = new ObservableCollection<Pipeline>();
         }
 
@@ -41,25 +40,6 @@ namespace GocdTray.Ui.ViewModel
                 isRunning = value;
                 OnPropertyChanged("IsRunning");
             }
-        }
-
-        private ObservableCollection<KeyValuePair<string,string>> statusFlags;
-
-        public ObservableCollection<KeyValuePair<string, string>> StatusFlags
-        {
-            get
-            {
-                return statusFlags;
-            }
-            set
-            {
-                statusFlags = value;
-                OnPropertyChanged("StatusFlags");
-            }
-        }
-        public void SetStatusFlags(List<KeyValuePair<string, string>> flags)
-        {
-            StatusFlags = new ObservableCollection<KeyValuePair<string, string>>(flags);
         }
 
         private ObservableCollection<Pipeline> pipelines;

@@ -9,8 +9,7 @@ namespace GocdTray.App
     {
         string DeviceName { get; }
         DeviceStatus Status { get; }
-        List<KeyValuePair<string, bool>> StatusFlags { get; }
-        List<Pipeline> Pipelines { get; set; }
+        List<Pipeline> Pipelines { get; }
         void Initialise();
         void Start();
         void Stop();
