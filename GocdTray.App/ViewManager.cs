@@ -12,12 +12,28 @@ using System.Windows.Media.Imaging;
 
 namespace GocdTray.App
 {
+
     public class ViewManager
     {
+        // This allows code to be run on a GUI thread
+        private Window _hiddenWindow;
+
+        private IContainer _components;
+        // The Windows system tray class
+        private NotifyIcon _notifyIcon;
+        IDeviceManager _deviceManager;
+
+        private GocdTray.Ui.View.AboutView _aboutView;
+        private GocdTray.Ui.ViewModel.AboutViewModel _aboutViewModel;
+        private GocdTray.Ui.View.StatusView _statusView;
+        private GocdTray.Ui.ViewModel.StatusViewModel _statusViewModel;
+
+        private ToolStripMenuItem _startDeviceMenuItem;
+        private ToolStripMenuItem _stopDeviceMenuItem;
+        private ToolStripMenuItem _exitMenuItem;
+
         public ViewManager(IDeviceManager deviceManager)
         {
-            System.Diagnostics.Debug.Assert(deviceManager != null);
-
             _deviceManager = deviceManager;
 
             _components = new Container();
@@ -33,11 +49,8 @@ namespace GocdTray.App
             _notifyIcon.DoubleClick += notifyIcon_DoubleClick;
             _notifyIcon.MouseUp += notifyIcon_MouseUp;
 
-            _aboutViewModel = new GocdTray.Ui.ViewModel.AboutViewModel();
-            _statusViewModel = new GocdTray.Ui.ViewModel.StatusViewModel();
-
-            _statusViewModel.Icon = AppIcon;
-            _aboutViewModel.Icon = _statusViewModel.Icon;
+            _aboutViewModel = new GocdTray.Ui.ViewModel.AboutViewModel() { Icon = AppIcon };
+            _statusViewModel = new GocdTray.Ui.ViewModel.StatusViewModel {Icon = AppIcon};
 
             _hiddenWindow = new Window();
             _hiddenWindow.Hide();
@@ -51,23 +64,6 @@ namespace GocdTray.App
                 return Imaging.CreateBitmapSourceFromHIcon(icon.Handle, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
             }
         }
-
-        // This allows code to be run on a GUI thread
-        private Window _hiddenWindow;
-
-        private IContainer _components;
-        // The Windows system tray class
-        private NotifyIcon _notifyIcon;  
-        IDeviceManager _deviceManager;
-
-        private GocdTray.Ui.View.AboutView _aboutView;
-        private GocdTray.Ui.ViewModel.AboutViewModel _aboutViewModel;
-        private GocdTray.Ui.View.StatusView _statusView;
-        private GocdTray.Ui.ViewModel.StatusViewModel _statusViewModel;
-
-        private ToolStripMenuItem _startDeviceMenuItem;
-        private ToolStripMenuItem _stopDeviceMenuItem;
-        private ToolStripMenuItem _exitMenuItem;
 
         private void DisplayStatusMessage(string text)
         {
@@ -271,15 +267,9 @@ namespace GocdTray.App
 
             if (_notifyIcon.ContextMenuStrip.Items.Count == 0)
             {
-                _startDeviceMenuItem = ToolStripMenuItemWithHandler(
-                    "Start Device",
-                    "Starts the device",
-                    startStopReaderItem_Click);
+                _startDeviceMenuItem = ToolStripMenuItemWithHandler( "Start Device", "Starts the device", startStopReaderItem_Click);
                 _notifyIcon.ContextMenuStrip.Items.Add(_startDeviceMenuItem);
-                _stopDeviceMenuItem = ToolStripMenuItemWithHandler(
-                    "Stop Device",
-                    "Stops the device",
-                    startStopReaderItem_Click);
+                _stopDeviceMenuItem = ToolStripMenuItemWithHandler( "Stop Device", "Stops the device", startStopReaderItem_Click);
                 _notifyIcon.ContextMenuStrip.Items.Add(_stopDeviceMenuItem);
                 _notifyIcon.ContextMenuStrip.Items.Add(new ToolStripSeparator());
                 _notifyIcon.ContextMenuStrip.Items.Add(ToolStripMenuItemWithHandler("Device S&tatus", "Shows the device status dialog", showStatusItem_Click));
