@@ -139,18 +139,6 @@ namespace GocdTray.App
             }
         }
         
-        private ToolStripMenuItem ToolStripMenuItemWithHandler(string displayText, string tooltipText, EventHandler eventHandler)
-        {
-            var item = new ToolStripMenuItem(displayText);
-            if (eventHandler != null)
-            {
-                item.Click += eventHandler;
-            }
-
-            item.ToolTipText = tooltipText;
-            return item;
-        }
-        
         private void ShowPipelineView()
         {
             if (pipelineView == null)
@@ -212,13 +200,53 @@ namespace GocdTray.App
 
         private void notifyIcon_MouseUp(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
+            if (e.Button == MouseButtons.Right)
             {
+                // https://stackoverflow.com/a/2208910
                 MethodInfo mi = typeof(NotifyIcon).GetMethod("ShowContextMenu", BindingFlags.Instance | BindingFlags.NonPublic);
                 mi.Invoke(_notifyIcon, null);
             }
         }
         
+
+
+        /*
+         *  Context Menu
+         */
+
+        private void ContextMenuStrip_Opening(object sender, CancelEventArgs e)
+        {
+            e.Cancel = false;
+
+            if (_notifyIcon.ContextMenuStrip.Items.Count == 0)
+            {
+                _startDeviceMenuItem = CreateMenuItemWithHandler( "Start Device", "Starts the device", startStopReaderItem_Click);
+                _notifyIcon.ContextMenuStrip.Items.Add(_startDeviceMenuItem);
+                _stopDeviceMenuItem = CreateMenuItemWithHandler( "Stop Device", "Stops the device", startStopReaderItem_Click);
+                _notifyIcon.ContextMenuStrip.Items.Add(_stopDeviceMenuItem);
+                _notifyIcon.ContextMenuStrip.Items.Add(new ToolStripSeparator());
+                _notifyIcon.ContextMenuStrip.Items.Add(CreateMenuItemWithHandler("Device S&tatus", "Shows the device status dialog", showStatusItem_Click));
+                _notifyIcon.ContextMenuStrip.Items.Add(CreateMenuItemWithHandler("&About", "Shows the About dialog", showHelpItem_Click));
+                _notifyIcon.ContextMenuStrip.Items.Add(new ToolStripSeparator());
+                _exitMenuItem = CreateMenuItemWithHandler("&Exit", "Exits System Tray App", exitItem_Click);
+                _notifyIcon.ContextMenuStrip.Items.Add(_exitMenuItem);
+            }
+
+            SetMenuItems();
+        }
+
+        private ToolStripMenuItem CreateMenuItemWithHandler(string displayText, string tooltipText, EventHandler eventHandler)
+        {
+            var item = new ToolStripMenuItem(displayText);
+            if (eventHandler != null)
+            {
+                item.Click += eventHandler;
+            }
+
+            item.ToolTipText = tooltipText;
+            return item;
+        }
+
         private void SetMenuItems()
         {
             switch (_deviceManager.Status)
@@ -249,30 +277,8 @@ namespace GocdTray.App
                     _exitMenuItem.Enabled = true;
                     break;
                 default:
-                    System.Diagnostics.Debug.Assert(false, "SetButtonStatus() => Unknown state");
-                    break;
+                    throw new ArgumentOutOfRangeException($"Unknown Status '{_deviceManager.Status}'");
             }
-        }
-
-        private void ContextMenuStrip_Opening(object sender, CancelEventArgs e)
-        {
-            e.Cancel = false;
-
-            if (_notifyIcon.ContextMenuStrip.Items.Count == 0)
-            {
-                _startDeviceMenuItem = ToolStripMenuItemWithHandler( "Start Device", "Starts the device", startStopReaderItem_Click);
-                _notifyIcon.ContextMenuStrip.Items.Add(_startDeviceMenuItem);
-                _stopDeviceMenuItem = ToolStripMenuItemWithHandler( "Stop Device", "Stops the device", startStopReaderItem_Click);
-                _notifyIcon.ContextMenuStrip.Items.Add(_stopDeviceMenuItem);
-                _notifyIcon.ContextMenuStrip.Items.Add(new ToolStripSeparator());
-                _notifyIcon.ContextMenuStrip.Items.Add(ToolStripMenuItemWithHandler("Device S&tatus", "Shows the device status dialog", showStatusItem_Click));
-                _notifyIcon.ContextMenuStrip.Items.Add(ToolStripMenuItemWithHandler("&About", "Shows the About dialog", showHelpItem_Click));
-                _notifyIcon.ContextMenuStrip.Items.Add(new ToolStripSeparator());
-                _exitMenuItem = ToolStripMenuItemWithHandler("&Exit", "Exits System Tray App", exitItem_Click);
-                _notifyIcon.ContextMenuStrip.Items.Add(_exitMenuItem);
-            }
-
-            SetMenuItems();
         }
     }
 }
