@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Media;
+using GocdTray.App.Abstractions;
 
 namespace GocdTray.Ui.ViewModel
 {
@@ -11,6 +12,7 @@ namespace GocdTray.Ui.ViewModel
         public StatusViewModel()
         {
             StatusFlags = new ObservableCollection<KeyValuePair<string,string>>();
+            Pipelines = new ObservableCollection<Pipeline>();
         }
 
         private ImageSource icon;
@@ -42,6 +44,7 @@ namespace GocdTray.Ui.ViewModel
         }
 
         private ObservableCollection<KeyValuePair<string,string>> statusFlags;
+
         public ObservableCollection<KeyValuePair<string, string>> StatusFlags
         {
             get
@@ -58,5 +61,18 @@ namespace GocdTray.Ui.ViewModel
         {
             StatusFlags = new ObservableCollection<KeyValuePair<string, string>>(flags);
         }
+
+        private ObservableCollection<Pipeline> pipelines;
+        public ObservableCollection<Pipeline> Pipelines
+        {
+            get => pipelines;
+            set
+            {
+                pipelines = value;
+                OnPropertyChanged("Pipelines");
+            }
+        }
+
+        public void PopulateTable(List<Pipeline> pipelines) => Pipelines = new ObservableCollection<Pipeline>(pipelines);
     }
 }

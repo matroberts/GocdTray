@@ -24,7 +24,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0" Padding="10" BorderBrush="Black" Height="auto" BorderThickness="0">
-            <DataGrid Padding="0" GridLinesVisibility="None" HeadersVisibility="None" ItemsSource="{Binding StatusFlags}" RowHeaderWidth="0" IsTabStop="True" Background="White" AutoGenerateColumns="False" IsReadOnly="True">
+            <DataGrid Padding="0" GridLinesVisibility="None" HeadersVisibility="None" ItemsSource="{Binding Pipelines}" RowHeaderWidth="0" IsTabStop="True" Background="White" AutoGenerateColumns="False" IsReadOnly="True">
                 <DataGrid.CellStyle>
                     <Style TargetType="DataGridCell">
                         <Setter Property="BorderThickness" Value="0"/>
@@ -33,8 +33,8 @@
                 </DataGrid.CellStyle>
 
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Key}" />
-                    <DataGridTextColumn Binding="{Binding Value}" />
+                    <DataGridTextColumn Binding="{Binding Name}" />
+                    <DataGridTextColumn Binding="{Binding PipelineGroupName}" />
                 </DataGrid.Columns>
             </DataGrid>
         </Border>

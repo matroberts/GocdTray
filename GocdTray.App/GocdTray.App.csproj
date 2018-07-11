@@ -40,6 +40,10 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.6\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -97,6 +101,14 @@
     <None Include="Resources\NotReadyIcon.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GocdTray.App.Abstractions\GocdTray.App.Abstractions.csproj">
+      <Project>{4cba91d2-e815-4c0d-9d84-aa0d1ce419d2}</Project>
+      <Name>GocdTray.App.Abstractions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GocdTray.Rest\GocdTray.Rest.csproj">
+      <Project>{6dd649f1-ca3d-4dba-af7d-e5789cde176f}</Project>
+      <Name>GocdTray.Rest</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GocdTray.Ui\GocdTray.Ui.csproj">
       <Project>{ec9652c9-aeec-48ea-bd5d-f00e3c80eabb}</Project>
       <Name>GocdTray.Ui</Name>
@@ -106,6 +118,9 @@
     <Content Include="ReadMe.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy $(SolutionDir)\AppSettingsSecret.config $(TargetDir)</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

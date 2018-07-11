@@ -106,7 +106,12 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\GocdTray.App.Abstractions\GocdTray.App.Abstractions.csproj">
+      <Project>{4cba91d2-e815-4c0d-9d84-aa0d1ce419d2}</Project>
+      <Name>GocdTray.App.Abstractions</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

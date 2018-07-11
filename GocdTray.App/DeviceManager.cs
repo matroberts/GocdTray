@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using GocdTray.App.Abstractions;
+using GocdTray.Rest;
 
 namespace GocdTray.App
 {
     public class DeviceManager : IDeviceManager
     {
+        private GocdServer gocdServer = null;
         public DeviceManager()
         {
             Status = DeviceStatus.Uninitialised;
@@ -60,6 +63,8 @@ namespace GocdTray.App
             }
         }
 
+        public List<Pipeline> Pipelines { get; set; } = new List<Pipeline>();
+
         public void Initialise()
         {
             if (Status == DeviceStatus.Uninitialised)
@@ -68,6 +73,17 @@ namespace GocdTray.App
             }
 
             DeviceName = "Death Star";
+            gocdServer = new GocdServer(new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, AppConfig.IgnoreCertificateErrors));
+        }
+
+        public void PollGocdForChanges()
+        {
+            // Todo: what to do about showing errors
+
+            var result = gocdServer.GetPipelines();
+            if(result.HasData == false)
+                throw new ApplicationException(result.ErrorMessage);
+            Pipelines = result.Data;
         }
 
         public void Start()
@@ -82,7 +98,8 @@ namespace GocdTray.App
                     delegate 
                     {
                         KillTimer();
-                        Status = DeviceStatus.Running; 
+                        Status = DeviceStatus.Running;
+                        PollGocdForChanges();
                         _statusTimer = null; 
                         if (OnStatusChange != null)
                         {
@@ -111,6 +128,7 @@ namespace GocdTray.App
             KillTimer();
             Stop();
             Status = DeviceStatus.Uninitialised;
+            gocdServer.Dispose();
         }
 
         #endregion
