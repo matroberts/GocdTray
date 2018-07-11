@@ -155,11 +155,12 @@ namespace GocdTray.App
         {
             if (_statusView == null)
             {
-                _statusView = new GocdTray.Ui.View.StatusView();
-                _statusView.DataContext = _statusViewModel;
-
+                _statusView = new GocdTray.Ui.View.StatusView
+                {
+                    DataContext = _statusViewModel,
+                    WindowStartupLocation = WindowStartupLocation.CenterScreen
+                };
                 _statusView.Closing += ((arg_1, arg_2) => _statusView = null);
-                _statusView.WindowStartupLocation = WindowStartupLocation.CenterScreen;
                 _statusView.Show();
                 UpdateStatusView();
             }
@@ -198,11 +199,6 @@ namespace GocdTray.App
         {
             ShowAboutView();
         }
-
-        private void showWebSite_Click(object sender, EventArgs e)
-        {
-            System.Diagnostics.Process.Start("http://www.CodeProject.com/");
-        }
         
         private void exitItem_Click(object sender, EventArgs e)
         {
@@ -211,7 +207,7 @@ namespace GocdTray.App
 
         private void notifyIcon_DoubleClick(object sender, EventArgs e)
         {
-            ShowAboutView();
+            ShowStatusView();
         }
 
         private void notifyIcon_MouseUp(object sender, MouseEventArgs e)
@@ -271,7 +267,6 @@ namespace GocdTray.App
                 _notifyIcon.ContextMenuStrip.Items.Add(new ToolStripSeparator());
                 _notifyIcon.ContextMenuStrip.Items.Add(ToolStripMenuItemWithHandler("Device S&tatus", "Shows the device status dialog", showStatusItem_Click));
                 _notifyIcon.ContextMenuStrip.Items.Add(ToolStripMenuItemWithHandler("&About", "Shows the About dialog", showHelpItem_Click));
-                _notifyIcon.ContextMenuStrip.Items.Add(ToolStripMenuItemWithHandler("Code Project &Web Site", "Navigates to the Code Project Web Site", showWebSite_Click));
                 _notifyIcon.ContextMenuStrip.Items.Add(new ToolStripSeparator());
                 _exitMenuItem = ToolStripMenuItemWithHandler("&Exit", "Exits System Tray App", exitItem_Click);
                 _notifyIcon.ContextMenuStrip.Items.Add(_exitMenuItem);
