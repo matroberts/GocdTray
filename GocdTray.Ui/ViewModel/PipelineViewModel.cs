@@ -7,9 +7,9 @@ using GocdTray.App.Abstractions;
 
 namespace GocdTray.Ui.ViewModel
 {
-    public class StatusViewModel : ViewModelBase
+    public class PipelineViewModel : ViewModelBase
     {
-        public StatusViewModel()
+        public PipelineViewModel()
         {
             Pipelines = new ObservableCollection<Pipeline>();
         }

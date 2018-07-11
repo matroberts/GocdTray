@@ -60,13 +60,13 @@
     </Compile>
     <Compile Include="ViewModel\AboutViewModel.cs" />
     <Compile Include="ViewModel\ComponentVersionInfo.cs" />
-    <Compile Include="ViewModel\StatusViewModel.cs" />
+    <Compile Include="ViewModel\PipelineViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\StatusView.xaml.cs">
-      <DependentUpon>StatusView.xaml</DependentUpon>
+    <Compile Include="View\PipelineView.xaml.cs">
+      <DependentUpon>PipelineView.xaml</DependentUpon>
     </Compile>
     <Page Include="View\AboutView.xaml">
       <SubType>Designer</SubType>
@@ -76,7 +76,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\StatusView.xaml">
+    <Page Include="View\PipelineView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

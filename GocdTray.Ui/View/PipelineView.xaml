@@ -1,8 +1,8 @@
-﻿<Window x:Class="GocdTray.Ui.View.StatusView"
+﻿<Window x:Class="GocdTray.Ui.View.PipelineView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Icon="{Binding Icon}"
-        Title="Device Status" Height="350" Width="327.795" Background="#DCE8F3">
+        Title="Pipelines" Height="350" Width="327.795" Background="#DCE8F3">
     <Window.Resources>
         <Style TargetType="Label">
             <Setter Property="FontFamily" Value="Times New Roman"/>

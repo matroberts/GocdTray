@@ -25,8 +25,8 @@ namespace GocdTray.App
 
         private GocdTray.Ui.View.AboutView _aboutView;
         private GocdTray.Ui.ViewModel.AboutViewModel _aboutViewModel;
-        private GocdTray.Ui.View.StatusView _statusView;
-        private GocdTray.Ui.ViewModel.StatusViewModel _statusViewModel;
+        private GocdTray.Ui.View.PipelineView pipelineView;
+        private GocdTray.Ui.ViewModel.PipelineViewModel pipelineViewModel;
 
         private ToolStripMenuItem _startDeviceMenuItem;
         private ToolStripMenuItem _stopDeviceMenuItem;
@@ -50,7 +50,7 @@ namespace GocdTray.App
             _notifyIcon.MouseUp += notifyIcon_MouseUp;
 
             _aboutViewModel = new GocdTray.Ui.ViewModel.AboutViewModel() { Icon = AppIcon };
-            _statusViewModel = new GocdTray.Ui.ViewModel.StatusViewModel {Icon = AppIcon};
+            pipelineViewModel = new GocdTray.Ui.ViewModel.PipelineViewModel {Icon = AppIcon};
 
             _hiddenWindow = new Window();
             _hiddenWindow.Hide();
@@ -75,17 +75,17 @@ namespace GocdTray.App
             });
         }
 
-        private void UpdateStatusView()
+        private void UpdatePipelineView()
         {
-            if ((_statusViewModel != null) && (_deviceManager != null))
+            if ((pipelineViewModel != null) && (_deviceManager != null))
             {
-                _statusViewModel.PopulateTable(_deviceManager.Pipelines);
+                pipelineViewModel.PopulateTable(_deviceManager.Pipelines);
             }
         }
 
         public void OnStatusChange()
         {
-            UpdateStatusView();
+            UpdatePipelineView();
 
             switch (_deviceManager.Status)
             {
@@ -121,9 +121,9 @@ namespace GocdTray.App
             {
                 _aboutView.Icon = AppIcon;
             }
-            if (_statusView != null)
+            if (pipelineView != null)
             {
-                _statusView.Icon = AppIcon;
+                pipelineView.Icon = AppIcon;
             }
         }
 
@@ -151,29 +151,29 @@ namespace GocdTray.App
             return item;
         }
         
-        private void ShowStatusView()
+        private void ShowPipelineView()
         {
-            if (_statusView == null)
+            if (pipelineView == null)
             {
-                _statusView = new GocdTray.Ui.View.StatusView
+                pipelineView = new GocdTray.Ui.View.PipelineView
                 {
-                    DataContext = _statusViewModel,
+                    DataContext = pipelineViewModel,
                     WindowStartupLocation = WindowStartupLocation.CenterScreen
                 };
-                _statusView.Closing += ((arg_1, arg_2) => _statusView = null);
-                _statusView.Show();
-                UpdateStatusView();
+                pipelineView.Closing += ((arg_1, arg_2) => pipelineView = null);
+                pipelineView.Show();
+                UpdatePipelineView();
             }
             else
             {
-                _statusView.Activate();
+                pipelineView.Activate();
             }
-            _statusView.Icon = AppIcon;
+            pipelineView.Icon = AppIcon;
         }
 
         private void showStatusItem_Click(object sender, EventArgs e)
         {
-            ShowStatusView();
+            ShowPipelineView();
         }
 
         private void ShowAboutView()
@@ -207,7 +207,7 @@ namespace GocdTray.App
 
         private void notifyIcon_DoubleClick(object sender, EventArgs e)
         {
-            ShowStatusView();
+            ShowPipelineView();
         }
 
         private void notifyIcon_MouseUp(object sender, MouseEventArgs e)
