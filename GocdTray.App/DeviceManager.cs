@@ -53,22 +53,12 @@ namespace GocdTray.App
             Pipelines = result.Data;
         }
 
-        public void Start()
-        {
-
-        }
-
-        public void Stop()
-        {
-
-        }
-        
         public void Terminate()
         {
             pollingTimer?.Stop();
             pollingTimer = null;
             Status = DeviceStatus.Uninitialised;
-            gocdServer.Dispose();
+            gocdServer?.Dispose();
             gocdServer = null;
         }
     }

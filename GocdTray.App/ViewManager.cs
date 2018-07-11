@@ -28,8 +28,6 @@ namespace GocdTray.App
         private GocdTray.Ui.View.PipelineView pipelineView;
         private GocdTray.Ui.ViewModel.PipelineViewModel pipelineViewModel;
 
-        private ToolStripMenuItem _startDeviceMenuItem;
-        private ToolStripMenuItem _stopDeviceMenuItem;
         private ToolStripMenuItem _exitMenuItem;
 
         public ViewManager(IDeviceManager deviceManager)
@@ -126,18 +124,6 @@ namespace GocdTray.App
                 pipelineView.Icon = AppIcon;
             }
         }
-
-        private void startStopReaderItem_Click(object sender, EventArgs e)
-        {
-            if (_deviceManager.Status == DeviceStatus.Running)
-            {
-                _deviceManager.Stop();
-            }
-            else
-            {
-                _deviceManager.Start();
-            }
-        }
         
         private void ShowPipelineView()
         {
@@ -220,19 +206,12 @@ namespace GocdTray.App
 
             if (_notifyIcon.ContextMenuStrip.Items.Count == 0)
             {
-                _startDeviceMenuItem = CreateMenuItemWithHandler( "Start Device", "Starts the device", startStopReaderItem_Click);
-                _notifyIcon.ContextMenuStrip.Items.Add(_startDeviceMenuItem);
-                _stopDeviceMenuItem = CreateMenuItemWithHandler( "Stop Device", "Stops the device", startStopReaderItem_Click);
-                _notifyIcon.ContextMenuStrip.Items.Add(_stopDeviceMenuItem);
-                _notifyIcon.ContextMenuStrip.Items.Add(new ToolStripSeparator());
                 _notifyIcon.ContextMenuStrip.Items.Add(CreateMenuItemWithHandler("Device S&tatus", "Shows the device status dialog", showStatusItem_Click));
                 _notifyIcon.ContextMenuStrip.Items.Add(CreateMenuItemWithHandler("&About", "Shows the About dialog", showHelpItem_Click));
                 _notifyIcon.ContextMenuStrip.Items.Add(new ToolStripSeparator());
                 _exitMenuItem = CreateMenuItemWithHandler("&Exit", "Exits System Tray App", exitItem_Click);
                 _notifyIcon.ContextMenuStrip.Items.Add(_exitMenuItem);
             }
-
-            SetMenuItems();
         }
 
         private ToolStripMenuItem CreateMenuItemWithHandler(string displayText, string tooltipText, EventHandler eventHandler)
@@ -245,40 +224,6 @@ namespace GocdTray.App
 
             item.ToolTipText = tooltipText;
             return item;
-        }
-
-        private void SetMenuItems()
-        {
-            switch (_deviceManager.Status)
-            {
-                case DeviceStatus.Initialised:
-                    _startDeviceMenuItem.Enabled = true;
-                    _stopDeviceMenuItem.Enabled = false;
-                    _exitMenuItem.Enabled = true;
-                    break;
-                case DeviceStatus.Starting:
-                    _startDeviceMenuItem.Enabled = false;
-                    _stopDeviceMenuItem.Enabled = false;
-                    _exitMenuItem.Enabled = false;
-                    break;
-                case DeviceStatus.Running:
-                    _startDeviceMenuItem.Enabled = false;
-                    _stopDeviceMenuItem.Enabled = true;
-                    _exitMenuItem.Enabled = true;
-                    break;
-                case DeviceStatus.Uninitialised:
-                    _startDeviceMenuItem.Enabled = false;
-                    _stopDeviceMenuItem.Enabled = false;
-                    _exitMenuItem.Enabled = true;
-                    break;
-                case DeviceStatus.Error:
-                    _startDeviceMenuItem.Enabled = false;
-                    _stopDeviceMenuItem.Enabled = false;
-                    _exitMenuItem.Enabled = true;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException($"Unknown Status '{_deviceManager.Status}'");
-            }
         }
     }
 }
