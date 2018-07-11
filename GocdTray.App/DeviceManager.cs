@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Windows.Threading;
 using GocdTray.App.Abstractions;
 using GocdTray.Rest;
 
@@ -8,29 +10,20 @@ namespace GocdTray.App
 {
     public class DeviceManager : IDeviceManager
     {
-        private GocdServer gocdServer = null;
+        private GocdServer gocdServer;
+        private DispatcherTimer pollingTimer;
+        public delegate void StatusChangeEvent();
+        public event StatusChangeEvent OnStatusChange;
+
         public DeviceManager()
         {
             Status = DeviceStatus.Uninitialised;
         }
 
-        private System.Windows.Threading.DispatcherTimer _statusTimer;
-
-        private void KillTimer()
-        {
-            if (_statusTimer != null)
-            {
-                _statusTimer.Stop();
-                _statusTimer = null;
-            }
-        }
-        
-        public delegate void StatusChangeEvent();
-        public event StatusChangeEvent OnStatusChange;
-
         public DeviceStatus Status { get; private set; }
 
         public List<Pipeline> Pipelines { get; set; } = new List<Pipeline>();
+
 
         public void Initialise()
         {
@@ -38,7 +31,18 @@ namespace GocdTray.App
             {
                 Status = DeviceStatus.Initialised;
             }
+            Debug.WriteLine("AppInistialise");
             gocdServer = new GocdServer(new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, AppConfig.IgnoreCertificateErrors));
+            // timer does not cause re-entry
+            pollingTimer = new DispatcherTimer(new TimeSpan(0, 0, 15), 
+                                                DispatcherPriority.Normal,
+                                                (sender, args) =>
+                                                {
+                                                    Debug.WriteLine("TimerCalled");
+                                                    PollGocdForChanges();
+                                                    OnStatusChange?.Invoke();
+                                                },
+                                                Dispatcher.CurrentDispatcher);
         }
 
         public void PollGocdForChanges()
@@ -53,47 +57,21 @@ namespace GocdTray.App
 
         public void Start()
         {
-            if (Status == DeviceStatus.Initialised)
-            {
-                Status = DeviceStatus.Starting;
-                // Simulate a real device with a simple timer
-                _statusTimer = new System.Windows.Threading.DispatcherTimer(
-                    new TimeSpan(0, 0, 3), 
-                    System.Windows.Threading.DispatcherPriority.Normal,
-                    delegate 
-                    {
-                        KillTimer();
-                        Status = DeviceStatus.Running;
-                        PollGocdForChanges();
-                        _statusTimer = null; 
-                        if (OnStatusChange != null)
-                        {
-                            OnStatusChange();
-                        }
-                    }, 
-                    System.Windows.Threading.Dispatcher.CurrentDispatcher);
-                
-            }
+
         }
 
         public void Stop()
         {
-            if (Status == DeviceStatus.Running)
-            {
-                Status = DeviceStatus.Initialised;
-                if (OnStatusChange != null)
-                {
-                    OnStatusChange();
-                }
-            }
+
         }
         
         public void Terminate()
         {
-            KillTimer();
-            Stop();
+            pollingTimer?.Stop();
+            pollingTimer = null;
             Status = DeviceStatus.Uninitialised;
             gocdServer.Dispose();
+            gocdServer = null;
         }
     }
 }
