@@ -17,67 +17,61 @@ namespace GocdTray.App
 
     public class ViewManager
     {
-        // This allows code to be run on a GUI thread
-        private Window _hiddenWindow;
-
-        private IContainer _components;
-        // The Windows system tray class
-        private NotifyIcon _notifyIcon;
-        IDeviceManager _deviceManager;
-
-        private AboutView _aboutView;
-        private AboutViewModel _aboutViewModel;
+        private Window hiddenWindow;
+        private NotifyIcon notifyIcon;
+        private IDeviceManager deviceManager;
+        private AboutView aboutView;
+        private AboutViewModel aboutViewModel;
         private PipelineView pipelineView;
         private PipelineViewModel pipelineViewModel;
 
         public ViewManager(IDeviceManager deviceManager)
         {
-            _deviceManager = deviceManager;
+            this.deviceManager = deviceManager;
 
-            _components = new Container();
-            _notifyIcon = new NotifyIcon(_components)
+            notifyIcon = new NotifyIcon(new Container())
             {
                 ContextMenuStrip = new ContextMenuStrip(),
                 Icon = Properties.Resources.NotReadyIcon,
-                Text = "System Tray App: Device Not Present",
+                Text = "Go.cd Tray Application",
                 Visible = true,
             };
 
-            _notifyIcon.ContextMenuStrip.Opening += ContextMenuStrip_Opening;
-            _notifyIcon.DoubleClick += notifyIcon_DoubleClick;
-            _notifyIcon.MouseUp += notifyIcon_MouseUp;
+            notifyIcon.ContextMenuStrip.Opening += ContextMenuStrip_Opening;
+            notifyIcon.DoubleClick += (sender, e) => ShowPipelineView();
+            notifyIcon.MouseUp += NotifyIcon_MouseUp;
 
-            _aboutViewModel = new AboutViewModel() { Icon = AppIcon };
+            aboutViewModel = new AboutViewModel() { Icon = AppIcon };
             pipelineViewModel = new PipelineViewModel {Icon = AppIcon};
 
-            _hiddenWindow = new Window();
-            _hiddenWindow.Hide();
+            hiddenWindow = new Window();
+            hiddenWindow.Hide();
         }
 
         ImageSource AppIcon
         {
             get
             {
-                Icon icon = _deviceManager.Status == DeviceStatus.Running ? Properties.Resources.ReadyIcon : Properties.Resources.NotReadyIcon;
+                Icon icon = deviceManager.Status == DeviceStatus.Running ? Properties.Resources.ReadyIcon : Properties.Resources.NotReadyIcon;
                 return Imaging.CreateBitmapSourceFromHIcon(icon.Handle, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
             }
         }
 
         private void DisplayStatusMessage(string text)
         {
-            _hiddenWindow.Dispatcher.Invoke(delegate
+            hiddenWindow.Dispatcher.Invoke(delegate
             {
-                _notifyIcon.BalloonTipText = text;
+                notifyIcon.BalloonTipText = text;
                 // The timeout is ignored on recent Windows
-                _notifyIcon.ShowBalloonTip(3000);
+                notifyIcon.ShowBalloonTip(3000);
             });
         }
 
         private void UpdatePipelineView()
         {
-            if ((pipelineViewModel != null) && (_deviceManager != null))
+            if (pipelineViewModel != null && deviceManager != null)
             {
-                pipelineViewModel.PopulateTable(_deviceManager.Pipelines);
+                pipelineViewModel.PopulateTable(deviceManager.Pipelines);
             }
         }
 
@@ -85,39 +79,39 @@ namespace GocdTray.App
         {
             UpdatePipelineView();
 
-            switch (_deviceManager.Status)
+            switch (deviceManager.Status)
             {
                 case DeviceStatus.Initialised:
-                    _notifyIcon.Text = "Ready";
-                    _notifyIcon.Icon = Properties.Resources.NotReadyIcon;
+                    notifyIcon.Text = "Ready";
+                    notifyIcon.Icon = Properties.Resources.NotReadyIcon;
                     DisplayStatusMessage("Idle");
                     break;
                 case DeviceStatus.Running:
-                    _notifyIcon.Text = "Running";
-                    _notifyIcon.Icon = Properties.Resources.ReadyIcon;
+                    notifyIcon.Text = "Running";
+                    notifyIcon.Icon = Properties.Resources.ReadyIcon;
                     DisplayStatusMessage("Running");
                     break;
                 case DeviceStatus.Starting:
-                    _notifyIcon.Text = "Starting";
-                    _notifyIcon.Icon = Properties.Resources.NotReadyIcon;
+                    notifyIcon.Text = "Starting";
+                    notifyIcon.Icon = Properties.Resources.NotReadyIcon;
                     DisplayStatusMessage("Starting");
                     break;
                 case DeviceStatus.Uninitialised:
-                    _notifyIcon.Text = "Not Ready";
-                    _notifyIcon.Icon = Properties.Resources.NotReadyIcon;
+                    notifyIcon.Text = "Not Ready";
+                    notifyIcon.Icon = Properties.Resources.NotReadyIcon;
                     break;
                 case DeviceStatus.Error:
-                    _notifyIcon.Text = "Error Detected";
-                    _notifyIcon.Icon = Properties.Resources.NotReadyIcon;
+                    notifyIcon.Text = "Error Detected";
+                    notifyIcon.Icon = Properties.Resources.NotReadyIcon;
                     break;
                 default:
-                    _notifyIcon.Text = "-";
-                    _notifyIcon.Icon = Properties.Resources.NotReadyIcon;
+                    notifyIcon.Text = "-";
+                    notifyIcon.Icon = Properties.Resources.NotReadyIcon;
                     break;
             }
-            if (_aboutView != null)
+            if (aboutView != null)
             {
-                _aboutView.Icon = AppIcon;
+                aboutView.Icon = AppIcon;
             }
             if (pipelineView != null)
             {
@@ -134,7 +128,7 @@ namespace GocdTray.App
                     DataContext = pipelineViewModel,
                     WindowStartupLocation = WindowStartupLocation.CenterScreen
                 };
-                pipelineView.Closing += ((arg_1, arg_2) => pipelineView = null);
+                pipelineView.Closing += (sender, e) => pipelineView = null;
                 pipelineView.Show();
                 UpdatePipelineView();
             }
@@ -145,59 +139,46 @@ namespace GocdTray.App
             pipelineView.Icon = AppIcon;
         }
 
-
-
         private void ShowAboutView()
         {
-            if (_aboutView == null)
+            if (aboutView == null)
             {
-                _aboutView = new AboutView
+                aboutView = new AboutView
                 {
-                    DataContext = _aboutViewModel,
+                    DataContext = aboutViewModel,
                     WindowStartupLocation = WindowStartupLocation.CenterScreen
                 };
 
-                _aboutView.Closing += (sender, e) => _aboutView = null;
-                _aboutView.Show();
+                aboutView.Closing += (sender, e) => aboutView = null;
+                aboutView.Show();
             }
             else
             {
-                _aboutView.Activate();
+                aboutView.Activate();
             }
-            _aboutView.Icon = AppIcon;
-            _aboutViewModel.AddVersionInfo("Version", Assembly.GetExecutingAssembly().GetName().Version.ToString());
+            aboutView.Icon = AppIcon;
+            aboutViewModel.AddVersionInfo("Version", Assembly.GetExecutingAssembly().GetName().Version.ToString());
         }
 
-        private void notifyIcon_DoubleClick(object sender, EventArgs e)
-        {
-            ShowPipelineView();
-        }
-
-        private void notifyIcon_MouseUp(object sender, MouseEventArgs e)
+        private void NotifyIcon_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
                 // https://stackoverflow.com/a/2208910
                 MethodInfo mi = typeof(NotifyIcon).GetMethod("ShowContextMenu", BindingFlags.Instance | BindingFlags.NonPublic);
-                mi.Invoke(_notifyIcon, null);
+                mi.Invoke(notifyIcon, null);
             }
         }
         
-
-
-        /*
-         *  Context Menu
-         */
-
         private void ContextMenuStrip_Opening(object sender, CancelEventArgs e)
         {
             e.Cancel = false;
-            if (_notifyIcon.ContextMenuStrip.Items.Count == 0)
+            if (notifyIcon.ContextMenuStrip.Items.Count == 0)
             {
-                _notifyIcon.ContextMenuStrip.Items.Add(CreateMenuItemWithHandler("Pipelines", "Show the status of the Go.cd pipelines", (sender1, e1) => ShowPipelineView()));
-                _notifyIcon.ContextMenuStrip.Items.Add(CreateMenuItemWithHandler("About", "Show the About dialog", (sender1, e1) => ShowAboutView()));
-                _notifyIcon.ContextMenuStrip.Items.Add(new ToolStripSeparator());
-                _notifyIcon.ContextMenuStrip.Items.Add(CreateMenuItemWithHandler("Exit", "Exits the application", (sender1, e1) => System.Windows.Forms.Application.Exit()));
+                notifyIcon.ContextMenuStrip.Items.Add(CreateMenuItemWithHandler("Pipelines", "Show the status of the Go.cd pipelines", (sender1, e1) => ShowPipelineView()));
+                notifyIcon.ContextMenuStrip.Items.Add(CreateMenuItemWithHandler("About", "Show the About dialog", (sender1, e1) => ShowAboutView()));
+                notifyIcon.ContextMenuStrip.Items.Add(new ToolStripSeparator());
+                notifyIcon.ContextMenuStrip.Items.Add(CreateMenuItemWithHandler("Exit", "Exits the application", (sender1, e1) => System.Windows.Forms.Application.Exit()));
             }
         }
 
