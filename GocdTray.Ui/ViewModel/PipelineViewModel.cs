@@ -28,20 +28,6 @@ namespace GocdTray.Ui.ViewModel
             }
         }
 
-        private bool isRunning = false;
-        public bool IsRunning
-        {
-            get
-            {
-                return isRunning;
-            }
-            set
-            {
-                isRunning = value;
-                OnPropertyChanged("IsRunning");
-            }
-        }
-
         private ObservableCollection<Pipeline> pipelines;
         public ObservableCollection<Pipeline> Pipelines
         {
