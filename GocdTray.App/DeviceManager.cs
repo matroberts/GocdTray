@@ -31,14 +31,12 @@ namespace GocdTray.App
             {
                 Status = DeviceStatus.Initialised;
             }
-            Debug.WriteLine("AppInistialise");
             gocdServer = new GocdServer(new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, AppConfig.IgnoreCertificateErrors));
             // timer does not cause re-entry
             pollingTimer = new DispatcherTimer(new TimeSpan(0, 0, 15), 
                                                 DispatcherPriority.Normal,
                                                 (sender, args) =>
                                                 {
-                                                    Debug.WriteLine("TimerCalled");
                                                     PollGocdForChanges();
                                                     OnStatusChange?.Invoke();
                                                 },

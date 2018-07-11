@@ -7,32 +7,27 @@ namespace GocdTray.App
 {
     public class STAApplicationContext : ApplicationContext
     {
+        private ViewManager viewManager;
+        private DeviceManager deviceManager;
+
         public STAApplicationContext()
         {
-            _deviceManager = new DeviceManager();
-            _viewManager = new ViewManager(_deviceManager);
-
-            _deviceManager.OnStatusChange += _viewManager.OnStatusChange;
-
-            _deviceManager.Initialise();
+            deviceManager = new DeviceManager();
+            viewManager = new ViewManager(deviceManager);
+            deviceManager.OnStatusChange += viewManager.OnStatusChange;
+            deviceManager.Initialise();
         }
 
-        private ViewManager _viewManager;
-        private DeviceManager _deviceManager;
-
-        // Called from the Dispose method of the base class
         protected override void Dispose(bool disposing)
         {
-            if ((_deviceManager != null) && (_viewManager != null))
+            if (deviceManager != null && viewManager != null)
             {
-                _deviceManager.OnStatusChange -= _viewManager.OnStatusChange;
+                deviceManager.OnStatusChange -= viewManager.OnStatusChange;
             }
-            if (_deviceManager != null)
-            {
-                _deviceManager.Terminate();
-            }
-            _deviceManager = null;
-            _viewManager = null;
+
+            deviceManager?.Terminate();
+            deviceManager = null;
+            viewManager = null;
         }
     }
 }
