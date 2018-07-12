@@ -203,6 +203,7 @@ namespace GocdTray.Test.Rest
             Assert.That(result.Data[0].PipelineInstances[0].Stages.Count, Is.EqualTo(1));
             Assert.That(result.Data[0].PipelineInstances[0].Stages[0].Name, Is.EqualTo("BuildStage"));
             Assert.That(result.Data[0].PipelineInstances[0].Stages[0].Status, Is.EqualTo(StageStatus.Passed));
+            Assert.That(result.Data[0].PipelineInstances[0].Stages[0].PreviousStatus, Is.Null);
         }
 
         [Test]
@@ -271,6 +272,7 @@ namespace GocdTray.Test.Rest
             Assert.That(result.Data[0].PipelineInstances[0].Stages.Count, Is.EqualTo(1));
             Assert.That(result.Data[0].PipelineInstances[0].Stages[0].Name, Is.EqualTo("BuildStage"));
             Assert.That(result.Data[0].PipelineInstances[0].Stages[0].Status, Is.EqualTo(StageStatus.Building));
+            Assert.That(result.Data[0].PipelineInstances[0].Stages[0].PreviousStatus.Value, Is.EqualTo(StageStatus.Passed));
         }
 
         [Test]
@@ -335,6 +337,7 @@ namespace GocdTray.Test.Rest
             Assert.That(result.Data[0].PipelineInstances[0].Stages.Count, Is.EqualTo(1));
             Assert.That(result.Data[0].PipelineInstances[0].Stages[0].Name, Is.EqualTo("BuildStage"));
             Assert.That(result.Data[0].PipelineInstances[0].Stages[0].Status, Is.EqualTo(StageStatus.Failed));
+            Assert.That(result.Data[0].PipelineInstances[0].Stages[0].PreviousStatus, Is.Null);
         }
 
         [Test]
@@ -399,6 +402,7 @@ namespace GocdTray.Test.Rest
             Assert.That(result.Data[0].PipelineInstances[0].Stages.Count, Is.EqualTo(1));
             Assert.That(result.Data[0].PipelineInstances[0].Stages[0].Name, Is.EqualTo("BuildStage"));
             Assert.That(result.Data[0].PipelineInstances[0].Stages[0].Status, Is.EqualTo(StageStatus.Cancelled));
+            Assert.That(result.Data[0].PipelineInstances[0].Stages[0].PreviousStatus, Is.Null);
         }
 
         [Test]

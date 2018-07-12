@@ -27,6 +27,8 @@ namespace GocdTray.App.Abstractions
     {
         public string Name { get; set; }
         public StageStatus Status { get; set; }
+        // Only defined when Status==Building
+        public StageStatus? PreviousStatus { get; set; }
     }
 
     public enum StageStatus

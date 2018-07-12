@@ -64,5 +64,6 @@ namespace GocdTray.Rest.Dto
     {
         public string name { get; set; }
         public string status { get; set; }
+        public DtoStage previous_stage { get; set; }
     }
 }

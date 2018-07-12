@@ -50,7 +50,8 @@ namespace GocdTray.Rest
                                 var stage = new Stage
                                 {
                                     Name = dtoStage.name,
-                                    Status = dtoStage.status.ToEnum<StageStatus>()
+                                    Status = dtoStage.status.ToEnum<StageStatus>(),
+                                    PreviousStatus = dtoStage?.previous_stage?.status.ToEnumNullable<StageStatus>(),
                                 };
                                 instance.Stages.Add(stage);
                             }

@@ -25,5 +25,12 @@
 
             return (T)Enum.Parse(t, value, true);
         }
+        public static T? ToEnumNullable<T>(this string value) where T : struct
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                return null;
+            else
+                return value.ToEnum<T>();
+        }
     }
 }
