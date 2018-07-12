@@ -22,7 +22,7 @@ namespace GocdTray.Test.Rest
             var gocdServer = new GocdServer(restClient);
             var result = gocdServer.GetPipelines();
             
-            Assert.That(result.HasData, result.ToString());
+            Assert.That(result.IsValid, result.ToString());
             Console.WriteLine(result.Data);
         }
 
@@ -110,7 +110,7 @@ namespace GocdTray.Test.Rest
             var httpClientHandler = new HttpClientHandlerFake { HttpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(jsonResult) } };
 
             // Act
-            RestResult<List<Pipeline>> result;
+            Result<List<Pipeline>> result;
             using (var gocdServer = new GocdServer(new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, AppConfig.IgnoreCertificateErrors, httpClientHandler)))
             {
                 result = gocdServer.GetPipelines();
@@ -121,7 +121,7 @@ namespace GocdTray.Test.Rest
             Assert.That(httpClientHandler.AcceptHeaders.Count, Is.EqualTo(1));
             Assert.That(httpClientHandler.AcceptHeaders.Single().ToString(), Is.EqualTo("application/vnd.go.cd.v1+json"));
 
-            Assert.That(result.HasData, result.ToString());
+            Assert.That(result.IsValid, result.ToString());
             Assert.That(result.Data.Count, Is.EqualTo(2));
 
             Assert.That(result.Data[0].PipelineGroupName, Is.EqualTo("Build"));
@@ -182,14 +182,14 @@ namespace GocdTray.Test.Rest
             var httpClientHandler = new HttpClientHandlerFake { HttpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(jsonResult) } };
 
             // Act
-            RestResult<List<Pipeline>> result;
+            Result<List<Pipeline>> result;
             using (var gocdServer = new GocdServer(new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, AppConfig.IgnoreCertificateErrors, httpClientHandler)))
             {
                 result = gocdServer.GetPipelines();
             }
 
             // Assert
-            Assert.That(result.HasData, result.ToString());
+            Assert.That(result.IsValid, result.ToString());
             Assert.That(result.Data.Count, Is.EqualTo(1));
 
             Assert.That(result.Data[0].PipelineGroupName, Is.EqualTo("Build"));
@@ -262,7 +262,7 @@ namespace GocdTray.Test.Rest
             var httpClientHandler = new HttpClientHandlerFake { HttpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(jsonResult) } };
 
             // Act
-            RestResult<List<Pipeline>> result;
+            Result<List<Pipeline>> result;
             using (var gocdServer = new GocdServer(new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, AppConfig.IgnoreCertificateErrors, httpClientHandler)))
             {
                 result = gocdServer.GetPipelines();
@@ -327,7 +327,7 @@ namespace GocdTray.Test.Rest
             var httpClientHandler = new HttpClientHandlerFake { HttpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(jsonResult) } };
 
             // Act
-            RestResult<List<Pipeline>> result;
+            Result<List<Pipeline>> result;
             using (var gocdServer = new GocdServer(new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, AppConfig.IgnoreCertificateErrors, httpClientHandler)))
             {
                 result = gocdServer.GetPipelines();
@@ -392,7 +392,7 @@ namespace GocdTray.Test.Rest
             var httpClientHandler = new HttpClientHandlerFake { HttpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(jsonResult) } };
 
             // Act
-            RestResult<List<Pipeline>> result;
+            Result<List<Pipeline>> result;
             using (var gocdServer = new GocdServer(new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, AppConfig.IgnoreCertificateErrors, httpClientHandler)))
             {
                 result = gocdServer.GetPipelines();
@@ -456,7 +456,7 @@ namespace GocdTray.Test.Rest
             var httpClientHandler = new HttpClientHandlerFake { HttpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(jsonResult) } };
 
             // Act
-            RestResult<List<Pipeline>> result;
+            Result<List<Pipeline>> result;
             using (var gocdServer = new GocdServer(new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, AppConfig.IgnoreCertificateErrors, httpClientHandler)))
             {
                 result = gocdServer.GetPipelines();
@@ -509,7 +509,7 @@ namespace GocdTray.Test.Rest
             var httpClientHandler = new HttpClientHandlerFake { HttpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(jsonResult) } };
 
             // Act
-            RestResult<List<Pipeline>> result;
+            Result<List<Pipeline>> result;
             using (var gocdServer = new GocdServer(new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, AppConfig.IgnoreCertificateErrors, httpClientHandler)))
             {
                 result = gocdServer.GetPipelines();
@@ -586,7 +586,7 @@ namespace GocdTray.Test.Rest
             var httpClientHandler = new HttpClientHandlerFake { HttpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(jsonResult) } };
 
             // Act
-            RestResult<List<Pipeline>> result;
+            Result<List<Pipeline>> result;
             using (var gocdServer = new GocdServer(new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, AppConfig.IgnoreCertificateErrors, httpClientHandler)))
             {
                 result = gocdServer.GetPipelines();
@@ -686,7 +686,7 @@ namespace GocdTray.Test.Rest
             var httpClientHandler = new HttpClientHandlerFake { HttpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(jsonResult) } };
 
             // Act
-            RestResult<List<Pipeline>> result;
+            Result<List<Pipeline>> result;
             using (var gocdServer = new GocdServer(new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, AppConfig.IgnoreCertificateErrors, httpClientHandler)))
             {
                 result = gocdServer.GetPipelines();

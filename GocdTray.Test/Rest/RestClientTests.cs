@@ -6,6 +6,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using GocdTray.App;
+using GocdTray.App.Abstractions;
 using GocdTray.Rest;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -27,7 +28,7 @@ namespace GocdTray.Test.Rest
             // Arrange
             // Invalid ssl certificate causes and error on the request
             var httpClientHandler = new HttpClientHandlerFakeWithFunc() { SendAsyncFunc = (r, c) => throw new HttpRequestException("An error occurred while sending the request.", new WebException("The underlying connection was closed: Could not establish trust relationship for the SSL/TLS secure channel.")) };
-            RestResult<object> result;
+            Result<object> result;
 
             // Act
             using (var restClient = new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, false, httpClientHandler))
@@ -37,7 +38,7 @@ namespace GocdTray.Test.Rest
             }
 
             // Assert
-            Assert.That(result.HasData, Is.False);
+            Assert.That(result.IsValid, Is.False);
             Assert.That(result.ToString(), Is.EqualTo("An error occurred while sending the request. The underlying connection was closed: Could not establish trust relationship for the SSL/TLS secure channel."));
         }
 
@@ -47,7 +48,7 @@ namespace GocdTray.Test.Rest
             // Arrange
             // Invalid password causes Unauthorised in response
             var httpClientHandler = new HttpClientHandlerFakeWithFunc { SendAsyncFunc = (r, c) => Task.FromResult(new HttpResponseMessage(HttpStatusCode.Unauthorized) { ReasonPhrase = "" })};
-            RestResult<object> result;
+            Result<object> result;
 
             // Act
             using (var restClient = new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, false, httpClientHandler))
@@ -56,7 +57,7 @@ namespace GocdTray.Test.Rest
             }
 
             //Assert
-            Assert.That(result.HasData, Is.False);
+            Assert.That(result.IsValid, Is.False);
             Assert.That(result.ToString(), Is.EqualTo("Response status code does not indicate success: 401 (Unauthorized)."));
         }
 
@@ -81,7 +82,7 @@ namespace GocdTray.Test.Rest
                     return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK) {Content = new StringContent(jsonResult)});
                 }
             };
-            RestResult<TestObject> result;
+            Result<TestObject> result;
 
             // Act
             using (var restClient = new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, false, httpClientHandler))
@@ -90,7 +91,7 @@ namespace GocdTray.Test.Rest
             }
 
             //Assert
-            Assert.That(result.HasData, Is.True);
+            Assert.That(result.IsValid, Is.True);
             Assert.That(url, Is.EqualTo(AppConfig.GocdApiUri + "/go/api/dashboard"));
             Assert.That(method, Is.EqualTo("GET"));
             Assert.That(acceptHeaders.Count, Is.EqualTo(1));

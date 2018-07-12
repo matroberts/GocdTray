@@ -7,12 +7,13 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using GocdTray.App.Abstractions;
 
 namespace GocdTray.Rest
 {
     public interface IRestClient : IDisposable
     {
-        RestResult<T> Get<T>(string relativeUri, string acceptHeaders = null);
+        Result<T> Get<T>(string relativeUri, string acceptHeaders = null);
     }
 
     public class RestClient : IRestClient
@@ -35,7 +36,7 @@ namespace GocdTray.Rest
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.ASCII.GetBytes($"{username}:{password}")));
         }
 
-        public RestResult<T> Get<T>(string relativeUri, string acceptHeaders = null)
+        public Result<T> Get<T>(string relativeUri, string acceptHeaders = null)
         {
             try
             {
@@ -48,11 +49,11 @@ namespace GocdTray.Rest
                 {
                     //Console.WriteLine(response.Content.ReadAsStringAsync().GetAwaiter().GetResult());
                     var data = response.Content.ReadAsStringAsync().FromJsonAsync<T>();
-                    return RestResult<T>.Valid(data.GetAwaiter().GetResult());
+                    return Result<T>.Valid(data.GetAwaiter().GetResult());
                 }
                 else
                 {
-                    return RestResult<T>.Invalid($"Response status code does not indicate success: {(int)response.StatusCode} ({response.StatusCode.ToString()}).");
+                    return Result<T>.Invalid($"Response status code does not indicate success: {(int)response.StatusCode} ({response.StatusCode.ToString()}).");
                 }
             }
             catch (Exception e)
@@ -60,7 +61,7 @@ namespace GocdTray.Rest
                 var errorMessage = e.Message;
                 if (e.InnerException != null)
                     errorMessage += " " + e.InnerException.Message;
-                return RestResult<T>.Invalid(errorMessage);
+                return Result<T>.Invalid(errorMessage);
             }
         }
 

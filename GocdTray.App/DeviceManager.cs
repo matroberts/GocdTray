@@ -48,7 +48,7 @@ namespace GocdTray.App
             // Todo: what to do about showing errors
 
             var result = gocdServer.GetPipelines();
-            if(result.HasData == false)
+            if(result.IsValid == false)
                 throw new ApplicationException(result.ErrorMessage);
             Pipelines = result.Data;
         }

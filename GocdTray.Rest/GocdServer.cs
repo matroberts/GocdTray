@@ -15,10 +15,10 @@ namespace GocdTray.Rest
             this.restClient = restClient;
         }
 
-        public RestResult<List<Pipeline>> GetPipelines()
+        public Result<List<Pipeline>> GetPipelines()
         {
             var result = restClient.Get<DtoEmbedded<DtoPipelineGroupsList>>("/go/api/dashboard", "application/vnd.go.cd.v1+json");
-            if (result.HasData)
+            if (result.IsValid)
             {
                 var pipelines = new List<Pipeline>();
                 foreach (var dtoPipelineGroup in result.Data._embedded.PipelineGroups)
@@ -58,11 +58,11 @@ namespace GocdTray.Rest
                         }    
                     }
                 }
-                return RestResult<List<Pipeline>>.Valid(pipelines);
+                return Result<List<Pipeline>>.Valid(pipelines);
             }
             else
             {
-                return RestResult<List<Pipeline>>.Invalid(result.ErrorMessage);
+                return Result<List<Pipeline>>.Invalid(result.ErrorMessage);
             }
         }
 

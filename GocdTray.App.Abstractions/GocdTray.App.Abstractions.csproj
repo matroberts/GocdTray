@@ -44,8 +44,10 @@
       <Link>Properties\AssemblyInfo.common.cs</Link>
     </Compile>
     <Compile Include="EnumExtensions.cs" />
+    <Compile Include="Estate.cs" />
     <Compile Include="Pipeline.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Result.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

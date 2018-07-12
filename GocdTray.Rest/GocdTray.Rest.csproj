@@ -54,7 +54,6 @@
     <Compile Include="GocdServer.cs" />
     <Compile Include="Dto\Dashboard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RestResult.cs" />
     <Compile Include="StringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
