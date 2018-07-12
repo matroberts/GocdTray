@@ -8,28 +8,19 @@ namespace GocdTray.Test.Abstractions
     [TestFixture]
     public class PipelineTests
     {
-        /*
-         *     public enum StageStatus
-    {
-        Unknown,
-        Passed,
-        Building,
-        Failed,
-        Cancelled
-    }
-         */
+        // Collapse Stage Statuses:
+        // Stage         Pipeline
+        // Building   => Building
+        // Failed     => Failed
+        // Cancelled  => Cancelled
+        // Passed     => Passed
+        // Unknown    => Unknown
+        //
+        // When multiple stages and multiple instances:
+        // if anything Building    => Building
+        // else if anything Failed => Failed
+        // else                    => Passed
 
-        // Ignore previous build state
-        // Cancelled => Failed   (or is cancelled previous build version)
-        // Unknown   => Pass or Building?
-
-        // Pipeline not run ever yet, i.e. Instances == 0 => Passed
-        // 
-
-
-        // PipelineStatus
-        // 0 Instances
-        // 1 Instance 1 Stage
         [Test]
         public void PipelineStatus_IfTheBuildHasNeverRun_ThatIsThereAreNoPipelineInstances_ThatCountsAsAPass()
         {
