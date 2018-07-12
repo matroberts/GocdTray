@@ -38,11 +38,8 @@ namespace GocdTray.Test.Abstractions
         [TestCase(StageStatus.Unknown,   PipelineStatus.Passed)]
         public void PipelineStatus_OneInstance_OneStage_CancelledIsFailed_UnknowenIsPassed(StageStatus stageStatus, PipelineStatus pipelineStatus)
         {
-            var pipeline = new Pipeline();
-            var instance = new PipelineInstance();
-            var stage = new Stage { Status = stageStatus };
-            pipeline.PipelineInstances.Add(instance);
-            instance.Stages.Add(stage);
+            // Arrange
+            var pipeline = new Pipeline() {PipelineInstances = {new PipelineInstance() {Stages = {new Stage {Status = stageStatus}}}}};
 
             // Act/Assert
             Assert.That(pipeline.Status, Is.EqualTo(pipelineStatus));
@@ -80,13 +77,8 @@ namespace GocdTray.Test.Abstractions
 
         public void PipelineStatus_OneInstance_TwoStages_BuildingBeatsEverything_FailedBeatsPassed(StageStatus stageStatus1, StageStatus stageStatus2, PipelineStatus pipelineStatus)
         {
-            var pipeline = new Pipeline();
-            var instance = new PipelineInstance();
-            var stage1 = new Stage { Status = stageStatus1 };
-            var stage2 = new Stage { Status = stageStatus2 };
-            pipeline.PipelineInstances.Add(instance);
-            instance.Stages.Add(stage1);
-            instance.Stages.Add(stage2);
+            // Arrange
+            var pipeline = new Pipeline() {PipelineInstances = {new PipelineInstance() {Stages = {new Stage {Status = stageStatus1}, new Stage {Status = stageStatus2}}}}};
 
             // Act/Assert
             Assert.That(pipeline.Status, Is.EqualTo(pipelineStatus));
@@ -124,15 +116,8 @@ namespace GocdTray.Test.Abstractions
 
         public void PipelineStatus_TwoInstances_OneStages_BuildingBeatsEverything_FailedBeatsPassed(StageStatus stageStatus1, StageStatus stageStatus2, PipelineStatus pipelineStatus)
         {
-            var pipeline = new Pipeline();
-            var instance1 = new PipelineInstance();
-            var instance2 = new PipelineInstance();
-            var stage1 = new Stage { Status = stageStatus1 };
-            var stage2 = new Stage { Status = stageStatus2 };
-            pipeline.PipelineInstances.Add(instance1);
-            pipeline.PipelineInstances.Add(instance2);
-            instance1.Stages.Add(stage1);
-            instance2.Stages.Add(stage2);
+            // Arrange
+            var pipeline = new Pipeline() {PipelineInstances = {new PipelineInstance() {Stages = {new Stage {Status = stageStatus1}}}, new PipelineInstance() {Stages = {new Stage {Status = stageStatus2}}}}};
 
             // Act/Assert
             Assert.That(pipeline.Status, Is.EqualTo(pipelineStatus));
