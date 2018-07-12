@@ -35,10 +35,10 @@
                 </DataGrid.CellStyle>
 
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn Width="SizeToCells" IsReadOnly="True">
+                    <DataGridTemplateColumn Width="12" IsReadOnly="True" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Image Source="{Binding Status, Converter={StaticResource PipelineStatusToImageConverter}}" />
+                                <Image Source="{Binding Status, Converter={StaticResource PipelineStatusToImageConverter}}" Width="10" Height="10"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
