@@ -33,6 +33,7 @@ namespace GocdTray.App.Abstractions
 
     public enum StageStatus
     {
+        Unknown,
         Passed,
         Building,
         Failed,

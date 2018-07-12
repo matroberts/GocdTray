@@ -15,8 +15,8 @@ namespace GocdTray.Test.Rest
     public class GocdServerTests
     {
 
-        [Test]
-        public void RealConnection()
+        [Test, Ignore("")]
+        public void GetPipelines_RealCall()
         {
             var restClient = new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, AppConfig.IgnoreCertificateErrors);
             var gocdServer = new GocdServer(restClient);
@@ -470,22 +470,256 @@ namespace GocdTray.Test.Rest
             Assert.That(result.Data[0].PausedReason, Is.EqualTo("editing"));
         }
 
+        [Test]
+        public void GetPipelines_ANewPipeline_WhichHasNeverBeenRun_DeserialisesCorrectly()
+        {
+            // Arrange
+            #region jsonResult
+
+            string jsonResult = @"
+{
+  ""_embedded"": {
+    ""pipeline_groups"": [
+      {
+        ""name"": ""Admin"",
+        ""_embedded"": {
+          ""pipelines"": [
+            {
+              ""name"": ""NewPipeline"",
+              ""locked"": false,
+              ""pause_info"": {
+                ""paused"": true,
+                ""paused_by"": ""mat.roberts"",
+                ""pause_reason"": ""Under construction""
+              },
+              ""_embedded"": {
+                ""instances"": [
+
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
+";
+            #endregion
+            var httpClientHandler = new HttpClientHandlerFake { HttpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(jsonResult) } };
+
+            // Act
+            RestResult<List<Pipeline>> result;
+            using (var gocdServer = new GocdServer(new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, AppConfig.IgnoreCertificateErrors, httpClientHandler)))
+            {
+                result = gocdServer.GetPipelines();
+            }
+
+            // Assert
+            Assert.That(result.Data[0].Name, Is.EqualTo("NewPipeline"));
+            Assert.That(result.Data[0].PipelineGroupName, Is.EqualTo("Admin"));
+            Assert.That(result.Data[0].Locked, Is.False);
+            Assert.That(result.Data[0].Paused, Is.True);
+            Assert.That(result.Data[0].PausedBy, Is.EqualTo("mat.roberts"));
+            Assert.That(result.Data[0].PausedReason, Is.EqualTo("Under construction"));
+            Assert.That(result.Data[0].PipelineInstances.Count, Is.EqualTo(0));
+        }
+
+        [Test]
+        public void GetPipelines_WhenPipelineHasTwoStages_DeserialisesCorrectly()
+        {
+            // Arrange
+            #region jsonResult
+
+            string jsonResult = @"
+
+{
+  ""_embedded"": {
+    ""pipeline_groups"": [
+      {
+        ""name"": ""Branch"",
+        ""_embedded"": {
+          ""pipelines"": [
+            {
+              ""name"": ""NetBackupAdapter9r1v8"",
+              ""locked"": false,
+              ""pause_info"": {
+                ""paused"": false,
+                ""paused_by"": null,
+                ""pause_reason"": null
+              },
+              ""_embedded"": {
+                ""instances"": [
+                  {
+                    ""label"": ""68"",
+                    ""schedule_at"": ""2018-07-12T09:33:15.000Z"",
+                    ""triggered_by"": ""changes"",
+                    ""_embedded"": {
+                      ""stages"": [
+                        {
+                          ""name"": ""BuildStage"",
+                          ""status"": ""Passed""
+                        },
+                        {
+                          ""name"": ""TestStage"",
+                          ""status"": ""Building"",
+                          ""previous_stage"": {
+                            ""name"": ""TestStage"",
+                            ""status"": ""Passed""
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
+
+";
+            #endregion
+            var httpClientHandler = new HttpClientHandlerFake { HttpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(jsonResult) } };
+
+            // Act
+            RestResult<List<Pipeline>> result;
+            using (var gocdServer = new GocdServer(new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, AppConfig.IgnoreCertificateErrors, httpClientHandler)))
+            {
+                result = gocdServer.GetPipelines();
+            }
+
+            // Assert
+            Assert.That(result.Data[0].Name, Is.EqualTo("NetBackupAdapter9r1v8"));
+            Assert.That(result.Data[0].PipelineInstances.Count, Is.EqualTo(1));
+
+            Assert.That(result.Data[0].PipelineInstances[0].Stages.Count, Is.EqualTo(2));
+            Assert.That(result.Data[0].PipelineInstances[0].Stages[0].Name, Is.EqualTo("BuildStage"));
+            Assert.That(result.Data[0].PipelineInstances[0].Stages[0].Status, Is.EqualTo(StageStatus.Passed));
+            Assert.That(result.Data[0].PipelineInstances[0].Stages[0].PreviousStatus, Is.Null);
+            Assert.That(result.Data[0].PipelineInstances[0].Stages[1].Name, Is.EqualTo("TestStage"));
+            Assert.That(result.Data[0].PipelineInstances[0].Stages[1].Status, Is.EqualTo(StageStatus.Building));
+            Assert.That(result.Data[0].PipelineInstances[0].Stages[1].PreviousStatus, Is.EqualTo(StageStatus.Passed));
+        }
+
+        [Test]
+        public void GetPipelines_WhenPipelineHasTwoInstances_DeserialisesCorrectly()
+        {
+            // Arrange
+            #region jsonResult
+
+            string jsonResult = @"
+
+{
+  ""_embedded"": {
+    ""pipeline_groups"": [
+      {
+        ""name"": ""Branch"",
+        ""_embedded"": {
+          ""pipelines"": [
+            {
+              ""name"": ""NetBackupAdapter9r1v8"",
+              ""locked"": false,
+              ""pause_info"": {
+                ""paused"": false,
+                ""paused_by"": null,
+                ""pause_reason"": null
+              },
+              ""_embedded"": {
+                ""instances"": [
+                  {
+                    ""label"": ""69"",
+                    ""schedule_at"": ""2018-07-12T09:48:15.000Z"",
+                    ""triggered_by"": ""changes"",
+                    ""_embedded"": {
+                      ""stages"": [
+                        {
+                          ""name"": ""BuildStage"",
+                          ""status"": ""Building"",
+                          ""previous_stage"": {
+                            ""name"": ""BuildStage"",
+                            ""status"": ""Passed""
+                          }
+                        },
+                        {
+                          ""name"": ""TestStage"",
+                          ""status"": ""Unknown""
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    ""label"": ""68"",
+                    ""schedule_at"": ""2018-07-12T09:33:15.000Z"",
+                    ""triggered_by"": ""changes"",
+                    ""_embedded"": {
+                      ""stages"": [
+                        {
+                          ""name"": ""BuildStage"",
+                          ""status"": ""Passed""
+                        },
+                        {
+                          ""name"": ""TestStage"",
+                          ""status"": ""Building"",
+                          ""previous_stage"": {
+                            ""name"": ""TestStage"",
+                            ""status"": ""Passed""
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
+";
+            #endregion
+            var httpClientHandler = new HttpClientHandlerFake { HttpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(jsonResult) } };
+
+            // Act
+            RestResult<List<Pipeline>> result;
+            using (var gocdServer = new GocdServer(new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, AppConfig.IgnoreCertificateErrors, httpClientHandler)))
+            {
+                result = gocdServer.GetPipelines();
+            }
+
+            // Assert
+            Assert.That(result.Data[0].Name, Is.EqualTo("NetBackupAdapter9r1v8"));
+            Assert.That(result.Data[0].PipelineInstances.Count, Is.EqualTo(2));
+
+            Assert.That(result.Data[0].PipelineInstances[0].Label, Is.EqualTo("69"));
+            Assert.That(result.Data[0].PipelineInstances[0].Stages.Count, Is.EqualTo(2));
+            Assert.That(result.Data[0].PipelineInstances[0].Stages[0].Name, Is.EqualTo("BuildStage"));
+            Assert.That(result.Data[0].PipelineInstances[0].Stages[0].Status, Is.EqualTo(StageStatus.Building));
+            Assert.That(result.Data[0].PipelineInstances[0].Stages[0].PreviousStatus, Is.EqualTo(StageStatus.Passed));
+            Assert.That(result.Data[0].PipelineInstances[0].Stages[1].Name, Is.EqualTo("TestStage"));
+            Assert.That(result.Data[0].PipelineInstances[0].Stages[1].Status, Is.EqualTo(StageStatus.Unknown));
+            Assert.That(result.Data[0].PipelineInstances[0].Stages[1].PreviousStatus, Is.Null);
+
+            Assert.That(result.Data[0].PipelineInstances[1].Label, Is.EqualTo("68"));
+            Assert.That(result.Data[0].PipelineInstances[1].Stages.Count, Is.EqualTo(2));
+            Assert.That(result.Data[0].PipelineInstances[1].Stages[0].Name, Is.EqualTo("BuildStage"));
+            Assert.That(result.Data[0].PipelineInstances[1].Stages[0].Status, Is.EqualTo(StageStatus.Passed));
+            Assert.That(result.Data[0].PipelineInstances[1].Stages[0].PreviousStatus, Is.Null);
+            Assert.That(result.Data[0].PipelineInstances[1].Stages[1].Name, Is.EqualTo("TestStage"));
+            Assert.That(result.Data[0].PipelineInstances[1].Stages[1].Status, Is.EqualTo(StageStatus.Building));
+            Assert.That(result.Data[0].PipelineInstances[1].Stages[1].PreviousStatus, Is.EqualTo(StageStatus.Passed));
+        }
+
         // How deal with failure to connect, or interuption?
         // Not doing it now but may want to connect to more than one go.cd
         // async
 
 
-        // pipeline
-        // - locked
-        // - paused (and by and reason)
-        //   instances
-        //   - label
-        //   - scheduled at
-        //   - triggered by
-        //     stages
-        //     - name
-        //     - status
-        //     - previous stage????
 
     }
 }

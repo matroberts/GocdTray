@@ -46,7 +46,7 @@ namespace GocdTray.Rest
                 var response = httpClient.SendAsync(request).GetAwaiter().GetResult();
                 if (response.IsSuccessStatusCode)
                 {
-                    Console.WriteLine(response.Content.ReadAsStringAsync().GetAwaiter().GetResult());
+                    //Console.WriteLine(response.Content.ReadAsStringAsync().GetAwaiter().GetResult());
                     var data = response.Content.ReadAsStringAsync().FromJsonAsync<T>();
                     return RestResult<T>.Valid(data.GetAwaiter().GetResult());
                 }
