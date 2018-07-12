@@ -13,6 +13,26 @@ namespace GocdTray.App.Abstractions
         public string PausedBy { get; set; } 
         public string PausedReason { get; set; }
         public List<PipelineInstance> PipelineInstances { get; set; } = new List<PipelineInstance>();
+
+        public PipelineStatus Status
+        {
+            get
+            {
+                if (PipelineInstances.Any(i => i.Status == PipelineStatus.Building))
+                    return PipelineStatus.Building;
+                else if (PipelineInstances.Any(i => i.Status == PipelineStatus.Failed))
+                    return PipelineStatus.Failed;
+                else
+                    return PipelineStatus.Passed;
+            }
+        }
+    }
+
+    public enum PipelineStatus
+    {
+        Building,
+        Passed,
+        Failed
     }
 
     public class PipelineInstance
@@ -21,6 +41,19 @@ namespace GocdTray.App.Abstractions
         public DateTime ScheduledAt { get; set; }
         public string TriggeredBy { get; set; }
         public List<Stage> Stages { get; set; } = new List<Stage>();
+
+        public PipelineStatus Status
+        {
+            get
+            {
+                if (Stages.Any(s => s.Status == StageStatus.Building))
+                    return PipelineStatus.Building;
+                else if (Stages.Any(s => s.Status == StageStatus.Cancelled || s.Status == StageStatus.Failed))
+                    return PipelineStatus.Failed;
+                else 
+                    return PipelineStatus.Passed;
+            }
+        }
     }
 
     public class Stage
