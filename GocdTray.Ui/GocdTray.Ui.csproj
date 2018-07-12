@@ -42,6 +42,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -58,6 +59,7 @@
     <Compile Include="..\AssemblyInfo.common.cs">
       <Link>Properties\AssemblyInfo.common.cs</Link>
     </Compile>
+    <Compile Include="Converters\PipelineStatusToImageConverter.cs" />
     <Compile Include="ViewModel\AboutViewModel.cs" />
     <Compile Include="ViewModel\ComponentVersionInfo.cs" />
     <Compile Include="ViewModel\PipelineViewModel.cs" />
@@ -111,6 +113,15 @@
       <Project>{4cba91d2-e815-4c0d-9d84-aa0d1ce419d2}</Project>
       <Name>GocdTray.App.Abstractions</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Building.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Failed.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Passed.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
