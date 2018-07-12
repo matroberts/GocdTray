@@ -8,6 +8,10 @@ namespace GocdTray.App.Abstractions
     {
         public string Name { get; set; }
         public string PipelineGroupName { get; set; }
+        public bool Locked { get; set; }
+        public bool Paused { get; set; }
+        public string PausedBy { get; set; } 
+        public string PausedReason { get; set; }
         public List<PipelineInstance> PipelineInstances { get; set; } = new List<PipelineInstance>();
     }
 
@@ -22,13 +26,14 @@ namespace GocdTray.App.Abstractions
     public class Stage
     {
         public string Name { get; set; }
-        public BuildStatus Status { get; set; }
+        public StageStatus Status { get; set; }
     }
 
-    public enum BuildStatus
+    public enum StageStatus
     {
         Passed,
         Building,
-        Failed
+        Failed,
+        Cancelled
     }
 }

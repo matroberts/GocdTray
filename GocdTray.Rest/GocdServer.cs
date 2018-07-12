@@ -29,7 +29,11 @@ namespace GocdTray.Rest
                         var pipeline = new Pipeline()
                         {
                             PipelineGroupName = pipelineGroupName,
-                            Name = dtoPipeline.Name
+                            Name = dtoPipeline.Name,
+                            Locked = dtoPipeline.locked,
+                            Paused = dtoPipeline.pause_info.paused,
+                            PausedBy = dtoPipeline.pause_info.paused_by,
+                            PausedReason = dtoPipeline.pause_info.pause_reason
                         };
                         pipelines.Add(pipeline);
                         foreach (var dtoInstance in dtoPipeline._embedded.instances)
@@ -46,7 +50,7 @@ namespace GocdTray.Rest
                                 var stage = new Stage
                                 {
                                     Name = dtoStage.name,
-                                    Status = dtoStage.status.ToEnum<BuildStatus>()
+                                    Status = dtoStage.status.ToEnum<StageStatus>()
                                 };
                                 instance.Stages.Add(stage);
                             }

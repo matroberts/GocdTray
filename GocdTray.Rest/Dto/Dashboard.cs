@@ -30,7 +30,16 @@ namespace GocdTray.Rest.Dto
     public class DtoPipeline
     {
         public string Name { get; set; }
+        public bool locked { get; set; }
+        public DtoPauseInfo pause_info { get; set; }
         public DtoInstanceList _embedded { get; set; }
+    }
+
+    public class DtoPauseInfo
+    {
+        public bool paused { get; set; }
+        public string paused_by { get; set; }
+        public string pause_reason { get; set; }
     }
 
     public class DtoInstanceList

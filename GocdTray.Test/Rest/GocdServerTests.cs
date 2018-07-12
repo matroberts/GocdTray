@@ -27,58 +27,19 @@ namespace GocdTray.Test.Rest
         }
 
         [Test]
-        public void GetPipelines_DeserialisesThePipelineAndPipelineGroupName_Correctly()
+        public void GetPipelines_DeserialisesPipelineAndPipelineGroupName_Correctly()
         {
             // Arrange
             #region jsonResult
 
             string jsonResult = @"{
-  ""_links"": {
-    ""self"": {
-      ""href"": ""https://devbuild03:8154/go/api/dashboard""
-    },
-    ""doc"": {
-      ""href"": ""https://api.gocd.io/#dashboard""
-    }
-  },
   ""_embedded"": {
     ""pipeline_groups"": [
       {
-        ""_links"": {
-          ""self"": {
-            ""href"": ""https://devbuild03:8154/go/api/config/pipeline_groups""
-          },
-          ""doc"": {
-            ""href"": ""https://api.gocd.io/#pipeline-groups""
-          }
-        },
         ""name"": ""Build"",
         ""_embedded"": {
           ""pipelines"": [
             {
-              ""_links"": {
-                ""self"": {
-                  ""href"": ""https://devbuild03:8154/go/api/pipelines/DirectaTrunk/history""
-                },
-                ""doc"": {
-                  ""href"": ""https://api.gocd.io/#pipelines""
-                },
-                ""settings_path"": {
-                  ""href"": ""https://devbuild03:8154/go/admin/pipelines/DirectaTrunk/general""
-                },
-                ""trigger"": {
-                  ""href"": ""https://devbuild03:8154/go/api/pipelines/DirectaTrunk/schedule""
-                },
-                ""trigger_with_options"": {
-                  ""href"": ""https://devbuild03:8154/go/api/pipelines/DirectaTrunk/schedule""
-                },
-                ""pause"": {
-                  ""href"": ""https://devbuild03:8154/go/api/pipelines/DirectaTrunk/pause""
-                },
-                ""unpause"": {
-                  ""href"": ""https://devbuild03:8154/go/api/pipelines/DirectaTrunk/unpause""
-                }
-              },
               ""name"": ""DirectaTrunk"",
               ""locked"": false,
               ""pause_info"": {
@@ -89,40 +50,12 @@ namespace GocdTray.Test.Rest
               ""_embedded"": {
                 ""instances"": [
                   {
-                    ""_links"": {
-                      ""self"": {
-                        ""href"": ""https://devbuild03:8154/go/api/pipelines/DirectaTrunk/instance/1768""
-                      },
-                      ""doc"": {
-                        ""href"": ""https://api.gocd.io/#get-pipeline-instance""
-                      },
-                      ""history_url"": {
-                        ""href"": ""https://devbuild03:8154/go/api/pipelines/DirectaTrunk/history""
-                      },
-                      ""vsm_url"": {
-                        ""href"": ""https://devbuild03:8154/go/pipelines/value_stream_map/DirectaTrunk/1768""
-                      },
-                      ""compare_url"": {
-                        ""href"": ""https://devbuild03:8154/go/compare/DirectaTrunk/1767/with/1768""
-                      },
-                      ""build_cause_url"": {
-                        ""href"": ""https://devbuild03:8154/go/pipelines/DirectaTrunk/1768/build_cause""
-                      }
-                    },
                     ""label"": ""1768"",
                     ""schedule_at"": ""2018-07-06T11:39:03.000Z"",
                     ""triggered_by"": ""changes"",
                     ""_embedded"": {
                       ""stages"": [
                         {
-                          ""_links"": {
-                            ""self"": {
-                              ""href"": ""https://devbuild03:8154/go/api/stages/DirectaTrunk/1768/BuildStage/1""
-                            },
-                            ""doc"": {
-                              ""href"": ""https://api.gocd.io/#get-stage-instance""
-                            }
-                          },
                           ""name"": ""BuildStage"",
                           ""status"": ""Passed""
                         }
@@ -133,29 +66,6 @@ namespace GocdTray.Test.Rest
               }
             },
             {
-              ""_links"": {
-                ""self"": {
-                  ""href"": ""https://devbuild03:8154/go/api/pipelines/DirectaTrunk-Msi/history""
-                },
-                ""doc"": {
-                  ""href"": ""https://api.gocd.io/#pipelines""
-                },
-                ""settings_path"": {
-                  ""href"": ""https://devbuild03:8154/go/admin/pipelines/DirectaTrunk-Msi/general""
-                },
-                ""trigger"": {
-                  ""href"": ""https://devbuild03:8154/go/api/pipelines/DirectaTrunk-Msi/schedule""
-                },
-                ""trigger_with_options"": {
-                  ""href"": ""https://devbuild03:8154/go/api/pipelines/DirectaTrunk-Msi/schedule""
-                },
-                ""pause"": {
-                  ""href"": ""https://devbuild03:8154/go/api/pipelines/DirectaTrunk-Msi/pause""
-                },
-                ""unpause"": {
-                  ""href"": ""https://devbuild03:8154/go/api/pipelines/DirectaTrunk-Msi/unpause""
-                }
-              },
               ""name"": ""DirectaTrunk-Msi"",
               ""locked"": false,
               ""pause_info"": {
@@ -166,40 +76,12 @@ namespace GocdTray.Test.Rest
               ""_embedded"": {
                 ""instances"": [
                   {
-                    ""_links"": {
-                      ""self"": {
-                        ""href"": ""https://devbuild03:8154/go/api/pipelines/DirectaTrunk-Msi/instance/1488""
-                      },
-                      ""doc"": {
-                        ""href"": ""https://api.gocd.io/#get-pipeline-instance""
-                      },
-                      ""history_url"": {
-                        ""href"": ""https://devbuild03:8154/go/api/pipelines/DirectaTrunk-Msi/history""
-                      },
-                      ""vsm_url"": {
-                        ""href"": ""https://devbuild03:8154/go/pipelines/value_stream_map/DirectaTrunk-Msi/1488""
-                      },
-                      ""compare_url"": {
-                        ""href"": ""https://devbuild03:8154/go/compare/DirectaTrunk-Msi/1487/with/1488""
-                      },
-                      ""build_cause_url"": {
-                        ""href"": ""https://devbuild03:8154/go/pipelines/DirectaTrunk-Msi/1488/build_cause""
-                      }
-                    },
                     ""label"": ""1488"",
                     ""schedule_at"": ""2018-07-06T11:59:15.000Z"",
                     ""triggered_by"": ""changes"",
                     ""_embedded"": {
                       ""stages"": [
                         {
-                          ""_links"": {
-                            ""self"": {
-                              ""href"": ""https://devbuild03:8154/go/api/stages/DirectaTrunk-Msi/1488/BuildStage/1""
-                            },
-                            ""doc"": {
-                              ""href"": ""https://api.gocd.io/#get-stage-instance""
-                            }
-                          },
                           ""name"": ""BuildStage"",
                           ""status"": ""Passed""
                         }
@@ -213,14 +95,6 @@ namespace GocdTray.Test.Rest
         }
       },
       {
-        ""_links"": {
-          ""self"": {
-            ""href"": ""https://devbuild03:8154/go/api/config/pipeline_groups""
-          },
-          ""doc"": {
-            ""href"": ""https://api.gocd.io/#pipeline-groups""
-          }
-        },
         ""name"": ""Test"",
         ""_embedded"": {
           ""pipelines"": [
@@ -265,52 +139,13 @@ namespace GocdTray.Test.Rest
 
             string jsonResult = @"
 {
-  ""_links"": {
-    ""self"": {
-      ""href"": ""https://devbuild03:8154/go/api/dashboard""
-    },
-    ""doc"": {
-      ""href"": ""https://api.gocd.io/#dashboard""
-    }
-  },
   ""_embedded"": {
     ""pipeline_groups"": [
       {
-        ""_links"": {
-          ""self"": {
-            ""href"": ""https://devbuild03:8154/go/api/config/pipeline_groups""
-          },
-          ""doc"": {
-            ""href"": ""https://api.gocd.io/#pipeline-groups""
-          }
-        },
         ""name"": ""Build"",
         ""_embedded"": {
           ""pipelines"": [
             {
-              ""_links"": {
-                ""self"": {
-                  ""href"": ""https://devbuild03:8154/go/api/pipelines/MsBuild/history""
-                },
-                ""doc"": {
-                  ""href"": ""https://api.gocd.io/#pipelines""
-                },
-                ""settings_path"": {
-                  ""href"": ""https://devbuild03:8154/go/admin/pipelines/MsBuild/general""
-                },
-                ""trigger"": {
-                  ""href"": ""https://devbuild03:8154/go/api/pipelines/MsBuild/schedule""
-                },
-                ""trigger_with_options"": {
-                  ""href"": ""https://devbuild03:8154/go/api/pipelines/MsBuild/schedule""
-                },
-                ""pause"": {
-                  ""href"": ""https://devbuild03:8154/go/api/pipelines/MsBuild/pause""
-                },
-                ""unpause"": {
-                  ""href"": ""https://devbuild03:8154/go/api/pipelines/MsBuild/unpause""
-                }
-              },
               ""name"": ""MsBuild"",
               ""locked"": false,
               ""pause_info"": {
@@ -321,40 +156,12 @@ namespace GocdTray.Test.Rest
               ""_embedded"": {
                 ""instances"": [
                   {
-                    ""_links"": {
-                      ""self"": {
-                        ""href"": ""https://devbuild03:8154/go/api/pipelines/MsBuild/instance/57""
-                      },
-                      ""doc"": {
-                        ""href"": ""https://api.gocd.io/#get-pipeline-instance""
-                      },
-                      ""history_url"": {
-                        ""href"": ""https://devbuild03:8154/go/api/pipelines/MsBuild/history""
-                      },
-                      ""vsm_url"": {
-                        ""href"": ""https://devbuild03:8154/go/pipelines/value_stream_map/MsBuild/57""
-                      },
-                      ""compare_url"": {
-                        ""href"": ""https://devbuild03:8154/go/compare/MsBuild/56/with/57""
-                      },
-                      ""build_cause_url"": {
-                        ""href"": ""https://devbuild03:8154/go/pipelines/MsBuild/57/build_cause""
-                      }
-                    },
                     ""label"": ""57"",
                     ""schedule_at"": ""2018-06-20T16:00:00.000Z"",
                     ""triggered_by"": ""changes"",
                     ""_embedded"": {
                       ""stages"": [
                         {
-                          ""_links"": {
-                            ""self"": {
-                              ""href"": ""https://devbuild03:8154/go/api/stages/MsBuild/57/BuildStage/1""
-                            },
-                            ""doc"": {
-                              ""href"": ""https://api.gocd.io/#get-stage-instance""
-                            }
-                          },
                           ""name"": ""BuildStage"",
                           ""status"": ""Passed""
                         }
@@ -395,7 +202,7 @@ namespace GocdTray.Test.Rest
 
             Assert.That(result.Data[0].PipelineInstances[0].Stages.Count, Is.EqualTo(1));
             Assert.That(result.Data[0].PipelineInstances[0].Stages[0].Name, Is.EqualTo("BuildStage"));
-            Assert.That(result.Data[0].PipelineInstances[0].Stages[0].Status, Is.EqualTo(BuildStatus.Passed));
+            Assert.That(result.Data[0].PipelineInstances[0].Stages[0].Status, Is.EqualTo(StageStatus.Passed));
         }
 
         [Test]
@@ -406,52 +213,13 @@ namespace GocdTray.Test.Rest
 
             string jsonResult = @"
 {
-  ""_links"": {
-    ""self"": {
-      ""href"": ""https://devbuild03:8154/go/api/dashboard""
-    },
-    ""doc"": {
-      ""href"": ""https://api.gocd.io/#dashboard""
-    }
-  },
   ""_embedded"": {
     ""pipeline_groups"": [
       {
-        ""_links"": {
-          ""self"": {
-            ""href"": ""https://devbuild03:8154/go/api/config/pipeline_groups""
-          },
-          ""doc"": {
-            ""href"": ""https://api.gocd.io/#pipeline-groups""
-          }
-        },
         ""name"": ""Build"",
         ""_embedded"": {
           ""pipelines"": [
             {
-              ""_links"": {
-                ""self"": {
-                  ""href"": ""https://devbuild03:8154/go/api/pipelines/MsBuild/history""
-                },
-                ""doc"": {
-                  ""href"": ""https://api.gocd.io/#pipelines""
-                },
-                ""settings_path"": {
-                  ""href"": ""https://devbuild03:8154/go/admin/pipelines/MsBuild/general""
-                },
-                ""trigger"": {
-                  ""href"": ""https://devbuild03:8154/go/api/pipelines/MsBuild/schedule""
-                },
-                ""trigger_with_options"": {
-                  ""href"": ""https://devbuild03:8154/go/api/pipelines/MsBuild/schedule""
-                },
-                ""pause"": {
-                  ""href"": ""https://devbuild03:8154/go/api/pipelines/MsBuild/pause""
-                },
-                ""unpause"": {
-                  ""href"": ""https://devbuild03:8154/go/api/pipelines/MsBuild/unpause""
-                }
-              },
               ""name"": ""MsBuild"",
               ""locked"": false,
               ""pause_info"": {
@@ -462,51 +230,15 @@ namespace GocdTray.Test.Rest
               ""_embedded"": {
                 ""instances"": [
                   {
-                    ""_links"": {
-                      ""self"": {
-                        ""href"": ""https://devbuild03:8154/go/api/pipelines/MsBuild/instance/58""
-                      },
-                      ""doc"": {
-                        ""href"": ""https://api.gocd.io/#get-pipeline-instance""
-                      },
-                      ""history_url"": {
-                        ""href"": ""https://devbuild03:8154/go/api/pipelines/MsBuild/history""
-                      },
-                      ""vsm_url"": {
-                        ""href"": ""https://devbuild03:8154/go/pipelines/value_stream_map/MsBuild/58""
-                      },
-                      ""compare_url"": {
-                        ""href"": ""https://devbuild03:8154/go/compare/MsBuild/57/with/58""
-                      },
-                      ""build_cause_url"": {
-                        ""href"": ""https://devbuild03:8154/go/pipelines/MsBuild/58/build_cause""
-                      }
-                    },
                     ""label"": ""58"",
                     ""schedule_at"": ""2018-07-11T14:19:05.000Z"",
                     ""triggered_by"": ""changes"",
                     ""_embedded"": {
                       ""stages"": [
                         {
-                          ""_links"": {
-                            ""self"": {
-                              ""href"": ""https://devbuild03:8154/go/api/stages/MsBuild/58/BuildStage/1""
-                            },
-                            ""doc"": {
-                              ""href"": ""https://api.gocd.io/#get-stage-instance""
-                            }
-                          },
                           ""name"": ""BuildStage"",
                           ""status"": ""Building"",
                           ""previous_stage"": {
-                            ""_links"": {
-                              ""self"": {
-                                ""href"": ""https://devbuild03:8154/go/api/stages/MsBuild/57/BuildStage/1""
-                              },
-                              ""doc"": {
-                                ""href"": ""https://api.gocd.io/#get-stage-instance""
-                              }
-                            },
                             ""name"": ""BuildStage"",
                             ""status"": ""Passed""
                           }
@@ -538,7 +270,7 @@ namespace GocdTray.Test.Rest
             // Assert
             Assert.That(result.Data[0].PipelineInstances[0].Stages.Count, Is.EqualTo(1));
             Assert.That(result.Data[0].PipelineInstances[0].Stages[0].Name, Is.EqualTo("BuildStage"));
-            Assert.That(result.Data[0].PipelineInstances[0].Stages[0].Status, Is.EqualTo(BuildStatus.Building));
+            Assert.That(result.Data[0].PipelineInstances[0].Stages[0].Status, Is.EqualTo(StageStatus.Building));
         }
 
         [Test]
@@ -549,52 +281,13 @@ namespace GocdTray.Test.Rest
 
             string jsonResult = @"
 {
-  ""_links"": {
-    ""self"": {
-      ""href"": ""https://devbuild03:8154/go/api/dashboard""
-    },
-    ""doc"": {
-      ""href"": ""https://api.gocd.io/#dashboard""
-    }
-  },
   ""_embedded"": {
     ""pipeline_groups"": [
       {
-        ""_links"": {
-          ""self"": {
-            ""href"": ""https://devbuild03:8154/go/api/config/pipeline_groups""
-          },
-          ""doc"": {
-            ""href"": ""https://api.gocd.io/#pipeline-groups""
-          }
-        },
         ""name"": ""Build"",
         ""_embedded"": {
           ""pipelines"": [
             {
-              ""_links"": {
-                ""self"": {
-                  ""href"": ""https://devbuild03:8154/go/api/pipelines/MsBuild/history""
-                },
-                ""doc"": {
-                  ""href"": ""https://api.gocd.io/#pipelines""
-                },
-                ""settings_path"": {
-                  ""href"": ""https://devbuild03:8154/go/admin/pipelines/MsBuild/general""
-                },
-                ""trigger"": {
-                  ""href"": ""https://devbuild03:8154/go/api/pipelines/MsBuild/schedule""
-                },
-                ""trigger_with_options"": {
-                  ""href"": ""https://devbuild03:8154/go/api/pipelines/MsBuild/schedule""
-                },
-                ""pause"": {
-                  ""href"": ""https://devbuild03:8154/go/api/pipelines/MsBuild/pause""
-                },
-                ""unpause"": {
-                  ""href"": ""https://devbuild03:8154/go/api/pipelines/MsBuild/unpause""
-                }
-              },
               ""name"": ""MsBuild"",
               ""locked"": false,
               ""pause_info"": {
@@ -605,40 +298,12 @@ namespace GocdTray.Test.Rest
               ""_embedded"": {
                 ""instances"": [
                   {
-                    ""_links"": {
-                      ""self"": {
-                        ""href"": ""https://devbuild03:8154/go/api/pipelines/MsBuild/instance/58""
-                      },
-                      ""doc"": {
-                        ""href"": ""https://api.gocd.io/#get-pipeline-instance""
-                      },
-                      ""history_url"": {
-                        ""href"": ""https://devbuild03:8154/go/api/pipelines/MsBuild/history""
-                      },
-                      ""vsm_url"": {
-                        ""href"": ""https://devbuild03:8154/go/pipelines/value_stream_map/MsBuild/58""
-                      },
-                      ""compare_url"": {
-                        ""href"": ""https://devbuild03:8154/go/compare/MsBuild/57/with/58""
-                      },
-                      ""build_cause_url"": {
-                        ""href"": ""https://devbuild03:8154/go/pipelines/MsBuild/58/build_cause""
-                      }
-                    },
                     ""label"": ""58"",
                     ""schedule_at"": ""2018-07-11T14:19:05.000Z"",
                     ""triggered_by"": ""changes"",
                     ""_embedded"": {
                       ""stages"": [
                         {
-                          ""_links"": {
-                            ""self"": {
-                              ""href"": ""https://devbuild03:8154/go/api/stages/MsBuild/58/BuildStage/1""
-                            },
-                            ""doc"": {
-                              ""href"": ""https://api.gocd.io/#get-stage-instance""
-                            }
-                          },
                           ""name"": ""BuildStage"",
                           ""status"": ""Failed""
                         }
@@ -669,7 +334,136 @@ namespace GocdTray.Test.Rest
             // Assert
             Assert.That(result.Data[0].PipelineInstances[0].Stages.Count, Is.EqualTo(1));
             Assert.That(result.Data[0].PipelineInstances[0].Stages[0].Name, Is.EqualTo("BuildStage"));
-            Assert.That(result.Data[0].PipelineInstances[0].Stages[0].Status, Is.EqualTo(BuildStatus.Failed));
+            Assert.That(result.Data[0].PipelineInstances[0].Stages[0].Status, Is.EqualTo(StageStatus.Failed));
+        }
+
+        [Test]
+        public void GetPipelines_DeserialisesThePipelineStage_AndItsCancelledStatus_Correctly()
+        {
+            // Arrange
+            #region jsonResult
+
+            string jsonResult = @"
+{
+  ""_embedded"": {
+    ""pipeline_groups"": [
+      {
+        ""name"": ""Build"",
+        ""_embedded"": {
+          ""pipelines"": [
+            {
+              ""name"": ""MsBuild"",
+              ""locked"": false,
+              ""pause_info"": {
+                ""paused"": false,
+                ""paused_by"": null,
+                ""pause_reason"": null
+              },
+              ""_embedded"": {
+                ""instances"": [
+                  {
+                    ""label"": ""59"",
+                    ""schedule_at"": ""2018-07-11T16:40:16.000Z"",
+                    ""triggered_by"": ""Mat.Roberts"",
+                    ""_embedded"": {
+                      ""stages"": [
+                        {
+                          ""name"": ""BuildStage"",
+                          ""status"": ""Cancelled""
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
+
+";
+            #endregion
+            var httpClientHandler = new HttpClientHandlerFake { HttpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(jsonResult) } };
+
+            // Act
+            RestResult<List<Pipeline>> result;
+            using (var gocdServer = new GocdServer(new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, AppConfig.IgnoreCertificateErrors, httpClientHandler)))
+            {
+                result = gocdServer.GetPipelines();
+            }
+
+            // Assert
+            Assert.That(result.Data[0].PipelineInstances[0].Stages.Count, Is.EqualTo(1));
+            Assert.That(result.Data[0].PipelineInstances[0].Stages[0].Name, Is.EqualTo("BuildStage"));
+            Assert.That(result.Data[0].PipelineInstances[0].Stages[0].Status, Is.EqualTo(StageStatus.Cancelled));
+        }
+
+        [Test]
+        public void GetPipelines_DeserialisesPausedAndLocked_Correctly()
+        {
+            // Arrange
+            #region jsonResult
+
+            string jsonResult = @"
+{
+  ""_embedded"": {
+    ""pipeline_groups"": [
+      {
+        ""name"": ""Build"",
+        ""_embedded"": {
+          ""pipelines"": [
+            {
+              ""name"": ""MsBuild"",
+              ""locked"": true,
+              ""pause_info"": {
+                ""paused"": true,
+                ""paused_by"": ""mat.roberts"",
+                ""pause_reason"": ""editing""
+              },
+              ""_embedded"": {
+                ""instances"": [
+                  {
+                    ""label"": ""59"",
+                    ""schedule_at"": ""2018-07-11T16:40:16.000Z"",
+                    ""triggered_by"": ""Mat.Roberts"",
+                    ""_embedded"": {
+                      ""stages"": [
+                        {
+                          ""name"": ""BuildStage"",
+                          ""status"": ""Cancelled""
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
+";
+            #endregion
+            var httpClientHandler = new HttpClientHandlerFake { HttpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(jsonResult) } };
+
+            // Act
+            RestResult<List<Pipeline>> result;
+            using (var gocdServer = new GocdServer(new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, AppConfig.IgnoreCertificateErrors, httpClientHandler)))
+            {
+                result = gocdServer.GetPipelines();
+            }
+
+            // Assert
+            Assert.That(result.Data[0].Name, Is.EqualTo("MsBuild"));
+            Assert.That(result.Data[0].Locked, Is.True);
+            Assert.That(result.Data[0].Paused, Is.True);
+            Assert.That(result.Data[0].PausedBy, Is.EqualTo("mat.roberts"));
+            Assert.That(result.Data[0].PausedReason, Is.EqualTo("editing"));
         }
 
         // How deal with failure to connect, or interuption?
