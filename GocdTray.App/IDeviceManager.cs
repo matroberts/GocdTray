@@ -8,6 +8,6 @@ namespace GocdTray.App
     public interface IDeviceManager
     {
         DeviceStatus Status { get; }
-        List<Pipeline> Pipelines { get; }
+        Estate Estate { get; }
     }
 }

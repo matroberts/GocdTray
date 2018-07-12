@@ -71,7 +71,7 @@ namespace GocdTray.App
         {
             if (pipelineViewModel != null && deviceManager != null)
             {
-                pipelineViewModel.PopulateTable(deviceManager.Pipelines);
+                pipelineViewModel.PopulateTable(deviceManager.Estate.Pipelines);
             }
         }
 

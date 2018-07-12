@@ -22,7 +22,7 @@ namespace GocdTray.App
 
         public DeviceStatus Status { get; private set; }
 
-        public List<Pipeline> Pipelines { get; set; } = new List<Pipeline>();
+        public Estate Estate { get; set; } = new Estate(Result<List<Pipeline>>.Invalid("Initialising"));
 
 
         public void Initialise()
@@ -37,20 +37,10 @@ namespace GocdTray.App
                                                 DispatcherPriority.Normal,
                                                 (sender, args) =>
                                                 {
-                                                    PollGocdForChanges();
+                                                    Estate = new Estate(gocdServer.GetPipelines());
                                                     OnStatusChange?.Invoke();
                                                 },
                                                 Dispatcher.CurrentDispatcher);
-        }
-
-        public void PollGocdForChanges()
-        {
-            // Todo: what to do about showing errors
-
-            var result = gocdServer.GetPipelines();
-            if(result.IsValid == false)
-                throw new ApplicationException(result.ErrorMessage);
-            Pipelines = result.Data;
         }
 
         public void Terminate()
