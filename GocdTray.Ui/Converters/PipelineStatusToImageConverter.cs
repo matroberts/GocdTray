@@ -11,7 +11,7 @@ using GocdTray.Ui.Properties;
 
 namespace GocdTray.Ui.Converters
 {
-    [ValueConversion(typeof(PipelineStatus), typeof(ImageSource))]
+    [ValueConversion(typeof(PipelineStatus), typeof(SolidColorBrush))]
     public class PipelineStatusToImageConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -19,11 +19,11 @@ namespace GocdTray.Ui.Converters
             switch ((PipelineStatus)value)
             {
                 case PipelineStatus.Building:
-                    return Imaging.CreateBitmapSourceFromHIcon(Resources.Building.Handle, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+                    return new SolidColorBrush(Colors.Gold);
                 case PipelineStatus.Passed:
-                    return Imaging.CreateBitmapSourceFromHIcon(Resources.Passed.Handle, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+                    return new SolidColorBrush(Colors.Green);
                 case PipelineStatus.Failed:
-                    return Imaging.CreateBitmapSourceFromHIcon(Resources.Failed.Handle, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+                    return new SolidColorBrush(Colors.Red);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(value), value, null);
             }
