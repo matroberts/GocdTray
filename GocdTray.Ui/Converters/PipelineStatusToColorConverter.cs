@@ -12,7 +12,7 @@ using GocdTray.Ui.Properties;
 namespace GocdTray.Ui.Converters
 {
     [ValueConversion(typeof(PipelineStatus), typeof(SolidColorBrush))]
-    public class PipelineStatusToImageConverter : IValueConverter
+    public class PipelineStatusToColorConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

@@ -4,9 +4,13 @@
                     xmlns:view="clr-namespace:ADR_Scanner.View"
                     xmlns:System="clr-namespace:System;assembly=mscorlib"
                     xmlns:converters="clr-namespace:GocdTray.Ui.Converters">
+
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    <converters:PipelineStatusToColorConverter x:Key="PipelineStatusToColorConverter" />
+
     <FontFamily x:Key="FontAwesome">/GocdTray.Ui;Component/Fonts/FontAwesome.otf#Font Awesome 5 Free Solid</FontFamily>
-    <converters:PipelineStatusToImageConverter x:Key="PipelineStatusToImageConverter" />
+    <System:String x:Key="Icon_Square">&#xf0c8;</System:String>
+    
     <!--<view:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
     <view:EnumBooleanConverter x:Key="EnumBooleanConverter"/>
     <view:IsNullConverter x:Key="IsNullConverter"/>-->

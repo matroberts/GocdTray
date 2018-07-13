@@ -61,7 +61,7 @@
       <Link>Properties\AssemblyInfo.common.cs</Link>
     </Compile>
     <Compile Include="Code\ViewManager.cs" />
-    <Compile Include="Converters\PipelineStatusToImageConverter.cs" />
+    <Compile Include="Converters\PipelineStatusToColorConverter.cs" />
     <Compile Include="ViewModel\AboutViewModel.cs" />
     <Compile Include="ViewModel\ComponentVersionInfo.cs" />
     <Compile Include="ViewModel\PipelineViewModel.cs" />

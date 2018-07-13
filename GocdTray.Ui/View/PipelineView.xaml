@@ -44,7 +44,7 @@
                     <DataGridTemplateColumn Width="12" IsReadOnly="True" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="&#xf0c8;" FontFamily="{StaticResource FontAwesome}" Foreground="{Binding Status, Converter={StaticResource PipelineStatusToImageConverter}}" FontSize="16" Margin="1" VerticalAlignment="Center"></TextBlock>
+                                <TextBlock Text="{StaticResource Icon_Square}" FontFamily="{StaticResource FontAwesome}" Foreground="{Binding Status, Converter={StaticResource PipelineStatusToColorConverter}}" FontSize="12" Margin="1" VerticalAlignment="Center"></TextBlock>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
