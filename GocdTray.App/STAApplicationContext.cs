@@ -9,25 +9,25 @@ namespace GocdTray.App
     public class STAApplicationContext : ApplicationContext
     {
         private ViewManager viewManager;
-        private DeviceManager deviceManager;
+        private ServiceManager serviceManager;
 
         public STAApplicationContext()
         {
-            deviceManager = new DeviceManager();
-            viewManager = new ViewManager(deviceManager);
-            deviceManager.OnStatusChange += viewManager.OnStatusChange;
-            deviceManager.Initialise();
+            serviceManager = new ServiceManager();
+            viewManager = new ViewManager(serviceManager);
+            serviceManager.OnStatusChange += viewManager.OnStatusChange;
+            serviceManager.Initialise();
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (deviceManager != null && viewManager != null)
+            if (serviceManager != null && viewManager != null)
             {
-                deviceManager.OnStatusChange -= viewManager.OnStatusChange;
+                serviceManager.OnStatusChange -= viewManager.OnStatusChange;
             }
 
-            deviceManager?.Terminate();
-            deviceManager = null;
+            serviceManager?.Terminate();
+            serviceManager = null;
             viewManager = null;
         }
     }

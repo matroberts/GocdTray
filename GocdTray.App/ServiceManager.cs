@@ -7,7 +7,7 @@ using GocdTray.Rest;
 
 namespace GocdTray.App
 {
-    public class DeviceManager : IDeviceManager
+    public class ServiceManager : IServiceManager
     {
         private GocdServer gocdServer;
         private DispatcherTimer pollingTimer;

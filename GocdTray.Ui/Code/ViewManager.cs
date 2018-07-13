@@ -21,15 +21,15 @@ namespace GocdTray.Ui.Code
     public class ViewManager
     {
         private NotifyIcon notifyIcon;
-        private IDeviceManager deviceManager;
+        private IServiceManager serviceManager;
         private AboutView aboutView;
         private AboutViewModel aboutViewModel;
         private PipelineView pipelineView;
         private PipelineViewModel pipelineViewModel;
 
-        public ViewManager(IDeviceManager deviceManager)
+        public ViewManager(IServiceManager serviceManager)
         {
-            this.deviceManager = deviceManager;
+            this.serviceManager = serviceManager;
 
             notifyIcon = new NotifyIcon(new Container())
             {
@@ -51,7 +51,7 @@ namespace GocdTray.Ui.Code
         {
             get
             {
-                switch (deviceManager.Estate.Status)
+                switch (serviceManager.Estate.Status)
                 {
                     case EstateStatus.NotConnected:
                         return Resources.NotConnected;
@@ -67,7 +67,7 @@ namespace GocdTray.Ui.Code
             }
         }
 
-        private string AppText => deviceManager.Estate.Status.ToString();
+        private string AppText => serviceManager.Estate.Status.ToString();
 
         private ImageSource AppImageSource => Imaging.CreateBitmapSourceFromHIcon(AppIcon.Handle, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
 
@@ -88,7 +88,7 @@ namespace GocdTray.Ui.Code
                 pipelineView.Icon = AppImageSource;
             }
             aboutViewModel.AddVersionInfo("Version", Assembly.GetExecutingAssembly().GetName().Version.ToString());
-            pipelineViewModel.PopulateTable(deviceManager.Estate.Pipelines);
+            pipelineViewModel.PopulateTable(serviceManager.Estate.Pipelines);
         }
 
         private void ShowPipelineView()
