@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using GocdTray.App.Abstractions;
 using GocdTray.Ui.Properties;
 using GocdTray.Ui.View;
 using GocdTray.Ui.ViewModel;
@@ -33,8 +34,8 @@ namespace GocdTray.App
             notifyIcon = new NotifyIcon(new Container())
             {
                 ContextMenuStrip = new ContextMenuStrip(),
-                Icon = Resources.Failed,
-                Text = "Go.cd Tray Application",
+                Icon = AppIcon,
+                Text = AppText,
                 Visible = true,
             };
 
@@ -42,31 +43,36 @@ namespace GocdTray.App
             notifyIcon.DoubleClick += (sender, e) => ShowPipelineView();
             notifyIcon.MouseUp += NotifyIcon_MouseUp;
 
-            aboutViewModel = new AboutViewModel() { Icon = AppIcon };
-            pipelineViewModel = new PipelineViewModel {Icon = AppIcon};
+            aboutViewModel = new AboutViewModel() { Icon = AppImageSource };
+            pipelineViewModel = new PipelineViewModel {Icon = AppImageSource};
 
             hiddenWindow = new Window();
             hiddenWindow.Hide();
         }
 
-        ImageSource AppIcon
+        private Icon AppIcon
         {
             get
             {
-                Icon icon = deviceManager.Status == DeviceStatus.Running ? Resources.Passed : Resources.Failed;
-                return Imaging.CreateBitmapSourceFromHIcon(icon.Handle, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+                switch (deviceManager.Estate.Status)
+                {
+                    case EstateStatus.NotConnected:
+                        return Resources.NotConnected;
+                    case EstateStatus.Building:
+                        return Resources.Building;
+                    case EstateStatus.Passed:
+                        return Resources.Passed;
+                    case EstateStatus.Failed:
+                        return Resources.Failed;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
             }
         }
 
-        private void DisplayStatusMessage(string text)
-        {
-            hiddenWindow.Dispatcher.Invoke(delegate
-            {
-                notifyIcon.BalloonTipText = text;
-                // The timeout is ignored on recent Windows
-                notifyIcon.ShowBalloonTip(3000);
-            });
-        }
+        private string AppText => deviceManager.Estate.Status.ToString();
+
+        private ImageSource AppImageSource => Imaging.CreateBitmapSourceFromHIcon(AppIcon.Handle, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
 
         private void UpdatePipelineView()
         {
@@ -79,44 +85,16 @@ namespace GocdTray.App
         public void OnStatusChange()
         {
             UpdatePipelineView();
+            notifyIcon.Icon = AppIcon;
+            notifyIcon.Text = AppText;
 
-            switch (deviceManager.Status)
-            {
-                case DeviceStatus.Initialised:
-                    notifyIcon.Text = "Ready";
-                    notifyIcon.Icon = Resources.Failed;
-                    DisplayStatusMessage("Idle");
-                    break;
-                case DeviceStatus.Running:
-                    notifyIcon.Text = "Running";
-                    notifyIcon.Icon = Resources.Failed;
-                    DisplayStatusMessage("Running");
-                    break;
-                case DeviceStatus.Starting:
-                    notifyIcon.Text = "Starting";
-                    notifyIcon.Icon = Resources.Failed;
-                    DisplayStatusMessage("Starting");
-                    break;
-                case DeviceStatus.Uninitialised:
-                    notifyIcon.Text = "Not Ready";
-                    notifyIcon.Icon = Resources.Failed;
-                    break;
-                case DeviceStatus.Error:
-                    notifyIcon.Text = "Error Detected";
-                    notifyIcon.Icon = Resources.Failed;
-                    break;
-                default:
-                    notifyIcon.Text = "-";
-                    notifyIcon.Icon = Resources.Failed;
-                    break;
-            }
             if (aboutView != null)
             {
-                aboutView.Icon = AppIcon;
+                aboutView.Icon = AppImageSource;
             }
             if (pipelineView != null)
             {
-                pipelineView.Icon = AppIcon;
+                pipelineView.Icon = AppImageSource;
             }
         }
         
@@ -137,7 +115,7 @@ namespace GocdTray.App
             {
                 pipelineView.Activate();
             }
-            pipelineView.Icon = AppIcon;
+            pipelineView.Icon = AppImageSource;
         }
 
         private void ShowAboutView()
@@ -157,7 +135,7 @@ namespace GocdTray.App
             {
                 aboutView.Activate();
             }
-            aboutView.Icon = AppIcon;
+            aboutView.Icon = AppImageSource;
             aboutViewModel.AddVersionInfo("Version", Assembly.GetExecutingAssembly().GetName().Version.ToString());
         }
 
