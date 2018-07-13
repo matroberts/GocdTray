@@ -6,11 +6,11 @@ using GocdTray.Rest.Dto;
 
 namespace GocdTray.Rest
 {
-    public class GocdServer : IDisposable
+    public class GocdService : IDisposable
     {
         private readonly IRestClient restClient;
 
-        public GocdServer(IRestClient restClient)
+        public GocdService(IRestClient restClient)
         {
             this.restClient = restClient;
         }

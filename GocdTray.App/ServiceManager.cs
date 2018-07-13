@@ -9,7 +9,7 @@ namespace GocdTray.App
 {
     public class ServiceManager : IServiceManager
     {
-        private GocdServer gocdServer;
+        private GocdService gocdService;
         private DispatcherTimer pollingTimer;
         public delegate void StatusChangeEvent();
         public event StatusChangeEvent OnStatusChange;
@@ -18,13 +18,13 @@ namespace GocdTray.App
 
         public void Initialise()
         {
-            gocdServer = new GocdServer(new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, AppConfig.IgnoreCertificateErrors));
+            gocdService = new GocdService(new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, AppConfig.IgnoreCertificateErrors));
             // timer does not cause re-entry
             pollingTimer = new DispatcherTimer(new TimeSpan(0, 0, 15), 
                                                 DispatcherPriority.Normal,
                                                 (sender, args) =>
                                                 {
-                                                    Estate = new Estate(gocdServer.GetPipelines());
+                                                    Estate = new Estate(gocdService.GetPipelines());
                                                     OnStatusChange?.Invoke();
                                                 },
                                                 Dispatcher.CurrentDispatcher);
@@ -34,8 +34,8 @@ namespace GocdTray.App
         {
             pollingTimer?.Stop();
             pollingTimer = null;
-            gocdServer?.Dispose();
-            gocdServer = null;
+            gocdService?.Dispose();
+            gocdService = null;
         }
     }
 }
