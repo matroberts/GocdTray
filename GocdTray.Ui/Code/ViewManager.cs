@@ -9,17 +9,17 @@ using System.Windows.Forms;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using GocdTray.App;
 using GocdTray.App.Abstractions;
 using GocdTray.Ui.Properties;
 using GocdTray.Ui.View;
 using GocdTray.Ui.ViewModel;
 
-namespace GocdTray.App
+namespace GocdTray.Ui.Code
 {
 
     public class ViewManager
     {
-        private Window hiddenWindow;
         private NotifyIcon notifyIcon;
         private IDeviceManager deviceManager;
         private AboutView aboutView;
@@ -45,9 +45,6 @@ namespace GocdTray.App
 
             aboutViewModel = new AboutViewModel() {Icon = AppImageSource};
             pipelineViewModel = new PipelineViewModel {Icon = AppImageSource};
-
-            hiddenWindow = new Window();
-            hiddenWindow.Hide();
         }
 
         private Icon AppIcon
@@ -74,17 +71,10 @@ namespace GocdTray.App
 
         private ImageSource AppImageSource => Imaging.CreateBitmapSourceFromHIcon(AppIcon.Handle, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
 
-        private void UpdatePipelineView()
-        {
-            if (pipelineViewModel != null && deviceManager != null)
-            {
-                pipelineViewModel.PopulateTable(deviceManager.Estate.Pipelines);
-            }
-        }
+        public void OnStatusChange() => UpdateViews();
 
-        public void OnStatusChange()
+        private void UpdateViews()
         {
-            UpdatePipelineView();
             notifyIcon.Icon = AppIcon;
             notifyIcon.Text = AppText;
 
@@ -92,12 +82,15 @@ namespace GocdTray.App
             {
                 aboutView.Icon = AppImageSource;
             }
+
             if (pipelineView != null)
             {
                 pipelineView.Icon = AppImageSource;
             }
+            aboutViewModel.AddVersionInfo("Version", Assembly.GetExecutingAssembly().GetName().Version.ToString());
+            pipelineViewModel.PopulateTable(deviceManager.Estate.Pipelines);
         }
-        
+
         private void ShowPipelineView()
         {
             if (pipelineView == null)
@@ -109,13 +102,13 @@ namespace GocdTray.App
                 };
                 pipelineView.Closing += (sender, e) => pipelineView = null;
                 pipelineView.Show();
-                UpdatePipelineView();
             }
             else
             {
                 pipelineView.Activate();
             }
-            pipelineView.Icon = AppImageSource;
+
+            UpdateViews();
         }
 
         private void ShowAboutView()
@@ -135,8 +128,8 @@ namespace GocdTray.App
             {
                 aboutView.Activate();
             }
-            aboutView.Icon = AppImageSource;
-            aboutViewModel.AddVersionInfo("Version", Assembly.GetExecutingAssembly().GetName().Version.ToString());
+
+            UpdateViews();
         }
 
         private void NotifyIcon_MouseUp(object sender, MouseEventArgs e)
