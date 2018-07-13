@@ -43,8 +43,10 @@
     <Compile Include="..\AssemblyInfo.common.cs">
       <Link>Properties\AssemblyInfo.common.cs</Link>
     </Compile>
+    <Compile Include="DeviceStatus.cs" />
     <Compile Include="EnumExtensions.cs" />
     <Compile Include="Estate.cs" />
+    <Compile Include="IDeviceManager.cs" />
     <Compile Include="Pipeline.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Result.cs" />

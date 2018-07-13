@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using GocdTray.Ui.Properties;
 using GocdTray.Ui.View;
 using GocdTray.Ui.ViewModel;
 
@@ -32,7 +33,7 @@ namespace GocdTray.App
             notifyIcon = new NotifyIcon(new Container())
             {
                 ContextMenuStrip = new ContextMenuStrip(),
-                Icon = Properties.Resources.NotReadyIcon,
+                Icon = Resources.Failed,
                 Text = "Go.cd Tray Application",
                 Visible = true,
             };
@@ -52,7 +53,7 @@ namespace GocdTray.App
         {
             get
             {
-                Icon icon = deviceManager.Status == DeviceStatus.Running ? Properties.Resources.ReadyIcon : Properties.Resources.NotReadyIcon;
+                Icon icon = deviceManager.Status == DeviceStatus.Running ? Resources.Passed : Resources.Failed;
                 return Imaging.CreateBitmapSourceFromHIcon(icon.Handle, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
             }
         }
@@ -83,30 +84,30 @@ namespace GocdTray.App
             {
                 case DeviceStatus.Initialised:
                     notifyIcon.Text = "Ready";
-                    notifyIcon.Icon = Properties.Resources.NotReadyIcon;
+                    notifyIcon.Icon = Resources.Failed;
                     DisplayStatusMessage("Idle");
                     break;
                 case DeviceStatus.Running:
                     notifyIcon.Text = "Running";
-                    notifyIcon.Icon = Properties.Resources.ReadyIcon;
+                    notifyIcon.Icon = Resources.Failed;
                     DisplayStatusMessage("Running");
                     break;
                 case DeviceStatus.Starting:
                     notifyIcon.Text = "Starting";
-                    notifyIcon.Icon = Properties.Resources.NotReadyIcon;
+                    notifyIcon.Icon = Resources.Failed;
                     DisplayStatusMessage("Starting");
                     break;
                 case DeviceStatus.Uninitialised:
                     notifyIcon.Text = "Not Ready";
-                    notifyIcon.Icon = Properties.Resources.NotReadyIcon;
+                    notifyIcon.Icon = Resources.Failed;
                     break;
                 case DeviceStatus.Error:
                     notifyIcon.Text = "Error Detected";
-                    notifyIcon.Icon = Properties.Resources.NotReadyIcon;
+                    notifyIcon.Icon = Resources.Failed;
                     break;
                 default:
                     notifyIcon.Text = "-";
-                    notifyIcon.Icon = Properties.Resources.NotReadyIcon;
+                    notifyIcon.Icon = Resources.Failed;
                     break;
             }
             if (aboutView != null)
