@@ -1,26 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace GocdTray.App
 {
-    static class Program
+    // Initial version of the system tray code from: https://www.codeproject.com/Articles/1173686/A-Csharp-System-Tray-Application-using-WPF-Forms
+    internal static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
         [STAThread]
-        static void Main()
+        private static void Main()
         {
-            // Use the assembly GUID as the name of the mutex which we use to detect if an application instance is already running
-            bool createdNew = false;
-            string mutexName = System.Reflection.Assembly.GetExecutingAssembly().GetType().GUID.ToString();
-            using (System.Threading.Mutex mutex = new System.Threading.Mutex(false, mutexName, out createdNew))
+            string mutexName = Assembly.GetExecutingAssembly().GetType().GUID.ToString();
+            using (new Mutex(false, mutexName, out var createdNew))
             {
                 if (!createdNew)
                 {
-                    // Only allow one instance
                     return;
                 }
 
@@ -28,8 +25,7 @@ namespace GocdTray.App
                 Application.SetCompatibleTextRenderingDefault(false);
                 try
                 {
-                    STAApplicationContext context = new STAApplicationContext();
-                    Application.Run(context);
+                    Application.Run(new GocdTrayApplicationContext());
                 }
                 catch (Exception exc)
                 {

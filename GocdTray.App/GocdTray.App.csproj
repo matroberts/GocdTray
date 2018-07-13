@@ -63,7 +63,7 @@
     <Compile Include="ServiceManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="STAApplicationContext.cs" />
+    <Compile Include="GocdTrayApplicationContext.cs" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -91,9 +91,6 @@
       <Project>{ec9652c9-aeec-48ea-bd5d-f00e3c80eabb}</Project>
       <Name>GocdTray.Ui</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="ReadMe.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

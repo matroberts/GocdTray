@@ -6,12 +6,12 @@ using GocdTray.Ui.Code;
 
 namespace GocdTray.App
 {
-    public class STAApplicationContext : ApplicationContext
+    public class GocdTrayApplicationContext : ApplicationContext
     {
         private ViewManager viewManager;
         private ServiceManager serviceManager;
 
-        public STAApplicationContext()
+        public GocdTrayApplicationContext()
         {
             serviceManager = new ServiceManager();
             viewManager = new ViewManager(serviceManager);
