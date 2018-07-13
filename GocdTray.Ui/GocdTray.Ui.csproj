@@ -117,13 +117,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Building.ico" />
+    <None Include="Resources\Building.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Failed.ico" />
+    <None Include="Resources\Failed.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Passed.ico" />
+    <None Include="Resources\Passed.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\NotConnected.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
