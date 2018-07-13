@@ -7,7 +7,6 @@ namespace GocdTray.App
 {
     public interface IDeviceManager
     {
-        DeviceStatus Status { get; }
         Estate Estate { get; }
     }
 }

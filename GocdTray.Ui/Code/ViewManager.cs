@@ -43,7 +43,7 @@ namespace GocdTray.App
             notifyIcon.DoubleClick += (sender, e) => ShowPipelineView();
             notifyIcon.MouseUp += NotifyIcon_MouseUp;
 
-            aboutViewModel = new AboutViewModel() { Icon = AppImageSource };
+            aboutViewModel = new AboutViewModel() {Icon = AppImageSource};
             pipelineViewModel = new PipelineViewModel {Icon = AppImageSource};
 
             hiddenWindow = new Window();
