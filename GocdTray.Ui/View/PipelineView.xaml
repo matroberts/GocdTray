@@ -7,18 +7,6 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="ResourceDictionary.xaml" />
-                <ResourceDictionary>
-                    <Style TargetType="Label">
-                        <Setter Property="FontFamily" Value="Times New Roman"/>
-                        <Setter Property="FontSize" Value="16"/>
-                        <Setter Property="HorizontalAlignment" Value="Center"/>
-                    </Style>
-                    <Style TargetType="TextBlock">
-                        <Setter Property="FontFamily" Value="Times New Roman"/>
-                        <Setter Property="FontSize" Value="16"/>
-                        <Setter Property="HorizontalAlignment" Value="Center"/>
-                    </Style>
-                </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
@@ -26,34 +14,40 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Border Grid.Row="0" Grid.Column="0" Margin="0" Padding="0" BorderBrush="{StaticResource BackgroundColorPrimary}" Height="auto" BorderThickness="0" >
-            <DataGrid Padding="0" GridLinesVisibility="None" HeadersVisibility="None" ItemsSource="{Binding Pipelines}" RowHeaderWidth="0" IsTabStop="True" Background="{StaticResource BackgroundColorPrimary}" AutoGenerateColumns="False" IsReadOnly="True" >
-                <DataGrid.CellStyle>
-                    <Style TargetType="DataGridCell">
-                        <Setter Property="BorderThickness" Value="0"/>
-                        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                    </Style>
-                </DataGrid.CellStyle>
-                <DataGrid.RowStyle>
-                    <Style TargetType="DataGridRow">
-                        <Setter Property="Background" Value="{StaticResource BackgroundColorPrimary}" />
-                    </Style>
-                </DataGrid.RowStyle>
+        <DataGrid Padding="0" Margin="0" GridLinesVisibility="None" HeadersVisibility="None" ItemsSource="{Binding Pipelines}" RowHeaderWidth="0" IsTabStop="True" Background="{StaticResource BackgroundColorPrimary}" AutoGenerateColumns="False" IsReadOnly="True" >
+            <DataGrid.CellStyle>
+                <Style TargetType="DataGridCell">
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                </Style>
+            </DataGrid.CellStyle>
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="Background" Value="{StaticResource BackgroundColorPrimary}" />
+                </Style>
+            </DataGrid.RowStyle>
 
-                <DataGrid.Columns>
-                    <DataGridTemplateColumn IsReadOnly="True">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{StaticResource Icon_Square}" FontFamily="{StaticResource FontAwesome}" Foreground="{Binding Status, Converter={StaticResource PipelineStatusToColorConverter}}" FontSize="12" Margin="1" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTextColumn Binding="{Binding Name}" Foreground="{StaticResource TextColorPrimary}" />
-                </DataGrid.Columns>
-            </DataGrid>
-        </Border>
+            <DataGrid.Columns>
+                <DataGridTemplateColumn IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{StaticResource Icon_Square}" FontFamily="{StaticResource FontAwesome}" Foreground="{Binding Status, Converter={StaticResource PipelineStatusToColorConverter}}" FontSize="12" Margin="1" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Binding="{Binding Name}" Foreground="{StaticResource TextColorPrimary}" />
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>
+
+
+
+
+
+
+
+
 
 
 
