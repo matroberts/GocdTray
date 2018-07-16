@@ -10,11 +10,27 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <DataGrid Padding="0" Margin="0" GridLinesVisibility="None" HeadersVisibility="None" ItemsSource="{Binding Pipelines}" RowHeaderWidth="0" IsTabStop="True" Background="{StaticResource BackgroundColorPrimary}" AutoGenerateColumns="False" IsReadOnly="True" >
+        <Grid.Resources>
+            <Style TargetType="Grid">
+                <Setter Property="Background" Value="{StaticResource BackgroundColorPrimary}"></Setter>
+            </Style>
+        </Grid.Resources>
+        <Button Grid.Row="0" Click="Button_Click" ContextMenuService.IsEnabled="False" Width="40" Height="Auto" HorizontalAlignment="Left" Background="{StaticResource BackgroundColorPrimary}"  Foreground="{StaticResource TextColorPrimary}" BorderThickness="0">
+            <TextBlock FontFamily="{StaticResource FontAwesome}" FontSize="16" Text="{StaticResource IconSortAmountDown}" />
+            <Button.ContextMenu>
+                <ContextMenu >
+                    <MenuItem Header="Build Status"/>
+                    <MenuItem Header="A-Z"/>
+                </ContextMenu>
+            </Button.ContextMenu>
+        </Button>
+        <DataGrid Grid.Row="1" Padding="0" Margin="0" GridLinesVisibility="None" HeadersVisibility="None" ItemsSource="{Binding Pipelines}" RowHeaderWidth="0" IsTabStop="True" Background="{StaticResource BackgroundColorPrimary}" AutoGenerateColumns="False" IsReadOnly="True"  BorderThickness="0">
             <DataGrid.CellStyle>
                 <Style TargetType="DataGridCell">
                     <Setter Property="BorderThickness" Value="0"/>
@@ -31,7 +47,7 @@
                 <DataGridTemplateColumn IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{StaticResource Icon_Square}" FontFamily="{StaticResource FontAwesome}" Foreground="{Binding Status, Converter={StaticResource PipelineStatusToColorConverter}}" FontSize="12" Margin="1" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                            <TextBlock Text="{StaticResource IconSquare}" FontFamily="{StaticResource FontAwesome}" Foreground="{Binding Status, Converter={StaticResource PipelineStatusToColorConverter}}" FontSize="12" Margin="1" VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

@@ -1,7 +1,6 @@
 ﻿<!-- These are default values to give a consistent look and feel -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:view="clr-namespace:ADR_Scanner.View"
                     xmlns:System="clr-namespace:System;assembly=mscorlib"
                     xmlns:converters="clr-namespace:GocdTray.Ui.Converters">
 
@@ -9,7 +8,8 @@
     <converters:PipelineStatusToColorConverter x:Key="PipelineStatusToColorConverter" />
 
     <FontFamily x:Key="FontAwesome">/GocdTray.Ui;Component/Fonts/FontAwesome.otf#Font Awesome 5 Free Solid</FontFamily>
-    <System:String x:Key="Icon_Square">&#xf0c8;</System:String>
+    <System:String x:Key="IconSquare">&#xf0c8;</System:String>
+    <System:String x:Key="IconSortAmountDown">&#xf160;</System:String>
 
     <SolidColorBrush x:Key="TextColorPrimary" Color="#FAFAFA" />
     <SolidColorBrush x:Key="BackgroundColorPrimary" Color="#282C31" />
