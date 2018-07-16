@@ -10,6 +10,9 @@
 
     <FontFamily x:Key="FontAwesome">/GocdTray.Ui;Component/Fonts/FontAwesome.otf#Font Awesome 5 Free Solid</FontFamily>
     <System:String x:Key="Icon_Square">&#xf0c8;</System:String>
+
+    <SolidColorBrush x:Key="TextColorPrimary" Color="#FAFAFA" />
+    <SolidColorBrush x:Key="BackgroundColorPrimary" Color="#282C31" />
     
     <!--<view:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
     <view:EnumBooleanConverter x:Key="EnumBooleanConverter"/>
