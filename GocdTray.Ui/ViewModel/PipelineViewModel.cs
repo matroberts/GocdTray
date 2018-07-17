@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Media;
 using GocdTray.App.Abstractions;
+using GocdTray.Ui.Code;
 
 namespace GocdTray.Ui.ViewModel
 {
@@ -40,5 +41,23 @@ namespace GocdTray.Ui.ViewModel
         }
 
         public void PopulateTable(List<Pipeline> pipelines) => Pipelines = new ObservableCollection<Pipeline>(pipelines);
+
+        public void Sort(PipelineSortOrder buildStatus)
+        {
+            switch (buildStatus)
+            {
+                case PipelineSortOrder.BuildStatus:
+                    Pipelines = new ObservableCollection<Pipeline>(Pipelines.OrderBy(p => p.Status).ThenBy(p => p.Name));
+                    break;
+                case PipelineSortOrder.AtoZ:
+                    Pipelines = new ObservableCollection<Pipeline>(Pipelines.OrderBy(p => p.Name));
+                    break;
+                case PipelineSortOrder.ZtoA:
+                    Pipelines = new ObservableCollection<Pipeline>(Pipelines.OrderByDescending(p => p.Name));
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(buildStatus), buildStatus, null);
+            }
+        }
     }
 }

@@ -25,8 +25,9 @@
             <TextBlock FontFamily="{StaticResource FontAwesome}" FontSize="16" Text="{StaticResource IconSortAmountDown}" />
             <Button.ContextMenu>
                 <ContextMenu >
-                    <MenuItem Header="Build Status"/>
-                    <MenuItem Header="A-Z"/>
+                    <MenuItem Header="Build Status" Click="SortByBuildStatusClick"/>
+                    <MenuItem Header="A-Z"  Click="SortByAtoZ"/>
+                    <MenuItem Header="Z-A"  Click="SortByZtoA"/>
                 </ContextMenu>
             </Button.ContextMenu>
         </Button>
