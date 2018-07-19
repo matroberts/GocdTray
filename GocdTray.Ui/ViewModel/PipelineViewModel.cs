@@ -18,6 +18,7 @@ namespace GocdTray.Ui.ViewModel
             SortCommand = new FuncCommand<PipelineSortOrder>(Sort);
         }
 
+        public PipelineSortOrder PipelineSortOrder { get; set; } = PipelineSortOrder.BuildStatus;
         public ICommand SortCommand { get; set; }
 
         private ImageSource icon;
@@ -47,12 +48,13 @@ namespace GocdTray.Ui.ViewModel
 
         public void PopulateTable(List<Pipeline> pipelines) => Pipelines = new ObservableCollection<Pipeline>(pipelines);
 
-        public void Sort(PipelineSortOrder buildStatus)
+        public void Sort(PipelineSortOrder pipelineSortOrder)
         {
-            switch (buildStatus)
+            PipelineSortOrder = pipelineSortOrder;
+            switch (pipelineSortOrder)
             {
                 case PipelineSortOrder.BuildStatus:
-                    Pipelines = new ObservableCollection<Pipeline>(Pipelines.OrderByDescending(p => p.Status).ThenBy(p => p.Name));
+                    Pipelines = new ObservableCollection<Pipeline>(Pipelines.OrderBy(p => p.Status).ThenBy(p => p.Name));
                     break;
                 case PipelineSortOrder.AtoZ:
                     Pipelines = new ObservableCollection<Pipeline>(Pipelines.OrderBy(p => p.Name));
@@ -61,7 +63,7 @@ namespace GocdTray.Ui.ViewModel
                     Pipelines = new ObservableCollection<Pipeline>(Pipelines.OrderByDescending(p => p.Name));
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(buildStatus), buildStatus, null);
+                    throw new ArgumentOutOfRangeException(nameof(pipelineSortOrder), pipelineSortOrder, null);
             }
         }
     }

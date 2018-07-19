@@ -6,11 +6,13 @@
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <converters:PipelineStatusToColorConverter x:Key="PipelineStatusToColorConverter" />
+    <converters:PipelineSortOrderToSelectedOptionConverter x:Key="PipelineSortOrderToSelectedOptionConverter" />
 
     <FontFamily x:Key="FontAwesome">/GocdTray.Ui;Component/Fonts/FontAwesome.otf#Font Awesome 5 Free Solid</FontFamily>
     <System:String x:Key="IconSquare">&#xf0c8;</System:String>
     <System:String x:Key="IconSortAmountDown">&#xf160;</System:String>
     <System:String x:Key="IconHeart">&#xf004;</System:String>
+    <System:String x:Key="IconCheck">&#xf00c;</System:String>
 
     <SolidColorBrush x:Key="TextColorPrimary" Color="#FAFAFA" />
     <SolidColorBrush x:Key="BackgroundColorPrimary" Color="#282C31" />

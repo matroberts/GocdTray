@@ -30,9 +30,9 @@ namespace GocdTray.App.Abstractions
 
     public enum PipelineStatus
     {
+        Failed,
         Building,
         Passed,
-        Failed
     }
 
     public class PipelineInstance

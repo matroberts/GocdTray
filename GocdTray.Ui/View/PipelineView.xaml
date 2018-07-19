@@ -26,14 +26,22 @@
         <Button Grid.Row="0" Click="Button_Click" ContextMenuService.IsEnabled="False" Width="40" Height="Auto" HorizontalAlignment="Left" Background="{StaticResource BackgroundColorPrimary}"  Foreground="{StaticResource TextColorPrimary}" BorderThickness="0">
             <TextBlock FontFamily="{StaticResource FontAwesome}" FontSize="16" Text="{StaticResource IconSortAmountDown}" />
             <Button.ContextMenu>
-                <ContextMenu >
-                    <MenuItem  Header="Build Status" Command="{Binding SortCommand}" CommandParameter="{x:Static code:PipelineSortOrder.BuildStatus}"/>
-                    <MenuItem Header="A-Z" Command="{Binding SortCommand}" CommandParameter="{x:Static code:PipelineSortOrder.AtoZ}">
+                <ContextMenu>
+                    <MenuItem  Header="Build Status" Command="{Binding SortCommand}" CommandParameter="{x:Static code:PipelineSortOrder.BuildStatus}">
                         <MenuItem.Icon>
-                            <Image Source="{converters:ImageFromFont Text={StaticResource IconHeart}, Brush=Brown}"/>
+                            <Image Source="{converters:ImageFromFont Text={StaticResource IconCheck}, Brush=Green}" Visibility="{Binding PipelineSortOrder, Converter={StaticResource PipelineSortOrderToSelectedOptionConverter}, ConverterParameter={x:Static code:PipelineSortOrder.BuildStatus}}"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Z-A" Command="{Binding SortCommand}" CommandParameter="{x:Static code:PipelineSortOrder.ZtoA}"/>
+                    <MenuItem Header="A-Z" Command="{Binding SortCommand}" CommandParameter="{x:Static code:PipelineSortOrder.AtoZ}">
+                        <MenuItem.Icon>
+                            <Image Source="{converters:ImageFromFont Text={StaticResource IconCheck}, Brush=Green}" Visibility="{Binding PipelineSortOrder, Converter={StaticResource PipelineSortOrderToSelectedOptionConverter}, ConverterParameter={x:Static code:PipelineSortOrder.AtoZ}}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Z-A" Command="{Binding SortCommand}" CommandParameter="{x:Static code:PipelineSortOrder.ZtoA}">
+                        <MenuItem.Icon>
+                            <Image Source="{converters:ImageFromFont Text={StaticResource IconCheck}, Brush=Green}" Visibility="{Binding PipelineSortOrder, Converter={StaticResource PipelineSortOrderToSelectedOptionConverter}, ConverterParameter={x:Static code:PipelineSortOrder.ZtoA}}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </ContextMenu>
             </Button.ContextMenu>
         </Button>
