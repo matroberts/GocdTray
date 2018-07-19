@@ -46,25 +46,27 @@ namespace GocdTray.Ui.ViewModel
             }
         }
 
-        public void PopulateTable(List<Pipeline> pipelines) => Pipelines = new ObservableCollection<Pipeline>(pipelines);
+        public void PopulateTable(IEnumerable<Pipeline> pipelines) => Pipelines = Sort(pipelines);
+
+        private ObservableCollection<Pipeline> Sort(IEnumerable<Pipeline> pipelines)
+        {
+            switch (PipelineSortOrder)
+            {
+                case PipelineSortOrder.BuildStatus:
+                    return new ObservableCollection<Pipeline>(pipelines.OrderBy(p => p.Status).ThenBy(p => p.Name));
+                case PipelineSortOrder.AtoZ:
+                    return new ObservableCollection<Pipeline>(pipelines.OrderBy(p => p.Name));
+                case PipelineSortOrder.ZtoA:
+                    return new ObservableCollection<Pipeline>(pipelines.OrderByDescending(p => p.Name));
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(PipelineSortOrder), PipelineSortOrder, null);
+            }
+        }
 
         public void Sort(PipelineSortOrder pipelineSortOrder)
         {
             PipelineSortOrder = pipelineSortOrder;
-            switch (pipelineSortOrder)
-            {
-                case PipelineSortOrder.BuildStatus:
-                    Pipelines = new ObservableCollection<Pipeline>(Pipelines.OrderBy(p => p.Status).ThenBy(p => p.Name));
-                    break;
-                case PipelineSortOrder.AtoZ:
-                    Pipelines = new ObservableCollection<Pipeline>(Pipelines.OrderBy(p => p.Name));
-                    break;
-                case PipelineSortOrder.ZtoA:
-                    Pipelines = new ObservableCollection<Pipeline>(Pipelines.OrderByDescending(p => p.Name));
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(pipelineSortOrder), pipelineSortOrder, null);
-            }
+            PopulateTable(Pipelines);
         }
     }
 }
