@@ -23,18 +23,17 @@
                 <Setter Property="Background" Value="{StaticResource BackgroundColorPrimary}"></Setter>
             </Style>
         </Grid.Resources>
-        <Button Grid.Row="0" Command="{Binding SortCommand}" CommandParameter="{x:Static code:PipelineSortOrder.ZtoA}"  ContextMenuService.IsEnabled="False" Width="40" Height="Auto" HorizontalAlignment="Left" Background="{StaticResource BackgroundColorPrimary}"  Foreground="{StaticResource TextColorPrimary}" BorderThickness="0">
-        <!-- <Button Grid.Row="0" Click="Button_Click" ContextMenuService.IsEnabled="False" Width="40" Height="Auto" HorizontalAlignment="Left" Background="{StaticResource BackgroundColorPrimary}"  Foreground="{StaticResource TextColorPrimary}" BorderThickness="0"> -->
+        <Button Grid.Row="0" Click="Button_Click" ContextMenuService.IsEnabled="False" Width="40" Height="Auto" HorizontalAlignment="Left" Background="{StaticResource BackgroundColorPrimary}"  Foreground="{StaticResource TextColorPrimary}" BorderThickness="0">
             <TextBlock FontFamily="{StaticResource FontAwesome}" FontSize="16" Text="{StaticResource IconSortAmountDown}" />
             <Button.ContextMenu>
                 <ContextMenu >
-                    <MenuItem  Header="Build Status" Click="SortByBuildStatusClick" />
-                    <MenuItem Header="A-Z"  Click="SortByAtoZ">
+                    <MenuItem  Header="Build Status" Command="{Binding SortCommand}" CommandParameter="{x:Static code:PipelineSortOrder.BuildStatus}"/>
+                    <MenuItem Header="A-Z" Command="{Binding SortCommand}" CommandParameter="{x:Static code:PipelineSortOrder.AtoZ}">
                         <MenuItem.Icon>
                             <Image Source="{converters:ImageFromFont Text={StaticResource IconHeart}, Brush=Brown}"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Z-A"  Click="SortByZtoA"/>
+                    <MenuItem Header="Z-A" Command="{Binding SortCommand}" CommandParameter="{x:Static code:PipelineSortOrder.ZtoA}"/>
                 </ContextMenu>
             </Button.ContextMenu>
         </Button>

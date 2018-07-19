@@ -31,8 +31,8 @@ namespace GocdTray.App.Abstractions
     public enum EstateStatus
     {
         NotConnected,
+        Failed,
         Building,
         Passed,
-        Failed
     }
 }
