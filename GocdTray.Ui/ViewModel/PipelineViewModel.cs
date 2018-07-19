@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows.Input;
 using System.Windows.Media;
 using GocdTray.App.Abstractions;
 using GocdTray.Ui.Code;
+using GocdTray.Ui.Converters;
 
 namespace GocdTray.Ui.ViewModel
 {
@@ -13,7 +15,10 @@ namespace GocdTray.Ui.ViewModel
         public PipelineViewModel()
         {
             Pipelines = new ObservableCollection<Pipeline>();
+            SortCommand = new FuncCommand<PipelineSortOrder>(Sort);
         }
+
+        public ICommand SortCommand { get; set; }
 
         private ImageSource icon;
         public ImageSource Icon
