@@ -18,10 +18,10 @@ namespace GocdTray.App.Abstractions
             {
                 if (result.IsValid == false)
                     return EstateStatus.NotConnected;
-                else if (Pipelines.Any(i => i.Status == PipelineStatus.Building))
-                    return EstateStatus.Building;
                 else if (Pipelines.Any(i => i.Status == PipelineStatus.Failed))
                     return EstateStatus.Failed;
+                else if (Pipelines.Any(i => i.Status == PipelineStatus.Building))
+                    return EstateStatus.Building;
                 else
                     return EstateStatus.Passed;
             }

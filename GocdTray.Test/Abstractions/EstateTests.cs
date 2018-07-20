@@ -22,18 +22,18 @@ namespace GocdTray.Test.Abstractions
         }
 
         [TestCase(StageStatus.Building,  StageStatus.Building,  EstateStatus.Building)]
-        [TestCase(StageStatus.Building,  StageStatus.Failed,    EstateStatus.Building)]
-        [TestCase(StageStatus.Building,  StageStatus.Cancelled, EstateStatus.Building)]
+        [TestCase(StageStatus.Building,  StageStatus.Failed,    EstateStatus.Failed)]
+        [TestCase(StageStatus.Building,  StageStatus.Cancelled, EstateStatus.Failed)]
         [TestCase(StageStatus.Building,  StageStatus.Passed,    EstateStatus.Building)]
         [TestCase(StageStatus.Building,  StageStatus.Unknown,   EstateStatus.Building)]
                                                                 
-        [TestCase(StageStatus.Failed,    StageStatus.Building,  EstateStatus.Building)]
+        [TestCase(StageStatus.Failed,    StageStatus.Building,  EstateStatus.Failed)]
         [TestCase(StageStatus.Failed,    StageStatus.Failed,    EstateStatus.Failed)]
         [TestCase(StageStatus.Failed,    StageStatus.Cancelled, EstateStatus.Failed)]
         [TestCase(StageStatus.Failed,    StageStatus.Passed,    EstateStatus.Failed)]
         [TestCase(StageStatus.Failed,    StageStatus.Unknown,   EstateStatus.Failed)]
                                                                 
-        [TestCase(StageStatus.Cancelled, StageStatus.Building,  EstateStatus.Building)]
+        [TestCase(StageStatus.Cancelled, StageStatus.Building,  EstateStatus.Failed)]
         [TestCase(StageStatus.Cancelled, StageStatus.Failed,    EstateStatus.Failed)]
         [TestCase(StageStatus.Cancelled, StageStatus.Cancelled, EstateStatus.Failed)]
         [TestCase(StageStatus.Cancelled, StageStatus.Passed,    EstateStatus.Failed)]
@@ -51,7 +51,7 @@ namespace GocdTray.Test.Abstractions
         [TestCase(StageStatus.Unknown,   StageStatus.Passed,    EstateStatus.Passed)]
         [TestCase(StageStatus.Unknown,   StageStatus.Unknown,   EstateStatus.Passed)]
 
-        public void IfTheResultIsValid_StateIsCalculatedFromPipelineStates_BuildingBeatsEverything_FailedBeatsPassed(StageStatus stageStatus1, StageStatus stageStatus2, EstateStatus estateStatus)
+        public void IfTheResultIsValid_StateIsCalculatedFromPipelineStates_FailedBeatsEverything_BuildingBeatsPassed(StageStatus stageStatus1, StageStatus stageStatus2, EstateStatus estateStatus)
         {
             // Arrange
             var pipeline1 = new Pipeline() {PipelineInstances = {new PipelineInstance() {Stages = {new Stage() {Status = stageStatus1}}}}};
