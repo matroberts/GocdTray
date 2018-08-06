@@ -96,6 +96,9 @@
   <PropertyGroup>
     <PostBuildEvent>copy $(SolutionDir)\AppSettingsSecret.config $(TargetDir)</PostBuildEvent>
   </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>"$(MSBuildBinPath)\msbuild.exe" $(SolutionDir)AppSettingsSecret.proj</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
