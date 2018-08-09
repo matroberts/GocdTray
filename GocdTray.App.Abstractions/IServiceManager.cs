@@ -8,6 +8,6 @@ namespace GocdTray.App.Abstractions
     {
         Estate Estate { get; }
         ConnectionInfo GetConnectionInfo();
-        void SetConnectionInfo(ConnectionInfo connectionInfo);
+        ValidationResult SetConnectionInfo(ConnectionInfo connectionInfo);
     }
 }

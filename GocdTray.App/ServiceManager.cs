@@ -27,10 +27,34 @@ namespace GocdTray.App
             };
         }
 
-        public void SetConnectionInfo(ConnectionInfo connectionInfo)
+        public ValidationResult SetConnectionInfo(ConnectionInfo connectionInfo)
         {
+
+            var validationResult = new ValidationResult();
+
+            if(connectionInfo.GocdApiUri.IsTrimmedNullOrEmpty() || Uri.TryCreate(connectionInfo.GocdApiUri, UriKind.Absolute, out _) == false)
+                validationResult.Add("You must supply a valid Gocd Url.", nameof(connectionInfo.GocdApiUri));
+
+            if (connectionInfo.Username.IsTrimmedNullOrEmpty())
+                validationResult.Add("You must supply a username.", nameof(connectionInfo.Username));
+
+            if (connectionInfo.Password.IsTrimmedNullOrEmpty())
+                validationResult.Add("You must supply a password.", nameof(connectionInfo.Password));
+
+            if (connectionInfo.PollingIntervalSeconds < 5)
+                validationResult.Add("Polling interval must be at least 5 seconds.", nameof(connectionInfo.PollingIntervalSeconds));
+
+            if (validationResult.IsValid == false)
+                return validationResult;
+
             Properties.Settings.Default.GocdApiUri = connectionInfo.GocdApiUri;
+            Properties.Settings.Default.IgnoreCertificateErrors = connectionInfo.IgnoreCertificateErrors;
+            Properties.Settings.Default.Password = connectionInfo.Password;
+            Properties.Settings.Default.PollingIntervalSeconds = connectionInfo.PollingIntervalSeconds;
+            Properties.Settings.Default.Username = connectionInfo.Username;
             Properties.Settings.Default.Save();
+
+            return validationResult;
         }
 
         public void Initialise()
