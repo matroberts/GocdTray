@@ -16,6 +16,7 @@
 
     <SolidColorBrush x:Key="TextColorPrimary" Color="#FAFAFA" />
     <SolidColorBrush x:Key="BackgroundColorPrimary" Color="#282C31" />
+    <SolidColorBrush x:Key="BackgroundColorSecondary" Color="#565A5F" />
 
     <Style TargetType="Grid">
         <Setter Property="Background" Value="{StaticResource BackgroundColorPrimary}"></Setter>
@@ -26,4 +27,19 @@
         <Setter Property="Foreground" Value="{StaticResource TextColorPrimary}"></Setter>
     </Style>
 
+    <Style TargetType="Label">
+        <Setter Property="Foreground" Value="{StaticResource TextColorPrimary}"></Setter>
+    </Style>
+
+    <Style TargetType="TextBox">
+        <Setter Property="Foreground" Value="{StaticResource TextColorPrimary}"></Setter>
+        <Setter Property="Background" Value="{StaticResource BackgroundColorSecondary}"></Setter>
+        <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+        <Setter Property="Margin" Value="1, 1, 1, 1"></Setter> 
+    </Style>
+
+    <Style TargetType="CheckBox">
+        <Setter Property="BorderThickness" Value="0"></Setter>
+    </Style>
 </ResourceDictionary>
