@@ -17,4 +17,13 @@
     <SolidColorBrush x:Key="TextColorPrimary" Color="#FAFAFA" />
     <SolidColorBrush x:Key="BackgroundColorPrimary" Color="#282C31" />
 
+    <Style TargetType="Grid">
+        <Setter Property="Background" Value="{StaticResource BackgroundColorPrimary}"></Setter>
+    </Style>
+
+    <Style TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource BackgroundColorPrimary}"></Setter>
+        <Setter Property="Foreground" Value="{StaticResource TextColorPrimary}"></Setter>
+    </Style>
+
 </ResourceDictionary>

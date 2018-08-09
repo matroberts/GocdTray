@@ -18,12 +18,8 @@
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid.Resources>
-            <Style TargetType="Grid">
-                <Setter Property="Background" Value="{StaticResource BackgroundColorPrimary}"></Setter>
-            </Style>
-        </Grid.Resources>
-        <Button Grid.Row="0" Click="Button_Click" ContextMenuService.IsEnabled="False" Width="40" Height="Auto" HorizontalAlignment="Left" Background="{StaticResource BackgroundColorPrimary}"  Foreground="{StaticResource TextColorPrimary}" BorderThickness="0">
+
+        <Button Grid.Row="0" Click="Button_Click" ContextMenuService.IsEnabled="False" Width="40" Height="Auto" HorizontalAlignment="Left"  BorderThickness="0">
             <TextBlock FontFamily="{StaticResource FontAwesome}" FontSize="16" Text="{StaticResource IconSortAmountDown}" />
             <Button.ContextMenu>
                 <ContextMenu>
