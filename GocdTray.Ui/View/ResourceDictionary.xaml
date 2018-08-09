@@ -9,11 +9,15 @@
     <converters:PipelineStatusToColorConverter x:Key="PipelineStatusToColorConverter" />
     <converters:PipelineSortOrderToSelectedOptionConverter x:Key="PipelineSortOrderToSelectedOptionConverter" />
 
+    <!-- font awesome -->
     <FontFamily x:Key="FontAwesome">/GocdTray.Ui;Component/Fonts/FontAwesome.otf#Font Awesome 5 Free Solid</FontFamily>
     <System:String x:Key="IconSquare">&#xf0c8;</System:String>
     <System:String x:Key="IconSortAmountDown">&#xf160;</System:String>
     <System:String x:Key="IconHeart">&#xf004;</System:String>
     <System:String x:Key="IconCheck">&#xf00c;</System:String>
+    <System:String x:Key="IconTimes">&#xf00d;</System:String>
+    <!-- segoe-ui-symbol-font -->
+    <System:String x:Key="WinChromeClose">&#xE8BB;</System:String>
 
     <SolidColorBrush x:Key="TextColorPrimary" Color="#FAFAFA" />
     <SolidColorBrush x:Key="BackgroundColorPrimary" Color="#282C31" />
@@ -43,16 +47,20 @@
     <Style TargetType="CheckBox">
         <Setter Property="BorderThickness" Value="0"></Setter>
     </Style>
+    
+    <Style x:Key="CloseWindowButton" TargetType="Button">
+        <!-- <Setter Property="OverridesDefaultStyle" Value="True"/> -->
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="FontSize" Value="11"/>
+        <Setter Property="Background"  Value="{StaticResource BackgroundColorPrimary}"/>
+        <Setter Property="Foreground"  Value="{StaticResource TextColorPrimary}"/>
+    </Style>
 
     <Style x:Key="CustomWindowStyle" TargetType="{x:Type Window}">
         <Setter Property="WindowChrome.WindowChrome">
             <Setter.Value>
-                <WindowChrome CaptionHeight="30"
-                              CornerRadius="0"
-                              GlassFrameThickness="0"
-                              NonClientFrameEdges="None"
-                              ResizeBorderThickness="5"
-                              UseAeroCaptionButtons="False"  />
+                <WindowChrome CaptionHeight="30" CornerRadius="0" GlassFrameThickness="0" NonClientFrameEdges="None" ResizeBorderThickness="8" UseAeroCaptionButtons="False"  />
             </Setter.Value>
         </Setter>
 
@@ -65,40 +73,19 @@
                                 <ContentPresenter />
                             </AdornerDecorator>
                         </Border>
-
                         <Grid Height="30" VerticalAlignment="Top">
-
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-
-                            <TextBlock Margin="5,0,0,0"
-                                       VerticalAlignment="Center"
-                                       HorizontalAlignment="Center"
-                                       FontSize="16"
-                                       Foreground="White"
-                                       Text="{TemplateBinding Title}" 
-                                       Grid.Column="0"/>
-
-
+                            <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" Foreground="White" Text="{TemplateBinding Title}" Grid.Column="0"/>
                             <StackPanel Orientation="Horizontal" Grid.Column="1">
-                                <Button x:Name="btnClose"
-                                        Width="25"
-                                        Margin="0"
-                                        Click="CloseClick"
-                                        Content="X"
-                                        WindowChrome.IsHitTestVisibleInChrome="True"
-                                        BorderThickness="0"
-                                        >
-
-
+                                <Button x:Name="btnClose" Style="{StaticResource CloseWindowButton}" Width="35" Click="CloseClick" WindowChrome.IsHitTestVisibleInChrome="True" >
+                                    <TextBlock Text="{StaticResource WinChromeClose}" FontFamily="Segoe MDL2 Assets" Foreground="{StaticResource TextColorPrimary}" />
                                 </Button>
                             </StackPanel>
                         </Grid>
-
                     </Grid>
-
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
