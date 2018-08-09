@@ -22,6 +22,7 @@
     <SolidColorBrush x:Key="TextColorPrimary" Color="#FAFAFA" />
     <SolidColorBrush x:Key="BackgroundColorPrimary" Color="#282C31" />
     <SolidColorBrush x:Key="BackgroundColorSecondary" Color="#565A5F" />
+    <SolidColorBrush x:Key="WindowCloseButtonColor" Color="#E81123" />
 
     <Style TargetType="Grid">
         <Setter Property="Background" Value="{StaticResource BackgroundColorPrimary}"></Setter>
@@ -49,12 +50,32 @@
     </Style>
     
     <Style x:Key="CloseWindowButton" TargetType="Button">
-        <!-- <Setter Property="OverridesDefaultStyle" Value="True"/> -->
         <Setter Property="Margin" Value="0"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="FontSize" Value="11"/>
         <Setter Property="Background"  Value="{StaticResource BackgroundColorPrimary}"/>
         <Setter Property="Foreground"  Value="{StaticResource TextColorPrimary}"/>
+        <Setter Property="Width"  Value="46"/>
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome"  Value="True"/>
+        <Setter Property="Content">
+            <Setter.Value>
+                <TextBlock Text="{StaticResource WinChromeClose}" FontFamily="Segoe MDL2 Assets" Foreground="{StaticResource TextColorPrimary}" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                        <ContentPresenter x:Name="PART_Content" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" TextElement.Foreground="{TemplateBinding Foreground}"></ContentPresenter>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource WindowCloseButtonColor}" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style x:Key="CustomWindowStyle" TargetType="{x:Type Window}">
@@ -78,12 +99,8 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" Foreground="White" Text="{TemplateBinding Title}" Grid.Column="0"/>
-                            <StackPanel Orientation="Horizontal" Grid.Column="1">
-                                <Button x:Name="btnClose" Style="{StaticResource CloseWindowButton}" Width="35" Click="CloseClick" WindowChrome.IsHitTestVisibleInChrome="True" >
-                                    <TextBlock Text="{StaticResource WinChromeClose}" FontFamily="Segoe MDL2 Assets" Foreground="{StaticResource TextColorPrimary}" />
-                                </Button>
-                            </StackPanel>
+                            <TextBlock  Grid.Column="0" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" Foreground="White" Text="{TemplateBinding Title}"/>
+                            <Button Grid.Column="1" x:Name="btnClose" Style="{StaticResource CloseWindowButton}" Click="CloseClick" />
                         </Grid>
                     </Grid>
                 </ControlTemplate>
