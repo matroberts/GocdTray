@@ -28,13 +28,22 @@ namespace GocdTray.Ui.ViewModel
             }
         }
 
-        public ICommand OkClick => new FuncCommand<string>((s) =>
+        public ICommand OkClick => new FuncCommand<object>(o =>
         {
             var connectionInfo = new ConnectionInfo()
             {
                 GocdApiUri = GocdUrl,
             };
             serviceManager.SetConnectionInfo(connectionInfo);
+            Close();
         });
+
+        public ICommand CancelClick => new FuncCommand<object>(o =>
+        {
+            Close();
+        });
+
+        public event EventHandler CloseRequest;
+        protected void Close() => CloseRequest?.Invoke(this, EventArgs.Empty);
     }
 }

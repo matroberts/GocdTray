@@ -139,9 +139,8 @@ namespace GocdTray.Ui.Code
         {
             if (connectionInfoView == null)
             {
-                connectionInfoView = new ConnectionInfoView
+                connectionInfoView = new ConnectionInfoView(connectionInfoViewModel)
                 {
-                    DataContext = connectionInfoViewModel,
                     WindowStartupLocation = WindowStartupLocation.CenterScreen
                 };
                 ElementHost.EnableModelessKeyboardInterop(connectionInfoView);

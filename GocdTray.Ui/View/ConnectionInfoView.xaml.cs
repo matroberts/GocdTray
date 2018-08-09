@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using GocdTray.Ui.ViewModel;
 
 namespace GocdTray.Ui.View
 {
@@ -22,6 +23,12 @@ namespace GocdTray.Ui.View
         public ConnectionInfoView()
         {
             InitializeComponent();
+        }
+
+        public ConnectionInfoView(ConnectionInfoViewModel connectionInfoViewModel) : this()
+        {
+            DataContext = connectionInfoViewModel;
+            connectionInfoViewModel.CloseRequest += (sender, e) => this.Close();
         }
     }
 }

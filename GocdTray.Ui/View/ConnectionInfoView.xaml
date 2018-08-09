@@ -32,6 +32,10 @@
         <Label Grid.Row="2" Grid.Column="0">Password</Label>
         <Label Grid.Row="3" Grid.Column="0">Ignore Certificate Errors</Label>
         <Label Grid.Row="4" Grid.Column="0">Polling Interval</Label>
-        <Button Grid.Row="5" Grid.Column="1" Command="{Binding OkClick}" Content="Save" Width="50" HorizontalAlignment="Right"/>
+        <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Command="{Binding OkClick}" Content="OK" Width="50" HorizontalAlignment="Right" Margin="0,0,10,0"/>
+            <Button Command="{Binding CancelClick}" Content="Cancel" Width="50" HorizontalAlignment="Right"/>
+        </StackPanel>
+
     </Grid>
 </Window>
