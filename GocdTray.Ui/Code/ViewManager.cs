@@ -27,7 +27,6 @@ namespace GocdTray.Ui.Code
         private PipelineView pipelineView;
         private PipelineViewModel pipelineViewModel;
         private ConnectionInfoView connectionInfoView;
-        private ConnectionInfoViewModel connectionInfoViewModel;
 
         public ViewManager(IServiceManager serviceManager)
         {
@@ -47,7 +46,6 @@ namespace GocdTray.Ui.Code
 
             aboutViewModel = new AboutViewModel() {Icon = AppImageSource};
             pipelineViewModel = new PipelineViewModel {Icon = AppImageSource};
-            connectionInfoViewModel = new ConnectionInfoViewModel(serviceManager);
         }
 
         private Icon AppIcon
@@ -139,11 +137,7 @@ namespace GocdTray.Ui.Code
         {
             if (connectionInfoView == null)
             {
-                connectionInfoView = new ConnectionInfoView(connectionInfoViewModel)
-                {
-                    WindowStartupLocation = WindowStartupLocation.CenterScreen
-                };
-                ElementHost.EnableModelessKeyboardInterop(connectionInfoView);
+                connectionInfoView = new ConnectionInfoView(new ConnectionInfoViewModel(serviceManager));
                 connectionInfoView.Closing += (sender, e) => connectionInfoView = null;
                 connectionInfoView.Show();
             }
