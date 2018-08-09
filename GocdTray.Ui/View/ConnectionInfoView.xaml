@@ -21,21 +21,26 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Label Grid.Row="0" Grid.Column="0">Go.cd Url</Label>
-        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding GocdUrl, Mode=TwoWay}"></TextBox>
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding GocdApiUri, Mode=TwoWay}"/>
         <Label Grid.Row="1" Grid.Column="0">Username</Label>
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Username, Mode=TwoWay}"/>
         <Label Grid.Row="2" Grid.Column="0">Password</Label>
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Password, Mode=TwoWay}"/>
         <Label Grid.Row="3" Grid.Column="0">Ignore Certificate Errors</Label>
+        <CheckBox Grid.Row="3" Grid.Column="1" IsChecked="{Binding IgnoreCertificateErrors, Mode=TwoWay}" VerticalAlignment="Center"/>
         <Label Grid.Row="4" Grid.Column="0">Polling Interval</Label>
-        <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding PollingIntervalSeconds, Mode=TwoWay}" PreviewTextInput="ValidateInt"/>
+        <Label Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Content="{Binding ErrorMessage}" />
+        <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Command="{Binding OkClick}" Content="OK" Width="50" HorizontalAlignment="Right" Margin="0,0,10,0"/>
             <Button Command="{Binding CancelClick}" Content="Cancel" Width="50" HorizontalAlignment="Right"/>
         </StackPanel>
-
     </Grid>
 </Window>

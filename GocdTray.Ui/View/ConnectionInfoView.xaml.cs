@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -33,5 +34,8 @@ namespace GocdTray.Ui.View
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             ElementHost.EnableModelessKeyboardInterop(this);
         }
+
+        private static readonly Regex intOnlyRegex =  new Regex("[^0-9]+");
+        private void ValidateInt(object sender, TextCompositionEventArgs e) => e.Handled = intOnlyRegex.IsMatch(e.Text);
     }
 }

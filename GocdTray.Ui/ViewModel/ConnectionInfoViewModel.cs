@@ -15,16 +15,76 @@ namespace GocdTray.Ui.ViewModel
         {
             this.serviceManager = serviceManager;
             var connectionInfo = serviceManager.GetConnectionInfo();
-            GocdUrl = connectionInfo.GocdApiUri;
+            GocdApiUri = connectionInfo.GocdApiUri;
+            Username = connectionInfo.Username;
+            Password = connectionInfo.Password;
+            IgnoreCertificateErrors = connectionInfo.IgnoreCertificateErrors;
+            PollingIntervalSeconds = connectionInfo.PollingIntervalSeconds;
         }
-        private string gocdUrl;
-        public string GocdUrl
+
+        private string gocdApiUri;
+        public string GocdApiUri
         {
-            get => gocdUrl;
+            get => gocdApiUri;
             set
             {
-                gocdUrl = value;
-                OnPropertyChanged("GocdUrl");
+                gocdApiUri = value;
+                OnPropertyChanged(nameof(GocdApiUri));
+            }
+        }
+
+        private string username;
+        public string Username
+        {
+            get => username;
+            set
+            {
+                username = value;
+                OnPropertyChanged(nameof(Username));
+            }
+        }
+
+        private string password;
+        public string Password
+        {
+            get => password;
+            set
+            {
+                password = value;
+                OnPropertyChanged(nameof(Password));
+            }
+        }
+
+        private bool ignoreCertificateErrors;
+        public bool IgnoreCertificateErrors
+        {
+            get => ignoreCertificateErrors;
+            set
+            {
+                ignoreCertificateErrors = value;
+                OnPropertyChanged(nameof(IgnoreCertificateErrors));
+            }
+        }
+
+        private int pollingIntervalSeconds;
+        public int PollingIntervalSeconds
+        {
+            get => pollingIntervalSeconds;
+            set
+            {
+                pollingIntervalSeconds = value;
+                OnPropertyChanged(nameof(PollingIntervalSeconds));
+            }
+        }
+
+        private string errorMessage;
+        public string ErrorMessage
+        {
+            get => errorMessage;
+            set
+            {
+                errorMessage = value;
+                OnPropertyChanged(nameof(ErrorMessage));
             }
         }
 
@@ -32,10 +92,22 @@ namespace GocdTray.Ui.ViewModel
         {
             var connectionInfo = new ConnectionInfo()
             {
-                GocdApiUri = GocdUrl,
+                GocdApiUri = GocdApiUri,
+                PollingIntervalSeconds = PollingIntervalSeconds,
+                Username = Username,
+                Password = Password,
+                IgnoreCertificateErrors = IgnoreCertificateErrors,
             };
-            serviceManager.SetConnectionInfo(connectionInfo);
-            Close();
+
+            var result = serviceManager.SetConnectionInfo(connectionInfo);
+            if (result.IsValid)
+            {
+                Close();
+            }
+            else
+            {
+                ErrorMessage = result.ToString();
+            }
         });
 
         public ICommand CancelClick => new FuncCommand<object>(o =>
