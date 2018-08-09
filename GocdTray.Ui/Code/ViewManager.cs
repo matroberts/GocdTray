@@ -6,10 +6,10 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Forms;
+using System.Windows.Forms.Integration;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using GocdTray.App;
 using GocdTray.App.Abstractions;
 using GocdTray.Ui.Properties;
 using GocdTray.Ui.View;
@@ -26,6 +26,8 @@ namespace GocdTray.Ui.Code
         private AboutViewModel aboutViewModel;
         private PipelineView pipelineView;
         private PipelineViewModel pipelineViewModel;
+        private ConnectionInfoView connectionInfoView;
+        private ConnectionInfoViewModel connectionInfoViewModel;
 
         public ViewManager(IServiceManager serviceManager)
         {
@@ -45,6 +47,7 @@ namespace GocdTray.Ui.Code
 
             aboutViewModel = new AboutViewModel() {Icon = AppImageSource};
             pipelineViewModel = new PipelineViewModel {Icon = AppImageSource};
+            connectionInfoViewModel = new ConnectionInfoViewModel(serviceManager);
         }
 
         private Icon AppIcon
@@ -132,6 +135,25 @@ namespace GocdTray.Ui.Code
             UpdateViews();
         }
 
+        private void ShowConnectionInfoView()
+        {
+            if (connectionInfoView == null)
+            {
+                connectionInfoView = new ConnectionInfoView
+                {
+                    DataContext = connectionInfoViewModel,
+                    WindowStartupLocation = WindowStartupLocation.CenterScreen
+                };
+                ElementHost.EnableModelessKeyboardInterop(connectionInfoView);
+                connectionInfoView.Closing += (sender, e) => connectionInfoView = null;
+                connectionInfoView.Show();
+            }
+            else
+            {
+                connectionInfoView.Activate();
+            }
+        }
+
         private void NotifyIcon_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -149,6 +171,7 @@ namespace GocdTray.Ui.Code
             {
                 notifyIcon.ContextMenuStrip.Items.Add(CreateMenuItemWithHandler("Pipelines", "Show the status of the Go.cd pipelines", (sender1, e1) => ShowPipelineView()));
                 notifyIcon.ContextMenuStrip.Items.Add(CreateMenuItemWithHandler("About", "Show the About dialog", (sender1, e1) => ShowAboutView()));
+                notifyIcon.ContextMenuStrip.Items.Add(CreateMenuItemWithHandler("Connection Info", "Configure Connection Information", (sender1, e1) => ShowConnectionInfoView()));
                 notifyIcon.ContextMenuStrip.Items.Add(new ToolStripSeparator());
                 notifyIcon.ContextMenuStrip.Items.Add(CreateMenuItemWithHandler("Exit", "Exits the application", (sender1, e1) => System.Windows.Forms.Application.Exit()));
             }

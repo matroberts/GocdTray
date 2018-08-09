@@ -7,5 +7,7 @@ namespace GocdTray.App.Abstractions
     public interface IServiceManager
     {
         Estate Estate { get; }
+        ConnectionInfo GetConnectionInfo();
+        void SetConnectionInfo(ConnectionInfo connectionInfo);
     }
 }

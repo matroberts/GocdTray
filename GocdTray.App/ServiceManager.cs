@@ -15,6 +15,23 @@ namespace GocdTray.App
         public event StatusChangeEvent OnStatusChange;
 
         public Estate Estate { get; set; } = new Estate(Result<List<Pipeline>>.Invalid("Initialising"));
+        public ConnectionInfo GetConnectionInfo()
+        {
+            return new ConnectionInfo()
+            {
+                GocdApiUri = Properties.Settings.Default.GocdApiUri,
+                IgnoreCertificateErrors = Properties.Settings.Default.IgnoreCertificateErrors,
+                Password = Properties.Settings.Default.Password,
+                Username = Properties.Settings.Default.Username,
+                PollingIntervalSeconds = Properties.Settings.Default.PollingIntervalSeconds,
+            };
+        }
+
+        public void SetConnectionInfo(ConnectionInfo connectionInfo)
+        {
+            Properties.Settings.Default.GocdApiUri = connectionInfo.GocdApiUri;
+            Properties.Settings.Default.Save();
+        }
 
         public void Initialise()
         {
