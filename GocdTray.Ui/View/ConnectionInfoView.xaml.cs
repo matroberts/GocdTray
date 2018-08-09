@@ -25,6 +25,7 @@ namespace GocdTray.Ui.View
         public ConnectionInfoView()
         {
             InitializeComponent();
+            this.Style = (Style)this.Resources["CustomWindowStyle"];
         }
 
         public ConnectionInfoView(ConnectionInfoViewModel connectionInfoViewModel) : this()

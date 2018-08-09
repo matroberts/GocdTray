@@ -81,6 +81,9 @@
     <Compile Include="View\PipelineView.xaml.cs">
       <DependentUpon>PipelineView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\ResourceDictionary.xaml.cs">
+      <DependentUpon>ResourceDictionary.xaml</DependentUpon>
+    </Compile>
     <Page Include="View\AboutView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
