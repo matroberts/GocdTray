@@ -22,7 +22,7 @@
     <SolidColorBrush x:Key="TextColorPrimary" Color="#FAFAFA" />
     <SolidColorBrush x:Key="BackgroundColorPrimary" Color="#282C31" />
     <SolidColorBrush x:Key="BackgroundColorSecondary" Color="#565A5F" />
-    <SolidColorBrush x:Key="WindowCloseButtonColor" Color="#E81123" />
+    <SolidColorBrush x:Key="CloseWindowButtonHoverColor" Color="#E81123" />
 
     <Style TargetType="Grid">
         <Setter Property="Background" Value="{StaticResource BackgroundColorPrimary}"></Setter>
@@ -73,7 +73,7 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource WindowCloseButtonColor}" />
+                <Setter Property="Background" Value="{StaticResource CloseWindowButtonHoverColor}" />
             </Trigger>
         </Style.Triggers>
     </Style>
