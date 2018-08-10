@@ -6,7 +6,6 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Forms;
-using System.Windows.Forms.Integration;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -23,7 +22,6 @@ namespace GocdTray.Ui.Code
         private NotifyIcon notifyIcon;
         private IServiceManager serviceManager;
         private AboutView aboutView;
-        private AboutViewModel aboutViewModel;
         private PipelineView pipelineView;
         private PipelineViewModel pipelineViewModel;
         private ConnectionInfoView connectionInfoView;
@@ -44,7 +42,6 @@ namespace GocdTray.Ui.Code
             notifyIcon.DoubleClick += (sender, e) => ShowPipelineView();
             notifyIcon.MouseUp += NotifyIcon_MouseUp;
 
-            aboutViewModel = new AboutViewModel() {Icon = AppImageSource};
             pipelineViewModel = new PipelineViewModel {Icon = AppImageSource};
         }
 
@@ -79,16 +76,10 @@ namespace GocdTray.Ui.Code
             notifyIcon.Icon = AppIcon;
             notifyIcon.Text = AppText;
 
-            if (aboutView != null)
-            {
-                aboutView.Icon = AppImageSource;
-            }
-
             if (pipelineView != null)
             {
                 pipelineView.Icon = AppImageSource;
             }
-            aboutViewModel.AddVersionInfo("Version", Assembly.GetExecutingAssembly().GetName().Version.ToString());
             pipelineViewModel.PopulateTable(serviceManager.Estate.Pipelines);
         }
 
@@ -116,12 +107,7 @@ namespace GocdTray.Ui.Code
         {
             if (aboutView == null)
             {
-                aboutView = new AboutView
-                {
-                    DataContext = aboutViewModel,
-                    WindowStartupLocation = WindowStartupLocation.CenterScreen
-                };
-
+                aboutView = new AboutView(new AboutViewModel());
                 aboutView.Closing += (sender, e) => aboutView = null;
                 aboutView.Show();
             }
@@ -129,8 +115,6 @@ namespace GocdTray.Ui.Code
             {
                 aboutView.Activate();
             }
-
-            UpdateViews();
         }
 
         private void ShowConnectionInfoView()
@@ -163,8 +147,8 @@ namespace GocdTray.Ui.Code
             if (notifyIcon.ContextMenuStrip.Items.Count == 0)
             {
                 notifyIcon.ContextMenuStrip.Items.Add(CreateMenuItemWithHandler("Pipelines", "Show the status of the Go.cd pipelines", (sender1, e1) => ShowPipelineView()));
-                notifyIcon.ContextMenuStrip.Items.Add(CreateMenuItemWithHandler("About", "Show the About dialog", (sender1, e1) => ShowAboutView()));
                 notifyIcon.ContextMenuStrip.Items.Add(CreateMenuItemWithHandler("Connection Info", "Configure Connection Information", (sender1, e1) => ShowConnectionInfoView()));
+                notifyIcon.ContextMenuStrip.Items.Add(CreateMenuItemWithHandler("About", "Show the About dialog", (sender1, e1) => ShowAboutView()));
                 notifyIcon.ContextMenuStrip.Items.Add(new ToolStripSeparator());
                 notifyIcon.ContextMenuStrip.Items.Add(CreateMenuItemWithHandler("Exit", "Exits the application", (sender1, e1) => System.Windows.Forms.Application.Exit()));
             }
