@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GocdTray.Ui.View"
         mc:Ignorable="d"
-        Title="Connection Info" Height="450" Width="800">
+        Title="Connection Info" Height="250" Width="600" >
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -24,7 +24,7 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Label Grid.Row="0" Grid.Column="0">Go.cd Url</Label>
@@ -39,8 +39,8 @@
         <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding PollingIntervalSeconds, Mode=TwoWay}" PreviewTextInput="ValidateInt"/>
         <Label Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Content="{Binding ErrorMessage}" Foreground="{StaticResource TextColorError}"/>
         <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Command="{Binding OkClick}" Content="OK" Width="50" HorizontalAlignment="Right" Margin="0,0,10,0"/>
-            <Button Command="{Binding CancelClick}" Content="Cancel" Width="50" HorizontalAlignment="Right"/>
+            <Button Command="{Binding OkClick}" Content="OK" Width="70" HorizontalAlignment="Right" Margin="0,0,10,0"/>
+            <Button Command="{Binding CancelClick}" Content="Cancel" Width="70" HorizontalAlignment="Right"/>
         </StackPanel>
     </Grid>
 </Window>

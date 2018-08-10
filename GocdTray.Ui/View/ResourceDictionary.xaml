@@ -25,20 +25,24 @@
     <SolidColorBrush x:Key="BackgroundColorSecondary" Color="#565A5F" />
     <SolidColorBrush x:Key="CloseWindowButtonHoverColor" Color="#E81123" />
 
+    <Style TargetType="{x:Type Control}" x:Key="BaseStyle">
+        <Setter Property="FontSize" Value="15" />
+    </Style>
+
     <Style TargetType="Grid">
         <Setter Property="Background" Value="{StaticResource BackgroundColorPrimary}"></Setter>
     </Style>
 
-    <Style TargetType="Button">
+    <Style TargetType="Button" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="Background" Value="{StaticResource BackgroundColorPrimary}"></Setter>
         <Setter Property="Foreground" Value="{StaticResource TextColorPrimary}"></Setter>
     </Style>
 
-    <Style TargetType="Label">
+    <Style TargetType="Label" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="Foreground" Value="{StaticResource TextColorPrimary}"></Setter>
     </Style>
 
-    <Style TargetType="TextBox">
+    <Style TargetType="TextBox" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="Foreground" Value="{StaticResource TextColorPrimary}"></Setter>
         <Setter Property="Background" Value="{StaticResource BackgroundColorSecondary}"></Setter>
         <Setter Property="BorderThickness" Value="0"></Setter>
@@ -46,7 +50,7 @@
         <Setter Property="Margin" Value="1, 1, 1, 1"></Setter> 
     </Style>
 
-    <Style TargetType="CheckBox">
+    <Style TargetType="CheckBox" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="BorderThickness" Value="0"></Setter>
     </Style>
     
