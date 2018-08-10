@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GocdTray.Ui.View"
         mc:Ignorable="d"
-        Title="Connection Info" Height="250" Width="600" ResizeMode="NoResize">
+        Title="Connection Info" Height="250" Width="600" ResizeMode="NoResize" ShowInTaskbar="False">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
