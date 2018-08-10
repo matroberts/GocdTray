@@ -57,43 +57,12 @@
                 <DataGridTemplateColumn IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{StaticResource IconSquare}" FontFamily="{StaticResource FontAwesome}" Foreground="{Binding Status, Converter={StaticResource PipelineStatusToColorConverter}}" FontSize="12" Margin="1" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                            <TextBlock Text="{StaticResource IconSquare}" FontFamily="{StaticResource FontAwesome}" Foreground="{Binding Status, Converter={StaticResource PipelineStatusToColorConverter}}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Binding="{Binding Name}" Foreground="{StaticResource TextColorPrimary}" />
+                <DataGridTextColumn Binding="{Binding Name}" Foreground="{StaticResource TextColorPrimary}" FontSize="15"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
 </Window>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
