@@ -2,7 +2,8 @@
 
 [assembly: AssemblyProduct("GocdTray")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyCopyright("Copyright © ")]
+[assembly: AssemblyCopyright("Copyright © 2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: AssemblyVersion("1.0.*")]
+// Assembly version is set in appveyor build
+[assembly: AssemblyVersion("0.0.0.0")]
