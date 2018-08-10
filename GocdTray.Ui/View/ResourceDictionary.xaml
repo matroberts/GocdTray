@@ -20,6 +20,7 @@
     <System:String x:Key="WinChromeClose">&#xE8BB;</System:String>
 
     <SolidColorBrush x:Key="TextColorPrimary" Color="#FAFAFA" />
+    <SolidColorBrush x:Key="TextColorError" Color="#E81123" />
     <SolidColorBrush x:Key="BackgroundColorPrimary" Color="#282C31" />
     <SolidColorBrush x:Key="BackgroundColorSecondary" Color="#565A5F" />
     <SolidColorBrush x:Key="CloseWindowButtonHoverColor" Color="#E81123" />
