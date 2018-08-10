@@ -29,7 +29,6 @@ namespace GocdTray.App
 
         public ValidationResult SetConnectionInfo(ConnectionInfo connectionInfo)
         {
-
             var validationResult = new ValidationResult();
 
             if(connectionInfo.GocdApiUri.IsTrimmedNullOrEmpty() || Uri.TryCreate(connectionInfo.GocdApiUri, UriKind.Absolute, out _) == false)
@@ -53,22 +52,26 @@ namespace GocdTray.App
             Properties.Settings.Default.PollingIntervalSeconds = connectionInfo.PollingIntervalSeconds;
             Properties.Settings.Default.Username = connectionInfo.Username;
             Properties.Settings.Default.Save();
+            Restart();
 
             return validationResult;
         }
 
-        public void Initialise()
+        public void Restart()
         {
-            gocdService = new GocdService(new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, AppConfig.IgnoreCertificateErrors));
+            pollingTimer?.Stop();
+            gocdService?.Dispose();
+            var connectionInfo = GetConnectionInfo();
+            gocdService = new GocdService(new RestClient(connectionInfo.GocdApiUri, connectionInfo.Username, connectionInfo.Password, connectionInfo.IgnoreCertificateErrors));
+            PollAndUpdate();
             // timer does not cause re-entry
-            pollingTimer = new DispatcherTimer(new TimeSpan(0, 0, 15), 
-                                                DispatcherPriority.Normal,
-                                                (sender, args) =>
-                                                {
-                                                    Estate = new Estate(gocdService.GetPipelines());
-                                                    OnStatusChange?.Invoke();
-                                                },
-                                                Dispatcher.CurrentDispatcher);
+            pollingTimer = new DispatcherTimer(TimeSpan.FromSeconds(connectionInfo.PollingIntervalSeconds), DispatcherPriority.Normal, (sender, args) => PollAndUpdate(), Dispatcher.CurrentDispatcher);
+        }
+
+        private void PollAndUpdate()
+        {
+            Estate = new Estate(gocdService.GetPipelines());
+            OnStatusChange?.Invoke();
         }
 
         public void Terminate()

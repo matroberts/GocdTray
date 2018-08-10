@@ -16,7 +16,7 @@ namespace GocdTray.App
             serviceManager = new ServiceManager();
             viewManager = new ViewManager(serviceManager);
             serviceManager.OnStatusChange += viewManager.OnStatusChange;
-            serviceManager.Initialise();
+            serviceManager.Restart();
         }
 
         protected override void Dispose(bool disposing)
