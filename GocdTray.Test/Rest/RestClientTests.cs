@@ -31,7 +31,7 @@ namespace GocdTray.Test.Rest
             Result<object> result;
 
             // Act
-            using (var restClient = new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, false, httpClientHandler))
+            using (var restClient = new RestClient("https://buildserver:8154", "username", "password", false, httpClientHandler))
             {
                 result = restClient.Get<object>("/go/api/dashboard", "application/vnd.go.cd.v1+json");
 
@@ -51,7 +51,7 @@ namespace GocdTray.Test.Rest
             Result<object> result;
 
             // Act
-            using (var restClient = new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, false, httpClientHandler))
+            using (var restClient = new RestClient("https://buildserver:8154", "username", "password", false, httpClientHandler))
             {
                 result = restClient.Get<object>("/go/api/dashboard", "application/vnd.go.cd.v1+json");
             }
@@ -85,19 +85,19 @@ namespace GocdTray.Test.Rest
             Result<TestObject> result;
 
             // Act
-            using (var restClient = new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, false, httpClientHandler))
+            using (var restClient = new RestClient("https://buildserver:8154", "username", "password", false, httpClientHandler))
             {
                 result = restClient.Get<TestObject>("/go/api/dashboard", "application/vnd.go.cd.v1+json");
             }
 
             //Assert
             Assert.That(result.IsValid, Is.True);
-            Assert.That(url, Is.EqualTo(AppConfig.GocdApiUri + "/go/api/dashboard"));
+            Assert.That(url, Is.EqualTo("https://buildserver:8154/go/api/dashboard"));
             Assert.That(method, Is.EqualTo("GET"));
             Assert.That(acceptHeaders.Count, Is.EqualTo(1));
             Assert.That(acceptHeaders.First().ToString(), Is.EqualTo("application/vnd.go.cd.v1+json"));
             Assert.That(authentication.Scheme, Is.EqualTo("Basic"));
-            Assert.That(authentication.Parameter, Is.EqualTo(Convert.ToBase64String(Encoding.ASCII.GetBytes($"{AppConfig.Username}:{AppConfig.Password}"))));
+            Assert.That(authentication.Parameter, Is.EqualTo(Convert.ToBase64String(Encoding.ASCII.GetBytes($"username:password"))));
             Assert.That(result.Data.Name, Is.EqualTo("to"));
             Assert.That(result.Data.Value, Is.EqualTo(2));
         }

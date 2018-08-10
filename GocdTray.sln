@@ -12,7 +12,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GocdTray.Ui", "GocdTray.Ui\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Root", "Root", "{C826096A-9756-445D-8FE9-0E955D17C0FE}"
 	ProjectSection(SolutionItems) = preProject
-		AppSettingsSecret.proj = AppSettingsSecret.proj
 		AssemblyInfo.common.cs = AssemblyInfo.common.cs
 		README.md = README.md
 	EndProjectSection

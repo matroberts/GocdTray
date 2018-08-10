@@ -18,7 +18,7 @@ namespace GocdTray.Test.Rest
         [Test, Ignore("")]
         public void GetPipelines_RealCall()
         {
-            var restClient = new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, AppConfig.IgnoreCertificateErrors);
+            var restClient = new RestClient("https://buildserver:8154", "username", "password", true);
             var service = new GocdService(restClient);
             var result = service.GetPipelines();
             
@@ -111,7 +111,7 @@ namespace GocdTray.Test.Rest
 
             // Act
             Result<List<Pipeline>> result;
-            using (var service = new GocdService(new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, AppConfig.IgnoreCertificateErrors, httpClientHandler)))
+            using (var service = new GocdService(new RestClient("https://buildserver:8154", "username", "password", true, httpClientHandler)))
             {
                 result = service.GetPipelines();
             }
@@ -183,7 +183,7 @@ namespace GocdTray.Test.Rest
 
             // Act
             Result<List<Pipeline>> result;
-            using (var service = new GocdService(new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, AppConfig.IgnoreCertificateErrors, httpClientHandler)))
+            using (var service = new GocdService(new RestClient("https://buildserver:8154", "username", "password", true, httpClientHandler)))
             {
                 result = service.GetPipelines();
             }
@@ -263,7 +263,7 @@ namespace GocdTray.Test.Rest
 
             // Act
             Result<List<Pipeline>> result;
-            using (var service = new GocdService(new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, AppConfig.IgnoreCertificateErrors, httpClientHandler)))
+            using (var service = new GocdService(new RestClient("https://buildserver:8154", "username", "password", true, httpClientHandler)))
             {
                 result = service.GetPipelines();
             }
@@ -328,7 +328,7 @@ namespace GocdTray.Test.Rest
 
             // Act
             Result<List<Pipeline>> result;
-            using (var service = new GocdService(new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, AppConfig.IgnoreCertificateErrors, httpClientHandler)))
+            using (var service = new GocdService(new RestClient("https://buildserver:8154", "username", "password", true, httpClientHandler)))
             {
                 result = service.GetPipelines();
             }
@@ -393,7 +393,7 @@ namespace GocdTray.Test.Rest
 
             // Act
             Result<List<Pipeline>> result;
-            using (var service = new GocdService(new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, AppConfig.IgnoreCertificateErrors, httpClientHandler)))
+            using (var service = new GocdService(new RestClient("https://buildserver:8154", "username", "password", true, httpClientHandler)))
             {
                 result = service.GetPipelines();
             }
@@ -457,7 +457,7 @@ namespace GocdTray.Test.Rest
 
             // Act
             Result<List<Pipeline>> result;
-            using (var service = new GocdService(new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, AppConfig.IgnoreCertificateErrors, httpClientHandler)))
+            using (var service = new GocdService(new RestClient("https://buildserver:8154", "username", "password", true, httpClientHandler)))
             {
                 result = service.GetPipelines();
             }
@@ -510,7 +510,7 @@ namespace GocdTray.Test.Rest
 
             // Act
             Result<List<Pipeline>> result;
-            using (var service = new GocdService(new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, AppConfig.IgnoreCertificateErrors, httpClientHandler)))
+            using (var service = new GocdService(new RestClient("https://buildserver:8154", "username", "password", true, httpClientHandler)))
             {
                 result = service.GetPipelines();
             }
@@ -587,7 +587,7 @@ namespace GocdTray.Test.Rest
 
             // Act
             Result<List<Pipeline>> result;
-            using (var service = new GocdService(new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, AppConfig.IgnoreCertificateErrors, httpClientHandler)))
+            using (var service = new GocdService(new RestClient("https://buildserver:8154", "username", "password", true, httpClientHandler)))
             {
                 result = service.GetPipelines();
             }
@@ -687,7 +687,7 @@ namespace GocdTray.Test.Rest
 
             // Act
             Result<List<Pipeline>> result;
-            using (var service = new GocdService(new RestClient(AppConfig.GocdApiUri, AppConfig.Username, AppConfig.Password, AppConfig.IgnoreCertificateErrors, httpClientHandler)))
+            using (var service = new GocdService(new RestClient("https://buildserver:8154", "username", "password", true, httpClientHandler)))
             {
                 result = service.GetPipelines();
             }
