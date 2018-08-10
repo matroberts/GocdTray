@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Deployment.Application;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -21,6 +23,7 @@ namespace GocdTray.App
                     return;
                 }
 
+                AddGocdTrayToStartup();
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 try
@@ -30,6 +33,20 @@ namespace GocdTray.App
                 catch (Exception exc)
                 {
                     MessageBox.Show(exc.Message, "Error");
+                }
+            }
+        }
+
+        public static void AddGocdTrayToStartup()
+        {
+            if (ApplicationDeployment.IsNetworkDeployed && ApplicationDeployment.CurrentDeployment.IsFirstRun)
+            {
+                string startupPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), "Gocd Tray" + ".appref-ms");
+
+                if (!File.Exists(startupPath))
+                {
+                    string shortcutPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Programs), "Gocd Tray", "Gocd Tray" + ".appref-ms");
+                    File.Copy(shortcutPath, startupPath);
                 }
             }
         }
