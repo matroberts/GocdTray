@@ -14,6 +14,7 @@ namespace GocdTray.Ui.View
         public PipelineView()
         {
             InitializeComponent();
+            this.Style = (Style)this.Resources["CustomWindowStyle"];
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

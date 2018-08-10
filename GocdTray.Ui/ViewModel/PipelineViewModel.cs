@@ -21,20 +21,6 @@ namespace GocdTray.Ui.ViewModel
         public PipelineSortOrder PipelineSortOrder { get; set; } = PipelineSortOrder.BuildStatus;
         public ICommand SortCommand { get; set; }
 
-        private ImageSource icon;
-        public ImageSource Icon
-        {
-            get
-            {
-                return icon;
-            }
-            set
-            {
-                icon = value;
-                OnPropertyChanged("Icon");
-            }
-        }
-
         private ObservableCollection<Pipeline> pipelines;
         public ObservableCollection<Pipeline> Pipelines
         {
