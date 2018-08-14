@@ -21,7 +21,7 @@ namespace GocdTray.Test.Rest
             var restClient = new RestClient("https://buildserver:8154", "username", "password", true);
             var service = new GocdService(restClient);
             var result = service.GetPipelines();
-            
+
             Assert.That(result.IsValid, result.ToString());
             Console.WriteLine(result.Data);
         }
@@ -523,6 +523,7 @@ namespace GocdTray.Test.Rest
             Assert.That(result.Data[0].PausedBy, Is.EqualTo("mat.roberts"));
             Assert.That(result.Data[0].PausedReason, Is.EqualTo("Under construction"));
             Assert.That(result.Data[0].PipelineInstances.Count, Is.EqualTo(0));
+            Assert.That(result.Data[0].WebsiteUrl, Is.EqualTo("/go/pipelines/"));
         }
 
         [Test]
@@ -700,6 +701,7 @@ namespace GocdTray.Test.Rest
             Assert.That(result.Data[0].PipelineInstances[0].Stages.Count, Is.EqualTo(2));
             Assert.That(result.Data[0].PipelineInstances[0].Stages[0].Name, Is.EqualTo("BuildStage"));
             Assert.That(result.Data[0].PipelineInstances[0].Stages[0].Status, Is.EqualTo(StageStatus.Building));
+            Assert.That(result.Data[0].PipelineInstances[0].Stages[0].Run, Is.EqualTo(1)); // run defaults to 1 if link is not present
             Assert.That(result.Data[0].PipelineInstances[0].Stages[0].PreviousStatus, Is.EqualTo(StageStatus.Passed));
             Assert.That(result.Data[0].PipelineInstances[0].Stages[1].Name, Is.EqualTo("TestStage"));
             Assert.That(result.Data[0].PipelineInstances[0].Stages[1].Status, Is.EqualTo(StageStatus.Unknown));
@@ -715,11 +717,136 @@ namespace GocdTray.Test.Rest
             Assert.That(result.Data[0].PipelineInstances[1].Stages[1].PreviousStatus, Is.EqualTo(StageStatus.Passed));
         }
 
-        // How deal with failure to connect, or interuption?
-        // Not doing it now but may want to connect to more than one go.cd
-        // async
+        [Test]
+        public void GetPipelines_GetsTheRunNumber_AndWebsiteUrl_ForAStage()
+        {
+            // Arrange
+            #region jsonResult
 
+            string jsonResult = @"
+{
+  ""_embedded"": {
+    ""pipeline_groups"": [
+      {
+        ""name"": ""Build"",
+        ""_embedded"": {
+          ""pipelines"": [
+            {
+              ""_links"": {
+                ""self"": {
+                  ""href"": ""https://devbuild03:8154/go/api/pipelines/DirectaTrunk/history""
+                },
+                ""doc"": {
+                  ""href"": ""https://api.gocd.io/#pipelines""
+                },
+                ""settings_path"": {
+                  ""href"": ""https://devbuild03:8154/go/admin/pipelines/DirectaTrunk/general""
+                },
+                ""trigger"": {
+                  ""href"": ""https://devbuild03:8154/go/api/pipelines/DirectaTrunk/schedule""
+                },
+                ""trigger_with_options"": {
+                  ""href"": ""https://devbuild03:8154/go/api/pipelines/DirectaTrunk/schedule""
+                },
+                ""pause"": {
+                  ""href"": ""https://devbuild03:8154/go/api/pipelines/DirectaTrunk/pause""
+                },
+                ""unpause"": {
+                  ""href"": ""https://devbuild03:8154/go/api/pipelines/DirectaTrunk/unpause""
+                }
+              },
+              ""name"": ""DirectaTrunk"",
+              ""locked"": false,
+              ""pause_info"": {
+                ""paused"": false,
+                ""paused_by"": null,
+                ""pause_reason"": null
+              },
+              ""_embedded"": {
+                ""instances"": [
+                  {
+                    ""_links"": {
+                      ""self"": {
+                        ""href"": ""https://devbuild03:8154/go/api/pipelines/DirectaTrunk/instance/1861""
+                      },
+                      ""doc"": {
+                        ""href"": ""https://api.gocd.io/#get-pipeline-instance""
+                      },
+                      ""history_url"": {
+                        ""href"": ""https://devbuild03:8154/go/api/pipelines/DirectaTrunk/history""
+                      },
+                      ""vsm_url"": {
+                        ""href"": ""https://devbuild03:8154/go/pipelines/value_stream_map/DirectaTrunk/1861""
+                      },
+                      ""compare_url"": {
+                        ""href"": ""https://devbuild03:8154/go/compare/DirectaTrunk/1860/with/1861""
+                      },
+                      ""build_cause_url"": {
+                        ""href"": ""https://devbuild03:8154/go/pipelines/DirectaTrunk/1861/build_cause""
+                      }
+                    },
+                    ""label"": ""1861"",
+                    ""schedule_at"": ""2018-08-14T08:37:45.000Z"",
+                    ""triggered_by"": ""Mat.Roberts"",
+                    ""_embedded"": {
+                      ""stages"": [
+                        {
+                          ""_links"": {
+                            ""self"": {
+                              ""href"": ""https://devbuild03:8154/go/api/stages/DirectaTrunk/1861/BuildStage/2""
+                            },
+                            ""doc"": {
+                              ""href"": ""https://api.gocd.io/#get-stage-instance""
+                            }
+                          },
+                          ""name"": ""BuildStage"",
+                          ""status"": ""Building"",
+                          ""previous_stage"": {
+                            ""_links"": {
+                              ""self"": {
+                                ""href"": ""https://devbuild03:8154/go/api/stages/DirectaTrunk/1860/BuildStage/1""
+                              },
+                              ""doc"": {
+                                ""href"": ""https://api.gocd.io/#get-stage-instance""
+                              }
+                            },
+                            ""name"": ""BuildStage"",
+                            ""status"": ""Passed""
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
 
+";
+            #endregion
+            var httpClientHandler = new HttpClientHandlerFake { HttpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(jsonResult) } };
 
+            // Act
+            Result<List<Pipeline>> result;
+            using (var service = new GocdService(new RestClient("https://buildserver:8154", "username", "password", true, httpClientHandler)))
+            {
+                result = service.GetPipelines();
+            }
+
+            // Assert
+            Assert.That(result.Data[0].Name, Is.EqualTo("DirectaTrunk"));
+            Assert.That(result.Data[0].WebsiteUrl, Is.EqualTo("/go/pipelines/DirectaTrunk/1861/BuildStage/2"));
+            Assert.That(result.Data[0].PipelineInstances[0].Label, Is.EqualTo("1861"));
+            Assert.That(result.Data[0].PipelineInstances[0].Stages[0].Name, Is.EqualTo("BuildStage"));
+            Assert.That(result.Data[0].PipelineInstances[0].Stages[0].Status, Is.EqualTo(StageStatus.Building));
+            Assert.That(result.Data[0].PipelineInstances[0].Stages[0].Run, Is.EqualTo(2));
+
+            Assert.That(result.Data[0].PipelineInstances[0].Stages[0].PreviousStatus, Is.EqualTo(StageStatus.Passed));
+        }
     }
 }

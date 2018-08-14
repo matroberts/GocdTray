@@ -13,6 +13,7 @@ namespace GocdTray.App.Abstractions
         public string PausedBy { get; set; } 
         public string PausedReason { get; set; }
         public List<PipelineInstance> PipelineInstances { get; set; } = new List<PipelineInstance>();
+        public string WebsiteUrl => PipelineInstances.Any() ? $"/go/pipelines/{Name}/{PipelineInstances.First().Label}/BuildStage/{PipelineInstances.First().Stages.First().Run}" : "/go/pipelines/";
 
         public PipelineStatus Status
         {
@@ -60,6 +61,8 @@ namespace GocdTray.App.Abstractions
     {
         public string Name { get; set; }
         public StageStatus Status { get; set; }
+        public int Run { get; set; }
+
         // Only defined when Status==Building
         public StageStatus? PreviousStatus { get; set; }
     }

@@ -47,9 +47,13 @@ namespace GocdTray.Rest
                             pipeline.PipelineInstances.Add(instance);
                             foreach (var dtoStage in dtoInstance._embedded.stages)
                             {
+                                var selflink = dtoStage._links?.self.href ?? "/1";
+                                var runString = selflink.Split('/').Last();
+                                var run = int.TryParse(runString, out var parsedInt) ? parsedInt : 1;
                                 var stage = new Stage
                                 {
                                     Name = dtoStage.name,
+                                    Run = run,
                                     Status = dtoStage.status.ToEnum<StageStatus>(),
                                     PreviousStatus = dtoStage?.previous_stage?.status.ToEnumNullable<StageStatus>(),
                                 };
