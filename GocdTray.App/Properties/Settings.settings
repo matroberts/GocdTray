@@ -17,5 +17,8 @@
     <Setting Name="PollingIntervalSeconds" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">15</Value>
     </Setting>
+    <Setting Name="GocdWebUri" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://buildserver:8153</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -82,5 +82,17 @@ namespace GocdTray.App.Properties {
                 this["PollingIntervalSeconds"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://buildserver:8153")]
+        public string GocdWebUri {
+            get {
+                return ((string)(this["GocdWebUri"]));
+            }
+            set {
+                this["GocdWebUri"] = value;
+            }
+        }
     }
 }

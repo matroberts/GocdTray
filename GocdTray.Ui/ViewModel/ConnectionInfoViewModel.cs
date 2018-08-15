@@ -16,6 +16,7 @@ namespace GocdTray.Ui.ViewModel
             this.serviceManager = serviceManager;
             var connectionInfo = serviceManager.GetConnectionInfo();
             GocdApiUri = connectionInfo.GocdApiUri;
+            GocdWebUri = connectionInfo.GocdWebUri;
             Username = connectionInfo.Username;
             Password = connectionInfo.Password;
             IgnoreCertificateErrors = connectionInfo.IgnoreCertificateErrors;
@@ -30,6 +31,17 @@ namespace GocdTray.Ui.ViewModel
             {
                 gocdApiUri = value;
                 OnPropertyChanged(nameof(GocdApiUri));
+            }
+        }
+
+        private string gocdWebUri;
+        public string GocdWebUri
+        {
+            get => gocdWebUri;
+            set
+            {
+                gocdWebUri = value;
+                OnPropertyChanged(nameof(GocdWebUri));
             }
         }
 
@@ -93,6 +105,7 @@ namespace GocdTray.Ui.ViewModel
             var connectionInfo = new ConnectionInfo()
             {
                 GocdApiUri = GocdApiUri,
+                GocdWebUri = GocdWebUri,
                 PollingIntervalSeconds = PollingIntervalSeconds,
                 Username = Username,
                 Password = Password,

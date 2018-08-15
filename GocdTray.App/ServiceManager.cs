@@ -20,6 +20,7 @@ namespace GocdTray.App
             return new ConnectionInfo()
             {
                 GocdApiUri = Properties.Settings.Default.GocdApiUri,
+                GocdWebUri = Properties.Settings.Default.GocdWebUri,
                 IgnoreCertificateErrors = Properties.Settings.Default.IgnoreCertificateErrors,
                 Password = Properties.Settings.Default.Password,
                 Username = Properties.Settings.Default.Username,
@@ -32,7 +33,10 @@ namespace GocdTray.App
             var validationResult = new ValidationResult();
 
             if(connectionInfo.GocdApiUri.IsTrimmedNullOrEmpty() || Uri.TryCreate(connectionInfo.GocdApiUri, UriKind.Absolute, out _) == false)
-                validationResult.Add("You must supply a valid Gocd Url.", nameof(connectionInfo.GocdApiUri));
+                validationResult.Add("You must supply a valid url for the Gocd Api.", nameof(connectionInfo.GocdApiUri));
+
+            if (connectionInfo.GocdWebUri.IsTrimmedNullOrEmpty() || Uri.TryCreate(connectionInfo.GocdWebUri, UriKind.Absolute, out _) == false)
+                validationResult.Add("You must supply a valid url for the Gocd Website.", nameof(connectionInfo.GocdWebUri));
 
             if (connectionInfo.Username.IsTrimmedNullOrEmpty())
                 validationResult.Add("You must supply a username.", nameof(connectionInfo.Username));
@@ -47,6 +51,7 @@ namespace GocdTray.App
                 return validationResult;
 
             Properties.Settings.Default.GocdApiUri = connectionInfo.GocdApiUri;
+            Properties.Settings.Default.GocdWebUri = connectionInfo.GocdWebUri;
             Properties.Settings.Default.IgnoreCertificateErrors = connectionInfo.IgnoreCertificateErrors;
             Properties.Settings.Default.Password = connectionInfo.Password;
             Properties.Settings.Default.PollingIntervalSeconds = connectionInfo.PollingIntervalSeconds;
