@@ -40,7 +40,8 @@
                 </ContextMenu>
             </Button.ContextMenu>
         </Button>
-        <DataGrid Grid.Row="1" Padding="0" Margin="0" GridLinesVisibility="None" HeadersVisibility="None" ItemsSource="{Binding Pipelines}" RowHeaderWidth="0" IsTabStop="True" Background="{StaticResource BackgroundColorPrimary}" AutoGenerateColumns="False" IsReadOnly="True"  BorderThickness="0">
+        <DataGrid x:Name="PipelineGrid" Grid.Row="1" ItemsSource="{Binding Pipelines}" SelectedItem="{Binding SelectedItem}" SelectionMode="Single" SelectionUnit="FullRow" 
+                  Padding="0" Margin="0" GridLinesVisibility="None" HeadersVisibility="None" RowHeaderWidth="0" IsTabStop="True" Background="{StaticResource BackgroundColorPrimary}" AutoGenerateColumns="False" IsReadOnly="True"  BorderThickness="0">
             <DataGrid.CellStyle>
                 <Style TargetType="DataGridCell">
                     <Setter Property="BorderThickness" Value="0"/>
@@ -52,6 +53,9 @@
                     <Setter Property="Background" Value="{StaticResource BackgroundColorPrimary}" />
                 </Style>
             </DataGrid.RowStyle>
+            <DataGrid.InputBindings>
+                <MouseBinding Gesture="LeftDoubleClick" Command="{Binding OpenInBrowserCommand}" CommandParameter="{Binding ElementName=PipelineGrid, Path=SelectedItem}"/>
+            </DataGrid.InputBindings>
 
             <DataGrid.Columns>
                 <DataGridTemplateColumn IsReadOnly="True">

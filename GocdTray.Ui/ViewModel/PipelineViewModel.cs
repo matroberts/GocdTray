@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -19,11 +20,11 @@ namespace GocdTray.Ui.ViewModel
             this.serviceManager = serviceManager;
             Pipelines = new ObservableCollection<Pipeline>();
             SortCommand = new FuncCommand<PipelineSortOrder>(Sort);
+            OpenInBrowserCommand = new FuncCommand<Pipeline>(OpenInBrowser);
             this.serviceManager.OnStatusChange += Update;
         }
 
         public PipelineSortOrder PipelineSortOrder { get; set; } = PipelineSortOrder.BuildStatus;
-        public ICommand SortCommand { get; }
 
         private ObservableCollection<Pipeline> pipelines;
         public ObservableCollection<Pipeline> Pipelines
@@ -55,10 +56,18 @@ namespace GocdTray.Ui.ViewModel
             }
         }
 
-        public void Sort(PipelineSortOrder pipelineSortOrder)
+        public ICommand SortCommand { get; }
+        private void Sort(PipelineSortOrder pipelineSortOrder)
         {
             PipelineSortOrder = pipelineSortOrder;
             Update();
+        }
+
+        public ICommand OpenInBrowserCommand { get; }
+        private void OpenInBrowser(Pipeline pipeline)
+        {
+            var url = serviceManager.GetConnectionInfo().GocdWebUri + pipeline.WebsiteUrl;
+            Process.Start(url);
         }
     }
 }
