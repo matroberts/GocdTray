@@ -29,6 +29,7 @@ namespace GocdTray.Ui.Code
         public ViewManager(IServiceManager serviceManager)
         {
             this.serviceManager = serviceManager;
+            serviceManager.OnStatusChange += Update;
 
             notifyIcon = new NotifyIcon(new Container())
             {
@@ -69,9 +70,7 @@ namespace GocdTray.Ui.Code
 
         private ImageSource AppImageSource => Imaging.CreateBitmapSourceFromHIcon(AppIcon.Handle, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
 
-        public void OnStatusChange() => UpdateViews();
-
-        private void UpdateViews()
+        private void Update()
         {
             notifyIcon.Icon = AppIcon;
             notifyIcon.Text = AppText;
@@ -95,7 +94,7 @@ namespace GocdTray.Ui.Code
                 pipelineView.Activate();
             }
 
-            UpdateViews();
+            Update();
         }
 
         private void ShowAboutView()

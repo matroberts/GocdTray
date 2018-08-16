@@ -11,8 +11,7 @@ namespace GocdTray.App
     {
         private GocdService gocdService;
         private DispatcherTimer pollingTimer;
-        public delegate void StatusChangeEvent();
-        public event StatusChangeEvent OnStatusChange;
+        public event Action OnStatusChange;
 
         public Estate Estate { get; set; } = new Estate(Result<List<Pipeline>>.Invalid("Initialising"));
         public ConnectionInfo GetConnectionInfo()

@@ -9,5 +9,6 @@ namespace GocdTray.App.Abstractions
         Estate Estate { get; }
         ConnectionInfo GetConnectionInfo();
         ValidationResult SetConnectionInfo(ConnectionInfo connectionInfo);
+        event Action OnStatusChange;
     }
 }
