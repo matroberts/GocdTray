@@ -17,13 +17,13 @@ namespace GocdTray.Ui.ViewModel
         public PipelineViewModel(IServiceManager serviceManager)
         {
             this.serviceManager = serviceManager;
-            this.serviceManager.OnStatusChange += Update;
             Pipelines = new ObservableCollection<Pipeline>();
             SortCommand = new FuncCommand<PipelineSortOrder>(Sort);
+            this.serviceManager.OnStatusChange += Update;
         }
 
         public PipelineSortOrder PipelineSortOrder { get; set; } = PipelineSortOrder.BuildStatus;
-        public ICommand SortCommand { get; set; }
+        public ICommand SortCommand { get; }
 
         private ObservableCollection<Pipeline> pipelines;
         public ObservableCollection<Pipeline> Pipelines
@@ -38,28 +38,27 @@ namespace GocdTray.Ui.ViewModel
 
         private void Update()
         {
-            Pipelines = Sort(serviceManager.Estate.Pipelines);
+            var pls = serviceManager.Estate.Pipelines;
+            switch (PipelineSortOrder)
+            {
+                case PipelineSortOrder.BuildStatus:
+                    Pipelines = new ObservableCollection<Pipeline>(pls.OrderBy(p => p.Status).ThenBy(p => p.Name));
+                    break;
+                case PipelineSortOrder.AtoZ:
+                    Pipelines = new ObservableCollection<Pipeline>(pls.OrderBy(p => p.Name));
+                    break;
+                case PipelineSortOrder.ZtoA:
+                    Pipelines = new ObservableCollection<Pipeline>(pls.OrderByDescending(p => p.Name));
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(PipelineSortOrder), PipelineSortOrder, null);
+            }
         }
 
         public void Sort(PipelineSortOrder pipelineSortOrder)
         {
             PipelineSortOrder = pipelineSortOrder;
-            Pipelines = Sort(pipelines);
-        }
-
-        private ObservableCollection<Pipeline> Sort(IEnumerable<Pipeline> pipelines)
-        {
-            switch (PipelineSortOrder)
-            {
-                case PipelineSortOrder.BuildStatus:
-                    return new ObservableCollection<Pipeline>(pipelines.OrderBy(p => p.Status).ThenBy(p => p.Name));
-                case PipelineSortOrder.AtoZ:
-                    return new ObservableCollection<Pipeline>(pipelines.OrderBy(p => p.Name));
-                case PipelineSortOrder.ZtoA:
-                    return new ObservableCollection<Pipeline>(pipelines.OrderByDescending(p => p.Name));
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(PipelineSortOrder), PipelineSortOrder, null);
-            }
+            Update();
         }
     }
 }
