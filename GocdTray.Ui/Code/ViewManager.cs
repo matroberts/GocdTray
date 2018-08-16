@@ -43,7 +43,7 @@ namespace GocdTray.Ui.Code
             notifyIcon.DoubleClick += (sender, e) => ShowPipelineView();
             notifyIcon.MouseUp += NotifyIcon_MouseUp;
 
-            pipelineViewModel = new PipelineViewModel( );
+            pipelineViewModel = new PipelineViewModel(serviceManager);
         }
 
         private Icon AppIcon
@@ -74,7 +74,6 @@ namespace GocdTray.Ui.Code
         {
             notifyIcon.Icon = AppIcon;
             notifyIcon.Text = AppText;
-            pipelineViewModel.PopulateTable(serviceManager.Estate.Pipelines);
         }
 
         private void ShowPipelineView()
@@ -93,8 +92,6 @@ namespace GocdTray.Ui.Code
             {
                 pipelineView.Activate();
             }
-
-            Update();
         }
 
         private void ShowAboutView()

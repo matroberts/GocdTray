@@ -12,8 +12,12 @@ namespace GocdTray.Ui.ViewModel
 {
     public class PipelineViewModel : ViewModelBase
     {
-        public PipelineViewModel()
+        private readonly IServiceManager serviceManager;
+
+        public PipelineViewModel(IServiceManager serviceManager)
         {
+            this.serviceManager = serviceManager;
+            this.serviceManager.OnStatusChange += Update;
             Pipelines = new ObservableCollection<Pipeline>();
             SortCommand = new FuncCommand<PipelineSortOrder>(Sort);
         }
@@ -32,7 +36,16 @@ namespace GocdTray.Ui.ViewModel
             }
         }
 
-        public void PopulateTable(IEnumerable<Pipeline> pipelines) => Pipelines = Sort(pipelines);
+        private void Update()
+        {
+            Pipelines = Sort(serviceManager.Estate.Pipelines);
+        }
+
+        public void Sort(PipelineSortOrder pipelineSortOrder)
+        {
+            PipelineSortOrder = pipelineSortOrder;
+            Pipelines = Sort(pipelines);
+        }
 
         private ObservableCollection<Pipeline> Sort(IEnumerable<Pipeline> pipelines)
         {
@@ -47,12 +60,6 @@ namespace GocdTray.Ui.ViewModel
                 default:
                     throw new ArgumentOutOfRangeException(nameof(PipelineSortOrder), PipelineSortOrder, null);
             }
-        }
-
-        public void Sort(PipelineSortOrder pipelineSortOrder)
-        {
-            PipelineSortOrder = pipelineSortOrder;
-            PopulateTable(Pipelines);
         }
     }
 }
