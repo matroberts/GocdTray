@@ -13,7 +13,7 @@ namespace GocdTray.App.Abstractions
         public string PausedBy { get; set; } 
         public string PausedReason { get; set; }
         public List<PipelineInstance> PipelineInstances { get; set; } = new List<PipelineInstance>();
-        public string WebsiteUrl => PipelineInstances.Any() ? $"/go/pipelines/{Name}/{PipelineInstances.First().Label}/{PipelineInstances.First().Stages.First().Name}/{PipelineInstances.First().Stages.First().Run}" : "/go/pipelines/";
+        public string WebsiteUrl => PipelineInstances.Any() ? $"go/pipelines/{Name}/{PipelineInstances.First().Label}/{PipelineInstances.First().Stages.First().Name}/{PipelineInstances.First().Stages.First().Run}" : "go/pipelines/";
 
         public PipelineStatus Status
         {

@@ -523,7 +523,7 @@ namespace GocdTray.Test.Rest
             Assert.That(result.Data[0].PausedBy, Is.EqualTo("mat.roberts"));
             Assert.That(result.Data[0].PausedReason, Is.EqualTo("Under construction"));
             Assert.That(result.Data[0].PipelineInstances.Count, Is.EqualTo(0));
-            Assert.That(result.Data[0].WebsiteUrl, Is.EqualTo("/go/pipelines/"));
+            Assert.That(result.Data[0].WebsiteUrl, Is.EqualTo("go/pipelines/"));
         }
 
         [Test]
@@ -840,7 +840,7 @@ namespace GocdTray.Test.Rest
 
             // Assert
             Assert.That(result.Data[0].Name, Is.EqualTo("DirectaTrunk"));
-            Assert.That(result.Data[0].WebsiteUrl, Is.EqualTo("/go/pipelines/DirectaTrunk/1861/MyBuildStage/2"));
+            Assert.That(result.Data[0].WebsiteUrl, Is.EqualTo("go/pipelines/DirectaTrunk/1861/MyBuildStage/2"));
             Assert.That(result.Data[0].PipelineInstances[0].Label, Is.EqualTo("1861"));
             Assert.That(result.Data[0].PipelineInstances[0].Stages[0].Name, Is.EqualTo("MyBuildStage"));
             Assert.That(result.Data[0].PipelineInstances[0].Stages[0].Status, Is.EqualTo(StageStatus.Building));

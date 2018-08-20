@@ -60,6 +60,7 @@
     <Compile Include="Rest\GocdServiceTests.cs" />
     <Compile Include="Rest\HttpClientHandlerFakeWithFunc.cs" />
     <Compile Include="Rest\RestClientTests.cs" />
+    <Compile Include="Ui\PipelineModelTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -80,6 +81,10 @@
     <ProjectReference Include="..\GocdTray.Rest\GocdTray.Rest.csproj">
       <Project>{6dd649f1-ca3d-4dba-af7d-e5789cde176f}</Project>
       <Name>GocdTray.Rest</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GocdTray.Ui\GocdTray.Ui.csproj">
+      <Project>{ec9652c9-aeec-48ea-bd5d-f00e3c80eabb}</Project>
+      <Name>GocdTray.Ui</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

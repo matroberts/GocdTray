@@ -66,8 +66,13 @@ namespace GocdTray.Ui.ViewModel
         public ICommand OpenInBrowserCommand { get; }
         private void OpenInBrowser(Pipeline pipeline)
         {
-            var url = serviceManager.GetConnectionInfo().GocdWebUri + pipeline.WebsiteUrl;
-            Process.Start(url);
+            Process.Start(GetPipelineUrl(pipeline));
+        }
+
+        public string GetPipelineUrl(Pipeline pipeline)
+        {
+            var baseUri = new Uri(serviceManager.GetConnectionInfo().GocdWebUri, UriKind.Absolute);
+            return new Uri(baseUri, pipeline.WebsiteUrl).ToString();
         }
     }
 }
