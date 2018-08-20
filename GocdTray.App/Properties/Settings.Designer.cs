@@ -85,7 +85,7 @@ namespace GocdTray.App.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://buildserver:8153")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://buildserver:8153")]
         public string GocdWebUri {
             get {
                 return ((string)(this["GocdWebUri"]));
