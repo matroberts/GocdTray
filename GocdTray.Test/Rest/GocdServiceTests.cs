@@ -799,7 +799,7 @@ namespace GocdTray.Test.Rest
                               ""href"": ""https://api.gocd.io/#get-stage-instance""
                             }
                           },
-                          ""name"": ""BuildStage"",
+                          ""name"": ""MyBuildStage"",
                           ""status"": ""Building"",
                           ""previous_stage"": {
                             ""_links"": {
@@ -840,9 +840,9 @@ namespace GocdTray.Test.Rest
 
             // Assert
             Assert.That(result.Data[0].Name, Is.EqualTo("DirectaTrunk"));
-            Assert.That(result.Data[0].WebsiteUrl, Is.EqualTo("/go/pipelines/DirectaTrunk/1861/BuildStage/2"));
+            Assert.That(result.Data[0].WebsiteUrl, Is.EqualTo("/go/pipelines/DirectaTrunk/1861/MyBuildStage/2"));
             Assert.That(result.Data[0].PipelineInstances[0].Label, Is.EqualTo("1861"));
-            Assert.That(result.Data[0].PipelineInstances[0].Stages[0].Name, Is.EqualTo("BuildStage"));
+            Assert.That(result.Data[0].PipelineInstances[0].Stages[0].Name, Is.EqualTo("MyBuildStage"));
             Assert.That(result.Data[0].PipelineInstances[0].Stages[0].Status, Is.EqualTo(StageStatus.Building));
             Assert.That(result.Data[0].PipelineInstances[0].Stages[0].Run, Is.EqualTo(2));
 
