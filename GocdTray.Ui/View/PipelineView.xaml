@@ -65,7 +65,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Binding="{Binding Name}" Foreground="{StaticResource TextColorPrimary}" FontSize="15"/>
+                <DataGridTextColumn Binding="{Binding Name}" Foreground="{StaticResource TextColorPrimary}" FontSize="15" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
