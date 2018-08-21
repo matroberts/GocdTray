@@ -40,8 +40,7 @@
                 </ContextMenu>
             </Button.ContextMenu>
         </Button>
-        <DataGrid x:Name="PipelineGrid" Grid.Row="1" ItemsSource="{Binding Pipelines}" SelectedItem="{Binding SelectedItem}" SelectionMode="Single" SelectionUnit="FullRow" 
-                  Padding="0" Margin="0" GridLinesVisibility="None" HeadersVisibility="None" RowHeaderWidth="0" IsTabStop="True" Background="{StaticResource BackgroundColorPrimary}" AutoGenerateColumns="False" IsReadOnly="True"  BorderThickness="0">
+        <DataGrid x:Name="PipelineGrid" Grid.Row="1" ItemsSource="{Binding Pipelines}" SelectedItem="{Binding SelectedItem}" SelectionMode="Single" SelectionUnit="FullRow" IsTabStop="True" AutoGenerateColumns="False" IsReadOnly="True" >
             <DataGrid.InputBindings>
                 <MouseBinding Gesture="LeftDoubleClick" Command="{Binding OpenInBrowserCommand}" CommandParameter="{Binding ElementName=PipelineGrid, Path=SelectedItem}"/>
             </DataGrid.InputBindings>

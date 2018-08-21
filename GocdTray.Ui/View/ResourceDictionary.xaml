@@ -127,6 +127,17 @@
     <!-- ########################### -->
     <!--          Data Grid          -->
     <!-- ########################### -->
+
+    <Style TargetType="DataGrid">
+        <Setter Property="Background" Value="{StaticResource BackgroundColorPrimary}" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="GridLinesVisibility" Value="None" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="HeadersVisibility" Value="None" />
+        <Setter Property="RowHeaderWidth" Value="0" /> 
+    </Style>
+
     <Style TargetType="DataGridRow">
         <Setter Property="Background" Value="{StaticResource BackgroundColorPrimary}" />
         <Style.Triggers>
@@ -135,6 +146,7 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+
     <Style TargetType="DataGridCell">
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
