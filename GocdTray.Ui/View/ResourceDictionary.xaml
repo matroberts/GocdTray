@@ -26,7 +26,7 @@
     <SolidColorBrush x:Key="TextColorError" Color="#E81123" />
     <SolidColorBrush x:Key="BackgroundColorPrimary" Color="#282C31" />
     <SolidColorBrush x:Key="BackgroundColorSecondary" Color="#565A5F" />
-    <SolidColorBrush x:Key="BackgroundColorHighlight" Color="#565A5F" />
+    <SolidColorBrush x:Key="BackgroundColorHighlight" Color="#373B40" />
     <SolidColorBrush x:Key="CloseWindowButtonHoverColor" Color="#E81123" />
 
     <!-- ################### -->
@@ -60,7 +60,10 @@
     <Style TargetType="CheckBox" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="BorderThickness" Value="0"></Setter>
     </Style>
-    
+
+    <!-- ########################### -->
+    <!--      Window Chrome          -->
+    <!-- ########################### -->
     <Style x:Key="CloseWindowButton" TargetType="Button">
         <Setter Property="Margin" Value="0"/>
         <Setter Property="BorderThickness" Value="0"/>
@@ -130,10 +133,6 @@
             <Trigger Property="IsMouseOver" Value="true">
                 <Setter Property="Background" Value="{StaticResource BackgroundColorHighlight}" />
             </Trigger>
-            <Trigger Property="IsSelected" Value="True">
-                <Setter Property="Background" Value="{StaticResource BackgroundColorHighlight}" />
-                <Setter Property="BorderBrush" Value="{StaticResource BackgroundColorHighlight}" />
-            </Trigger>
         </Style.Triggers>
     </Style>
     <Style TargetType="DataGridCell">
@@ -141,7 +140,8 @@
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Style.Triggers>
             <Trigger Property="DataGridCell.IsSelected" Value="True">
-                <Setter Property="Background" Value="{StaticResource BackgroundColorHighlight}" />
+                <!-- This makes selection invisible, so only get the mouse over effect -->
+                <Setter Property="Background" Value="Transparent" />
             </Trigger>
         </Style.Triggers>
     </Style>
