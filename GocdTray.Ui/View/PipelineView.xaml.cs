@@ -15,6 +15,9 @@ namespace GocdTray.Ui.View
         {
             InitializeComponent();
             this.Style = (Style)this.Resources["CustomWindowStyle"];
+
+            this.Top = SystemParameters.WorkArea.Height - this.Height;
+            this.Left = SystemParameters.WorkArea.Width - this.Width;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
