@@ -24,7 +24,7 @@
         <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">A windows tray application for montoring Go.cd build servers.</Label>
         <Label Grid.Row="2" Grid.Column="0">Version</Label>
         <Label Grid.Row="2" Grid.Column="1" Content="{Binding Version}"/>
-        <Button  Grid.Row="3" Grid.Column="1" Command="{Binding CloseClick}" Content="Close" Width="70" HorizontalAlignment="Right"/>
+        <Button  Grid.Row="3" Grid.Column="1" Command="{Binding CloseClick}" Content="Close" Width="70" Height="28" HorizontalAlignment="Right"/>
 
     </Grid>
 </Window>
