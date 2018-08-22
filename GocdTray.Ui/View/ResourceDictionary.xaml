@@ -41,8 +41,22 @@
     </Style>
 
     <Style TargetType="Button" BasedOn="{StaticResource BaseStyle}">
-        <Setter Property="Background" Value="{StaticResource BackgroundColorPrimary}"></Setter>
-        <Setter Property="Foreground" Value="{StaticResource TextColorPrimary}"></Setter>
+        <Setter Property="Background" Value="{StaticResource BackgroundColorPrimary}"/>
+        <Setter Property="Foreground" Value="{StaticResource TextColorPrimary}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}" BorderBrush="{StaticResource BackgroundColorSecondary}" BorderThickness="{TemplateBinding BorderThickness}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource BackgroundColorHighlight}"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style TargetType="Label" BasedOn="{StaticResource BaseStyle}">

@@ -42,8 +42,8 @@
         <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding PollingIntervalSeconds, Mode=TwoWay}" PreviewTextInput="ValidateInt"/>
         <Label Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Content="{Binding ErrorMessage}" Foreground="{StaticResource TextColorError}"/>
         <StackPanel Grid.Row="7" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Command="{Binding OkClick}" Content="OK" Width="70" HorizontalAlignment="Right" Margin="0,0,10,0"/>
-            <Button Command="{Binding CancelClick}" Content="Cancel" Width="70" HorizontalAlignment="Right"/>
+            <Button Command="{Binding OkClick}" Content="OK" Width="70" Height="28" HorizontalAlignment="Right" Margin="0,0,10,0"/>
+            <Button Command="{Binding CancelClick}" Content="Cancel" Width="70" Height="28" HorizontalAlignment="Right"/>
         </StackPanel>
     </Grid>
 </Window>
