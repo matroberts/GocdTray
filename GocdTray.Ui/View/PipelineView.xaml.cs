@@ -16,6 +16,7 @@ namespace GocdTray.Ui.View
             InitializeComponent();
             this.Style = (Style)this.Resources["CustomWindowStyle"];
 
+            this.WindowStartupLocation = WindowStartupLocation.Manual;
             this.Top = SystemParameters.WorkArea.Height - this.Height;
             this.Left = SystemParameters.WorkArea.Width - this.Width;
         }

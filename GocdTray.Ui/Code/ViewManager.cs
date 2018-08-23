@@ -83,7 +83,6 @@ namespace GocdTray.Ui.Code
                 pipelineView = new PipelineView
                 {
                     DataContext = pipelineViewModel,
-                    WindowStartupLocation = WindowStartupLocation.Manual
                 };
                 pipelineView.Closing += (sender, e) => pipelineView = null;
                 pipelineView.Show();
