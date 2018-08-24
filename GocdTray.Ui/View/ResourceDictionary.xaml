@@ -12,6 +12,7 @@
     <!-- font awesome -->
     <FontFamily x:Key="FontAwesome">/GocdTray.Ui;Component/Fonts/FontAwesome.otf#Font Awesome 5 Free Solid</FontFamily>
     <System:String x:Key="IconSquare">&#xf0c8;</System:String>
+    <System:String x:Key="IconCheckSquare">&#xf14a;</System:String>
     <System:String x:Key="IconSortAmountDown">&#xf160;</System:String>
     <System:String x:Key="IconHeart">&#xf004;</System:String>
     <System:String x:Key="IconCheck">&#xf00c;</System:String>
@@ -71,9 +72,31 @@
         <Setter Property="Margin" Value="1, 1, 1, 1"></Setter> 
     </Style>
 
-    <Style TargetType="CheckBox" BasedOn="{StaticResource BaseStyle}">
-        <Setter Property="BorderThickness" Value="0"></Setter>
+    <Style TargetType="CheckBox">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Source="{converters:ImageFromFont Text={StaticResource IconSquare}, Brush={StaticResource BackgroundColorSecondary}}" Width="22"/>
+                        <!-- second image on top of first-->
+                        <Image x:Name="iconCheck" Source="{converters:ImageFromFont Text={StaticResource IconCheck}, Brush={StaticResource TextColorPrimary}}" Width="18"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="iconCheck" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter TargetName="iconCheck" Property="Visibility" Value="Hidden"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
+
 
     <Style TargetType="ContextMenu">
         <Setter Property="SnapsToDevicePixels" Value="True" />
