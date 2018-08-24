@@ -86,10 +86,34 @@
                     <Border x:Name="Border" Background="{StaticResource BackgroundColorPrimary}" BorderThickness="1" BorderBrush="{StaticResource BackgroundColorPrimary}">
                         <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
                     </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="MenuItem" >
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Background" Value="{StaticResource BackgroundColorPrimary}"/>
+        <Setter Property="Foreground" Value="{StaticResource TextColorPrimary}"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type MenuItem}">
+                    <Border x:Name="Bd" Padding="1" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <ContentPresenter Grid.Column="0" x:Name="IconPresenter"     Margin="0, 0, 5, 0"  ContentSource="Icon"   RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            <ContentPresenter Grid.Column="1" x:Name="ContentPresenter"  Margin="0, 0, 10, 0"  ContentSource="Header" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Grid>
+                    </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="HasDropShadow" Value="true">
-                            <Setter TargetName="Border" Property="Padding" Value="0,3,0,3" />
-                            <Setter TargetName="Border" Property="CornerRadius" Value="4" />
+                        <Trigger Property="IsHighlighted" Value="True">
+                            <Setter Property="Background" TargetName="Bd" Value="{StaticResource BackgroundColorHighlight}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
