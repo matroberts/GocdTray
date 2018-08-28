@@ -22,6 +22,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GocdTray.Rest", "GocdTray.R
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GocdTray.App.Abstractions", "GocdTray.App.Abstractions\GocdTray.App.Abstractions.csproj", "{4CBA91D2-E815-4C0D-9D84-AA0D1CE419D2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{F6A50094-7991-49F4-8F7A-5EB95084D5A9}"
+	ProjectSection(SolutionItems) = preProject
+		Images\pipeline-view.png = Images\pipeline-view.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
