@@ -2,8 +2,16 @@
 # GocdTray  
 GocdTray is a Microsoft Windows System Tray Application for monitoring [Go.cd](https://www.gocd.org/).
 
-The simplest method to install GocdTray is to use the [ClickOnce installation](https://github.com/matroberts/GocdTrayClickOnce).
+Simply install GocdTray with a [ClickOnce installation](https://github.com/matroberts/GocdTrayClickOnce).
 
-GocdTray shows a summary status of the go.cd server in the system tray, and provides a detailed status in the dashboard.
+GocdTray shows status in the system tray.
+
+![Failed](Images/failed.png?raw=true "Failed")
+
+![Building](Images/building.png?raw=true "Building")
+
+![Passed](Images/passed.png?raw=true "Passed")
+
+And detailed information in the dashboard.
 
 ![GocdTray Dashboard](Images/pipeline-view.png?raw=true "Dashboard")

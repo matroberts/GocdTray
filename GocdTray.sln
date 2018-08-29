@@ -24,6 +24,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GocdTray.App.Abstractions",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{F6A50094-7991-49F4-8F7A-5EB95084D5A9}"
 	ProjectSection(SolutionItems) = preProject
+		Images\building.png = Images\building.png
+		Images\failed.png = Images\failed.png
+		Images\passed.png = Images\passed.png
 		Images\pipeline-view.png = Images\pipeline-view.png
 	EndProjectSection
 EndProject
