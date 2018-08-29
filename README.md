@@ -6,11 +6,7 @@ Simply install GocdTray with a [ClickOnce installation](https://github.com/matro
 
 GocdTray shows status in the system tray.
 
-![Failed](Images/failed.png?raw=true "Failed")
-
-![Building](Images/building.png?raw=true "Building")
-
-![Passed](Images/passed.png?raw=true "Passed")
+![Tray](Images/tray-animated.png?raw=true "Tray")
 
 And detailed information in the dashboard.
 

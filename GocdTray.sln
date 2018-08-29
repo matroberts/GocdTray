@@ -28,6 +28,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{F6A500
 		Images\failed.png = Images\failed.png
 		Images\passed.png = Images\passed.png
 		Images\pipeline-view.png = Images\pipeline-view.png
+		Images\tray-animated.gif = Images\tray-animated.gif
 	EndProjectSection
 EndProject
 Global
