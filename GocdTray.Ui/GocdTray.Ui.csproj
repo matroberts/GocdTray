@@ -61,6 +61,7 @@
     <Compile Include="..\AssemblyInfo.common.cs">
       <Link>Properties\AssemblyInfo.common.cs</Link>
     </Compile>
+    <Compile Include="Code\PasswordBoxWithBinding.cs" />
     <Compile Include="Code\PipelineSortOrder.cs" />
     <Compile Include="Code\ViewManager.cs" />
     <Compile Include="Code\FuncCommand.cs" />

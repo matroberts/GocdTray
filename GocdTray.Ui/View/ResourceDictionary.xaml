@@ -61,15 +61,23 @@
     </Style>
 
     <Style TargetType="Label" BasedOn="{StaticResource BaseStyle}">
-        <Setter Property="Foreground" Value="{StaticResource TextColorPrimary}"></Setter>
+        <Setter Property="Foreground" Value="{StaticResource TextColorPrimary}"/>
     </Style>
 
     <Style TargetType="TextBox" BasedOn="{StaticResource BaseStyle}">
-        <Setter Property="Foreground" Value="{StaticResource TextColorPrimary}"></Setter>
-        <Setter Property="Background" Value="{StaticResource BackgroundColorSecondary}"></Setter>
-        <Setter Property="BorderThickness" Value="0"></Setter>
-        <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
-        <Setter Property="Margin" Value="1, 1, 1, 1"></Setter> 
+        <Setter Property="Foreground" Value="{StaticResource TextColorPrimary}"/>
+        <Setter Property="Background" Value="{StaticResource BackgroundColorSecondary}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="1, 1, 1, 1"/> 
+    </Style>
+
+    <Style TargetType="PasswordBox" BasedOn="{StaticResource BaseStyle}">
+        <Setter Property="Foreground" Value="{StaticResource TextColorPrimary}"/>
+        <Setter Property="Background" Value="{StaticResource BackgroundColorSecondary}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="1, 1, 1, 1"/>
     </Style>
 
     <Style TargetType="CheckBox">

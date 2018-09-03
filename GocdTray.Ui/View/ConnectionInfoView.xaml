@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GocdTray.Ui.View"
+        xmlns:code="clr-namespace:GocdTray.Ui.Code"
         mc:Ignorable="d"
         Title="Connection Info" Height="280" Width="600" ResizeMode="NoResize" ShowInTaskbar="False">
     <Window.Resources>
@@ -36,6 +37,7 @@
         <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Username, Mode=TwoWay}"/>
         <Label Grid.Row="3" Grid.Column="0">Password</Label>
         <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Password, Mode=TwoWay}"/>
+        <PasswordBox Grid.Row="3" Grid.Column="1" code:PasswordBoxWithBinding.BindPassword="True" code:PasswordBoxWithBinding.BoundPassword="{Binding Password, Mode=TwoWay}"/>
         <Label Grid.Row="4" Grid.Column="0">Ignore Certificate Errors</Label>
         <CheckBox Grid.Row="4" Grid.Column="1" IsChecked="{Binding IgnoreCertificateErrors, Mode=TwoWay}" VerticalAlignment="Center"/>
         <Label Grid.Row="5" Grid.Column="0">Polling Interval</Label>
