@@ -2,6 +2,7 @@
 using System.Linq;
 using GocdTray.App;
 using GocdTray.App.Abstractions;
+using GocdTray.Test.App;
 using GocdTray.Ui.ViewModel;
 using NUnit.Framework;
 
@@ -16,7 +17,7 @@ namespace GocdTray.Test.Ui
         {
             // Arrange
             GocdTray.App.Properties.Settings.Default.GocdWebUri = baseUri;
-            var pipelineViewModel = new PipelineViewModel(new ServiceManager());
+            var pipelineViewModel = new PipelineViewModel(new ServiceManager(new GocdServiceFactoryFake()));
 
             // Act
             var pipeline = new Pipeline { Name = "Pipeline", PipelineInstances = { new PipelineInstance() { Label = "23", Stages = { new Stage() { Name = "Stage", Run = 3 } } } } };

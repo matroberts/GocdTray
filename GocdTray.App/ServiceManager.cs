@@ -10,7 +10,7 @@ namespace GocdTray.App
     public class ServiceManager : IServiceManager
     {
         private readonly IGocdServiceFactory gocdServiceFactory;
-        private GocdService gocdService;
+        private IGocdService gocdService;
         private DispatcherTimer pollingTimer;
         public event Action OnStatusChange;
 

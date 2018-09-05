@@ -6,7 +6,12 @@ using GocdTray.Rest.Dto;
 
 namespace GocdTray.Rest
 {
-    public class GocdService : IDisposable
+    public interface IGocdService : IDisposable
+    {
+        Result<List<Pipeline>> GetPipelines();
+    }
+
+    public class GocdService : IGocdService
     {
         private readonly IRestClient restClient;
 

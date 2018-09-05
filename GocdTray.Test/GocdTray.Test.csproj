@@ -54,6 +54,8 @@
     </Compile>
     <Compile Include="Abstractions\EstateTests.cs" />
     <Compile Include="Abstractions\PipelineTests.cs" />
+    <Compile Include="App\GocdServiceFactoryFake.cs" />
+    <Compile Include="App\GocdServiceFake.cs" />
     <Compile Include="App\ServiceManagerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rest\HttpClientHandlerFake.cs" />

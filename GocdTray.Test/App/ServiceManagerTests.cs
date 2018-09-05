@@ -15,7 +15,7 @@ namespace GocdTray.Test.App
         public void SetConnectionInfo_IfConnectionInfoIsValid_ShouldBeSaved()
         {
             // Arrange
-            var service = new ServiceManager();
+            var service = new ServiceManager(new GocdServiceFactoryFake());
 
             // Act
             var result = service.SetConnectionInfo(new ConnectionInfo { GocdApiUri = "https://example.com", GocdWebUri = "http://example.com", IgnoreCertificateErrors = false, Password = "mypassword", PollingIntervalSeconds = 5, Username = "myusername" });
@@ -35,7 +35,7 @@ namespace GocdTray.Test.App
         public void SetConnectionInfo_ShouldReturnValidationError_If_ApiUrl_WebUrl_Username_Or_Password_IsNotSet()
         {
             // Arrange
-            var service = new ServiceManager();
+            var service = new ServiceManager(new GocdServiceFactoryFake());
             var connectionInfo = service.GetConnectionInfo();
 
             // Act
@@ -63,7 +63,7 @@ namespace GocdTray.Test.App
         public void SetConnectionInfo_ShouldReturnError_IfApiUrlIsNotValid()
         {
             // Arrange
-            var service = new ServiceManager();
+            var service = new ServiceManager(new GocdServiceFactoryFake());
             var connectionInfo = service.GetConnectionInfo();
 
             // Act
@@ -82,7 +82,7 @@ namespace GocdTray.Test.App
         public void SetConnectionInfo_ShouldReturnError_IfWebUrlIsNotValid()
         {
             // Arrange
-            var service = new ServiceManager();
+            var service = new ServiceManager(new GocdServiceFactoryFake());
             var connectionInfo = service.GetConnectionInfo();
 
             // Act
@@ -101,7 +101,7 @@ namespace GocdTray.Test.App
         public void SetConnectionInfo_ShouldReturnError_IfPollingIntervalIsLessThan5Seconds()
         {
             // Arrange
-            var service = new ServiceManager();
+            var service = new ServiceManager(new GocdServiceFactoryFake());
             var connectionInfo = service.GetConnectionInfo();
 
             // Act
@@ -124,7 +124,7 @@ namespace GocdTray.Test.App
         public void TestConnectionInfo_ShouldReturnValidationError_If_ApiUrl_WebUrl_Username_Or_Password_IsNotSet()
         {
             // Arrange
-            var service = new ServiceManager();
+            var service = new ServiceManager(new GocdServiceFactoryFake());
 
             // Act
             var result = service.TestConnectionInfo(new ConnectionInfo { GocdApiUri = string.Empty, GocdWebUri = string.Empty, Password = string.Empty, Username = string.Empty, IgnoreCertificateErrors = false, PollingIntervalSeconds = 30, });
@@ -150,7 +150,7 @@ namespace GocdTray.Test.App
         public void TestConnectionInfo_ShouldReturnError_IfApiUrlIsNotValid()
         {
             // Arrange
-            var service = new ServiceManager();
+            var service = new ServiceManager(new GocdServiceFactoryFake());
 
             // Act
             var result = service.TestConnectionInfo(new ConnectionInfo { GocdApiUri = "https://", GocdWebUri = "http://example.com", PollingIntervalSeconds = 5, IgnoreCertificateErrors = false, Password = "mypassword", Username = "myusername" });
@@ -167,7 +167,7 @@ namespace GocdTray.Test.App
         public void TestConnectionInfo_ShouldReturnError_IfWebUrlIsNotValid()
         {
             // Arrange
-            var service = new ServiceManager();
+            var service = new ServiceManager(new GocdServiceFactoryFake());
 
             // Act
             var result = service.TestConnectionInfo(new ConnectionInfo { GocdApiUri = "http://example.com", GocdWebUri = "http://", PollingIntervalSeconds = 5, IgnoreCertificateErrors = false, Password = "mypassword", Username = "myusername" });
@@ -184,7 +184,7 @@ namespace GocdTray.Test.App
         public void TestConnectionInfo_ShouldReturnError_IfPollingIntervalIsLessThan5Seconds()
         {
             // Arrange
-            var service = new ServiceManager();
+            var service = new ServiceManager(new GocdServiceFactoryFake());
 
             // Act
             var result = service.TestConnectionInfo(new ConnectionInfo { PollingIntervalSeconds = 4, GocdApiUri = "https://example.com", GocdWebUri = "http://example.com", IgnoreCertificateErrors = false, Password = "mypassword", Username = "myusername" });
