@@ -11,6 +11,7 @@ namespace GocdTray.Test.App
     public class ServiceManagerTests
     {
         #region SetConnectionInfo
+        fail
 
         [Test]
         public void SetConnectionInfo_IfConnectionInfoIsValid_ShouldBeSaved()
