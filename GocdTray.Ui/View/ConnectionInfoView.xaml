@@ -7,7 +7,7 @@
         xmlns:code="clr-namespace:GocdTray.Ui.Code"
         xmlns:converters="clr-namespace:GocdTray.Ui.Converters"
         mc:Ignorable="d"
-        Title="Connection Info" Height="280" Width="600" ResizeMode="NoResize" ShowInTaskbar="False">
+        Title="Connection Info" Width="600" SizeToContent="Height" ResizeMode="NoResize" ShowInTaskbar="False">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -23,8 +23,20 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition>
+                <RowDefinition.Style>
+                    <Style TargetType="{x:Type RowDefinition}">
+                        <Setter Property="Height" Value="Auto" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding HasErrors}" Value="False">
+                                <Setter Property="Height" Value="0" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </RowDefinition.Style>
+            </RowDefinition>
+            <RowDefinition Height="4"/> <!-- empty row for padding -->
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -43,10 +55,10 @@
         <CheckBox Grid.Row="4" Grid.Column="1" IsChecked="{Binding IgnoreCertificateErrors, Mode=TwoWay}" VerticalAlignment="Center"/>
         <Label Grid.Row="5" Grid.Column="0">Polling Interval (seconds)</Label>
         <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding PollingIntervalSeconds, Mode=TwoWay}" PreviewTextInput="ValidateInt"/>
-        <Label Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Content="{Binding ErrorMessage}" Foreground="{StaticResource TextColorError}"/>
-        <StackPanel Grid.Row="7" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left">
+        <TextBlock Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding ErrorMessage}" Foreground="{StaticResource TextColorError}" TextWrapping="Wrap" />
+        <StackPanel Grid.Row="8" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left">
             <Button  Command="{Binding TestConnection}" Content="Test Connection" Width="120" Height="28" />
-            <Image Tag="{Binding TestConnectionState}" Width="28" Height="28">
+            <Image Tag="{Binding TestConnectionState}" Width="24" Height="24">
                 <Image.Style>
                     <Style TargetType="Image">
                         <Style.Triggers>
@@ -64,7 +76,7 @@
                 </Image.Style>
             </Image>
         </StackPanel>
-        <StackPanel Grid.Row="7" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+        <StackPanel Grid.Row="8" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Command="{Binding OkClick}" Content="OK" Width="70" Height="28" HorizontalAlignment="Right" Margin="0,0,10,0"/>
             <Button Command="{Binding CancelClick}" Content="Cancel" Width="70" Height="28" HorizontalAlignment="Right"/>
         </StackPanel>

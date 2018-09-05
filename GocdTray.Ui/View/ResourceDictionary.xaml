@@ -70,6 +70,11 @@
         <Setter Property="Foreground" Value="{StaticResource TextColorPrimary}"/>
     </Style>
 
+    <Style TargetType="TextBlock">
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="Foreground" Value="{StaticResource TextColorPrimary}"/>
+    </Style>
+
     <Style TargetType="TextBox" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="Foreground" Value="{StaticResource TextColorPrimary}"/>
         <Setter Property="Background" Value="{StaticResource BackgroundColorSecondary}"/>

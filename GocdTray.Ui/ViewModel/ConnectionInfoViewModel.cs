@@ -99,9 +99,14 @@ namespace GocdTray.Ui.ViewModel
             set
             {
                 errorMessage = value;
+                hasErrors = value.IsTrimmedNullOrEmpty() == false;
                 OnPropertyChanged(nameof(ErrorMessage));
+                OnPropertyChanged(nameof(HasErrors));
             }
         }
+
+        private bool hasErrors;
+        public bool HasErrors => hasErrors;
 
         private TestConnectionState testConnectionState;
         public TestConnectionState TestConnectionState
