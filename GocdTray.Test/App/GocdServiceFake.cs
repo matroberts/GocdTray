@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using GocdTray.App.Abstractions;
 using GocdTray.Rest;
 
@@ -10,9 +11,11 @@ namespace GocdTray.Test.App
         {
         }
 
-        public Result<List<Pipeline>> Pipelines { get; set; } = new Result<List<Pipeline>>();
+        public Result<List<Pipeline>> Pipelines { get; set; }
         public Result<List<Pipeline>> GetPipelines()
         {
+            if(Pipelines==null)
+                throw new ArgumentException("GocdServiceFake you need to set a return value for GetPipelines()");
             return Pipelines;
         }
     }

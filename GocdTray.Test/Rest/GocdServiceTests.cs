@@ -26,6 +26,26 @@ namespace GocdTray.Test.Rest
             Console.WriteLine(result.Data);
         }
 
+
+        [Test]
+        public void GetPipelines_IfTheRestCallFails_TheErrorIsReturnedCorrectly()
+        {
+            // Arrange
+            // Invalid ssl certificate causes and error on the request
+            var httpClientHandler = new HttpClientHandlerFakeWithFunc() { SendAsyncFunc = (r, c) => throw new HttpRequestException("An error occurred while sending the request.", new WebException("The underlying connection was closed: Could not establish trust relationship for the SSL/TLS secure channel.")) };
+
+            // Act
+            Result<List<Pipeline>> result;
+            using (var service = new GocdService(new RestClient("https://buildserver:8154", "username", "password", false, httpClientHandler)))
+            {
+                result = service.GetPipelines();
+            }
+
+            // Assert
+            Assert.That(result.IsValid, Is.False);
+            Assert.That(result.ErrorMessage, Is.EqualTo("An error occurred while sending the request. The underlying connection was closed: Could not establish trust relationship for the SSL/TLS secure channel."));
+        }
+
         [Test]
         public void GetPipelines_DeserialisesPipelineAndPipelineGroupName_Correctly()
         {

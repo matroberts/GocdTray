@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using GocdTray.App;
 using GocdTray.App.Abstractions;
@@ -15,7 +16,9 @@ namespace GocdTray.Test.App
         public void SetConnectionInfo_IfConnectionInfoIsValid_ShouldBeSaved()
         {
             // Arrange
-            var service = new ServiceManager(new GocdServiceFactoryFake());
+            var gocdServiceFactory = new GocdServiceFactoryFake();
+            gocdServiceFactory.GocdService.Pipelines = Result<List<Pipeline>>.Valid(new List<Pipeline>());
+            var service = new ServiceManager(gocdServiceFactory);
 
             // Act
             var result = service.SetConnectionInfo(new ConnectionInfo { GocdApiUri = "https://example.com", GocdWebUri = "http://example.com", IgnoreCertificateErrors = false, Password = "mypassword", PollingIntervalSeconds = 5, Username = "myusername" });
@@ -195,6 +198,40 @@ namespace GocdTray.Test.App
 
             Assert.That(result.Messages[0].Property, Is.EqualTo(nameof(ConnectionInfo.PollingIntervalSeconds)));
             Assert.That(result.Messages[0].Message, Is.EqualTo("Polling interval must be at least 5 seconds."));
+        }
+
+        [Test]
+        public void TestConnectionInfo_ShouldReturnError_IfGetPipelinesCallFails()
+        {
+            // Arrange
+            var gocdServiceFactory = new GocdServiceFactoryFake();
+            gocdServiceFactory.GocdService.Pipelines = Result<List<Pipeline>>.Invalid("An error occurred while sending the request. The underlying connection was closed: Could not establish trust relationship for the SSL/TLS secure channel.");
+            var service = new ServiceManager(gocdServiceFactory);
+
+            // Act
+            var result = service.TestConnectionInfo(new ConnectionInfo { GocdApiUri = "https://example.com", GocdWebUri = "http://example.com", IgnoreCertificateErrors = false, Password = "mypassword", PollingIntervalSeconds = 5, Username = "myusername" });
+
+            // Assert
+            Assert.That(result.IsValid, Is.False);
+            Assert.That(result.Messages.Count, Is.EqualTo(1));
+
+            Assert.That(result.Messages[0].Message, Is.EqualTo("An error occurred while sending the request. The underlying connection was closed: Could not establish trust relationship for the SSL/TLS secure channel."));
+        }
+
+        [Test]
+        public void TestConnectionInfo_ShouldReturnValid_IfGetPipelinesCallSuceeds()
+        {
+            // Arrange
+            var gocdServiceFactory = new GocdServiceFactoryFake();
+            gocdServiceFactory.GocdService.Pipelines = Result<List<Pipeline>>.Valid(new List<Pipeline>());
+            var service = new ServiceManager(gocdServiceFactory);
+
+            // Act
+            var result = service.TestConnectionInfo(new ConnectionInfo { GocdApiUri = "https://example.com", GocdWebUri = "http://example.com", IgnoreCertificateErrors = false, Password = "mypassword", PollingIntervalSeconds = 5, Username = "myusername" });
+
+            // Assert
+            Assert.That(result.IsValid, Is.True);
+            Assert.That(result.Messages.Count, Is.EqualTo(0));
         }
 
         #endregion

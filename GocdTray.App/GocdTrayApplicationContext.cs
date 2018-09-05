@@ -21,7 +21,7 @@ namespace GocdTray.App
 
         protected override void Dispose(bool disposing)
         {
-            serviceManager?.Terminate();
+            serviceManager?.Dispose();
             serviceManager = null;
             viewManager = null;
         }

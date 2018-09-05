@@ -7,7 +7,7 @@ using GocdTray.Rest;
 
 namespace GocdTray.App
 {
-    public class ServiceManager : IServiceManager
+    public class ServiceManager : IServiceManager, IDisposable
     {
         private readonly IGocdServiceFactory gocdServiceFactory;
         private IGocdService gocdService;
@@ -108,7 +108,7 @@ namespace GocdTray.App
             OnStatusChange?.Invoke();
         }
 
-        public void Terminate()
+        public void Dispose()
         {
             pollingTimer?.Stop();
             pollingTimer = null;
