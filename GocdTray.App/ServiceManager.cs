@@ -9,9 +9,15 @@ namespace GocdTray.App
 {
     public class ServiceManager : IServiceManager
     {
+        private readonly IGocdServiceFactory gocdServiceFactory;
         private GocdService gocdService;
         private DispatcherTimer pollingTimer;
         public event Action OnStatusChange;
+
+        public ServiceManager(IGocdServiceFactory gocdServiceFactory)
+        {
+            this.gocdServiceFactory = gocdServiceFactory;
+        }
 
         public Estate Estate { get; set; } = new Estate(Result<List<Pipeline>>.Invalid("Initialising"));
         public ConnectionInfo GetConnectionInfo()
@@ -52,7 +58,7 @@ namespace GocdTray.App
                 return validationResult;
 
             Result<List<Pipeline>> restResult = null;
-            using (var tempGocdServive = new GocdService(new RestClient(connectionInfo.GocdApiUri, connectionInfo.Username, connectionInfo.Password, connectionInfo.IgnoreCertificateErrors)))
+            using (var tempGocdServive = gocdServiceFactory.Create(connectionInfo))
             {
                 restResult = tempGocdServive.GetPipelines();
             }
@@ -90,7 +96,7 @@ namespace GocdTray.App
             pollingTimer?.Stop();
             gocdService?.Dispose();
             var connectionInfo = GetConnectionInfo();
-            gocdService = new GocdService(new RestClient(connectionInfo.GocdApiUri, connectionInfo.Username, connectionInfo.Password, connectionInfo.IgnoreCertificateErrors));
+            gocdService = gocdServiceFactory.Create(connectionInfo);
             PollAndUpdate();
             // timer does not cause re-entry
             pollingTimer = new DispatcherTimer(TimeSpan.FromSeconds(connectionInfo.PollingIntervalSeconds), DispatcherPriority.Normal, (sender, args) => PollAndUpdate(), Dispatcher.CurrentDispatcher);

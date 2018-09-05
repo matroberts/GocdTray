@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using GocdTray.Rest;
 using GocdTray.Ui.Code;
 
 namespace GocdTray.App
@@ -13,7 +14,7 @@ namespace GocdTray.App
 
         public GocdTrayApplicationContext()
         {
-            serviceManager = new ServiceManager();
+            serviceManager = new ServiceManager(new GocdServiceFactory());
             viewManager = new ViewManager(serviceManager);
             serviceManager.Restart();
         }
