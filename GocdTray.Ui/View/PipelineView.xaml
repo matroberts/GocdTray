@@ -24,17 +24,17 @@
                 <ContextMenu>
                     <MenuItem  Header="Build Status" Command="{Binding SortCommand}" CommandParameter="{x:Static code:PipelineSortOrder.BuildStatus}">
                         <MenuItem.Icon>
-                            <Image Source="{converters:ImageFromFont Text={StaticResource IconCheck}, Brush=Green}" Visibility="{Binding PipelineSortOrder, Converter={StaticResource PipelineSortOrderToSelectedOptionConverter}, ConverterParameter={x:Static code:PipelineSortOrder.BuildStatus}}"/>
+                            <Image Source="{converters:ImageFromFont Text={StaticResource IconCheck}, Brush={StaticResource ColorPassed}}" Visibility="{Binding PipelineSortOrder, Converter={StaticResource PipelineSortOrderToSelectedOptionConverter}, ConverterParameter={x:Static code:PipelineSortOrder.BuildStatus}}"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="A-Z" Command="{Binding SortCommand}" CommandParameter="{x:Static code:PipelineSortOrder.AtoZ}">
                         <MenuItem.Icon>
-                            <Image Source="{converters:ImageFromFont Text={StaticResource IconCheck}, Brush=Green}" Visibility="{Binding PipelineSortOrder, Converter={StaticResource PipelineSortOrderToSelectedOptionConverter}, ConverterParameter={x:Static code:PipelineSortOrder.AtoZ}}"/>
+                            <Image Source="{converters:ImageFromFont Text={StaticResource IconCheck}, Brush={StaticResource ColorPassed}}" Visibility="{Binding PipelineSortOrder, Converter={StaticResource PipelineSortOrderToSelectedOptionConverter}, ConverterParameter={x:Static code:PipelineSortOrder.AtoZ}}"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="Z-A" Command="{Binding SortCommand}" CommandParameter="{x:Static code:PipelineSortOrder.ZtoA}">
                         <MenuItem.Icon>
-                            <Image Source="{converters:ImageFromFont Text={StaticResource IconCheck}, Brush=Green}" Visibility="{Binding PipelineSortOrder, Converter={StaticResource PipelineSortOrderToSelectedOptionConverter}, ConverterParameter={x:Static code:PipelineSortOrder.ZtoA}}"/>
+                            <Image Source="{converters:ImageFromFont Text={StaticResource IconCheck}, Brush={StaticResource ColorPassed}}" Visibility="{Binding PipelineSortOrder, Converter={StaticResource PipelineSortOrderToSelectedOptionConverter}, ConverterParameter={x:Static code:PipelineSortOrder.ZtoA}}"/>
                         </MenuItem.Icon>
                     </MenuItem>
                 </ContextMenu>

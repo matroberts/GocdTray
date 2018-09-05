@@ -9,6 +9,8 @@ namespace GocdTray.Ui.ViewModel
 {
     public class ConnectionInfoViewModel : ViewModelBase
     {
+
+
         private readonly IServiceManager serviceManager;
 
         public ConnectionInfoViewModel(IServiceManager serviceManager)
@@ -21,6 +23,7 @@ namespace GocdTray.Ui.ViewModel
             Password = connectionInfo.Password;
             IgnoreCertificateErrors = connectionInfo.IgnoreCertificateErrors;
             PollingIntervalSeconds = connectionInfo.PollingIntervalSeconds;
+            TestConnectionState = TestConnectionState.NotRun;
         }
 
         private string gocdApiUri;
@@ -100,6 +103,17 @@ namespace GocdTray.Ui.ViewModel
             }
         }
 
+        private TestConnectionState testConnectionState;
+        public TestConnectionState TestConnectionState
+        {
+            get => testConnectionState;
+            set
+            {
+                testConnectionState = value;
+                OnPropertyChanged(nameof(TestConnectionState));
+            }
+        }
+
         public ICommand OkClick => new FuncCommand<object>(o =>
         {
             var connectionInfo = new ConnectionInfo()
@@ -125,6 +139,7 @@ namespace GocdTray.Ui.ViewModel
 
         public ICommand TestConnection => new FuncCommand<object>(o =>
         {
+            TestConnectionState = TestConnectionState.Running;
             var connectionInfo = new ConnectionInfo()
             {
                 GocdApiUri = GocdApiUri,
@@ -137,6 +152,7 @@ namespace GocdTray.Ui.ViewModel
 
             var result = serviceManager.TestConnectionInfo(connectionInfo);
             ErrorMessage = result.IsValid ? null : result.ToString();
+            TestConnectionState = result.IsValid ? TestConnectionState.Passed : TestConnectionState.Failed;
         });
 
         public ICommand CancelClick => new FuncCommand<object>(o =>

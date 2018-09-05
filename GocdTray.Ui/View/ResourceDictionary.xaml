@@ -17,6 +17,7 @@
     <System:String x:Key="IconHeart">&#xf004;</System:String>
     <System:String x:Key="IconCheck">&#xf00c;</System:String>
     <System:String x:Key="IconTimes">&#xf00d;</System:String>
+    <System:String x:Key="IconSpinner">&#xf110;</System:String>
     <!-- segoe-ui-symbol-font -->
     <System:String x:Key="WinChromeClose">&#xE8BB;</System:String>
 
@@ -29,6 +30,11 @@
     <SolidColorBrush x:Key="BackgroundColorSecondary" Color="#565A5F" />
     <SolidColorBrush x:Key="BackgroundColorHighlight" Color="#373B40" />
     <SolidColorBrush x:Key="CloseWindowButtonHoverColor" Color="#E81123" />
+    <!-- Note that these color are "hard coded" in the icons for the app -->
+    <SolidColorBrush x:Key="ColorBuilding" Color="#FFD800" />
+    <SolidColorBrush x:Key="ColorPassed" Color="#008000" />
+    <SolidColorBrush x:Key="ColorFailed" Color="#FF0000" />
+    <SolidColorBrush x:Key="ColorNotConnected" Color="#AEAEAE" />
 
     <!-- ################### -->
     <!--       Controls      -->

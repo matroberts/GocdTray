@@ -63,6 +63,7 @@
     </Compile>
     <Compile Include="Code\PasswordBoxWithBinding.cs" />
     <Compile Include="Code\PipelineSortOrder.cs" />
+    <Compile Include="Code\TestConnectionState.cs" />
     <Compile Include="Code\ViewManager.cs" />
     <Compile Include="Code\FuncCommand.cs" />
     <Compile Include="Converters\ImageFromFont.cs" />

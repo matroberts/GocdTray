@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GocdTray.Ui.View"
         xmlns:code="clr-namespace:GocdTray.Ui.Code"
+        xmlns:converters="clr-namespace:GocdTray.Ui.Converters"
         mc:Ignorable="d"
         Title="Connection Info" Height="280" Width="600" ResizeMode="NoResize" ShowInTaskbar="False">
     <Window.Resources>
@@ -43,7 +44,26 @@
         <Label Grid.Row="5" Grid.Column="0">Polling Interval (seconds)</Label>
         <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding PollingIntervalSeconds, Mode=TwoWay}" PreviewTextInput="ValidateInt"/>
         <Label Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Content="{Binding ErrorMessage}" Foreground="{StaticResource TextColorError}"/>
-        <Button Grid.Row="7" Grid.Column="0" Command="{Binding TestConnection}" Content="Test Connection" Width="120" Height="28" HorizontalAlignment="Left"/>
+        <StackPanel Grid.Row="7" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left">
+            <Button  Command="{Binding TestConnection}" Content="Test Connection" Width="120" Height="28" />
+            <Image Tag="{Binding TestConnectionState}" Width="28" Height="28">
+                <Image.Style>
+                    <Style TargetType="Image">
+                        <Style.Triggers>
+                            <DataTrigger  Binding="{Binding TestConnectionState}" Value="{x:Static code:TestConnectionState.Passed}">
+                                <Setter Property="Source" Value="{converters:ImageFromFont Text={StaticResource IconCheck}, Brush={StaticResource ColorPassed}}"/>
+                            </DataTrigger>
+                            <DataTrigger  Binding="{Binding TestConnectionState}" Value="{x:Static code:TestConnectionState.Failed}">
+                                <Setter Property="Source" Value="{converters:ImageFromFont Text={StaticResource IconTimes}, Brush={StaticResource ColorFailed}}"/>
+                            </DataTrigger>
+                            <DataTrigger  Binding="{Binding TestConnectionState}" Value="{x:Static code:TestConnectionState.Running}">
+                                <Setter Property="Source" Value="{converters:ImageFromFont Text={StaticResource IconSpinner}, Brush={StaticResource ColorBuilding}}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+        </StackPanel>
         <StackPanel Grid.Row="7" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Command="{Binding OkClick}" Content="OK" Width="70" Height="28" HorizontalAlignment="Right" Margin="0,0,10,0"/>
             <Button Command="{Binding CancelClick}" Content="Cancel" Width="70" Height="28" HorizontalAlignment="Right"/>
