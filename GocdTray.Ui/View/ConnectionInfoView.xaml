@@ -35,7 +35,7 @@
                     </Style>
                 </RowDefinition.Style>
             </RowDefinition>
-            <RowDefinition Height="4"/> <!-- empty row for padding -->
+            <RowDefinition Height="6"/> <!-- empty row for padding -->
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -58,7 +58,7 @@
         <TextBlock Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding ErrorMessage}" Foreground="{StaticResource TextColorError}" TextWrapping="Wrap" />
         <StackPanel Grid.Row="8" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left">
             <Button  Command="{Binding TestConnection}" Content="Test Connection" Width="120" Height="28" />
-            <Image Tag="{Binding TestConnectionState}" Width="24" Height="24">
+            <Image Tag="{Binding TestConnectionState}" Width="24" Height="24" Margin="2,0,0,0">
                 <Image.Style>
                     <Style TargetType="Image">
                         <Style.Triggers>
@@ -69,11 +69,24 @@
                                 <Setter Property="Source" Value="{converters:ImageFromFont Text={StaticResource IconTimes}, Brush={StaticResource ColorFailed}}"/>
                             </DataTrigger>
                             <DataTrigger  Binding="{Binding TestConnectionState}" Value="{x:Static code:TestConnectionState.Running}">
-                                <Setter Property="Source" Value="{converters:ImageFromFont Text={StaticResource IconSpinner}, Brush={StaticResource ColorBuilding}}"/>
+                                <Setter Property="Source" Value="{converters:ImageFromFont Text={StaticResource IconSpinner}, Brush={StaticResource TextColorPrimary}}"/>
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard x:Name="Spin">
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Angle" From="0" To="360" Duration="0:0:2" RepeatBehavior="Forever" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                                <DataTrigger.ExitActions>
+                                    <RemoveStoryboard BeginStoryboardName="Spin"/>
+                                </DataTrigger.ExitActions>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </Image.Style>
+                <Image.RenderTransform>
+                    <RotateTransform CenterX="12" CenterY="12" />
+                </Image.RenderTransform>
             </Image>
         </StackPanel>
         <StackPanel Grid.Row="8" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
