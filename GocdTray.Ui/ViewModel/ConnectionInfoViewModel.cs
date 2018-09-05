@@ -123,6 +123,22 @@ namespace GocdTray.Ui.ViewModel
             }
         });
 
+        public ICommand TestConnection => new FuncCommand<object>(o =>
+        {
+            var connectionInfo = new ConnectionInfo()
+            {
+                GocdApiUri = GocdApiUri,
+                GocdWebUri = GocdWebUri,
+                PollingIntervalSeconds = PollingIntervalSeconds,
+                Username = Username,
+                Password = Password,
+                IgnoreCertificateErrors = IgnoreCertificateErrors,
+            };
+
+            var result = serviceManager.TestConnectionInfo(connectionInfo);
+            ErrorMessage = result.IsValid ? null : result.ToString();
+        });
+
         public ICommand CancelClick => new FuncCommand<object>(o =>
         {
             Close();

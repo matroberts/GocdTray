@@ -6,9 +6,10 @@ namespace GocdTray.App.Abstractions
 {
     public interface IServiceManager
     {
+        event Action OnStatusChange;
         Estate Estate { get; }
         ConnectionInfo GetConnectionInfo();
         ValidationResult SetConnectionInfo(ConnectionInfo connectionInfo);
-        event Action OnStatusChange;
+        ValidationResult TestConnectionInfo(ConnectionInfo connectionInfo);
     }
 }
