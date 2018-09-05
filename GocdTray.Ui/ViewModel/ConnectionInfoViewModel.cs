@@ -145,18 +145,12 @@ namespace GocdTray.Ui.ViewModel
 
         public ICommand TestConnection => new FuncCommand<object>(async o =>
         {
+            ErrorMessage = string.Empty;
             TestConnectionState = TestConnectionState.Running;
-            var connectionInfo = new ConnectionInfo()
-            {
-                GocdApiUri = GocdApiUri,
-                GocdWebUri = GocdWebUri,
-                PollingIntervalSeconds = PollingIntervalSeconds,
-                Username = Username,
-                Password = Password,
-                IgnoreCertificateErrors = IgnoreCertificateErrors,
-            };
 
+            var connectionInfo = new ConnectionInfo() { GocdApiUri = GocdApiUri, GocdWebUri = GocdWebUri, PollingIntervalSeconds = PollingIntervalSeconds, Username = Username, Password = Password, IgnoreCertificateErrors = IgnoreCertificateErrors, };
             var result = await Task.Run(() => serviceManager.TestConnectionInfo(connectionInfo));
+
             ErrorMessage = result.IsValid ? null : result.ToString();
             TestConnectionState = result.IsValid ? TestConnectionState.Passed : TestConnectionState.Failed;
         });
