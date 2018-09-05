@@ -29,9 +29,45 @@ namespace GocdTray.App
 
         public ValidationResult SetConnectionInfo(ConnectionInfo connectionInfo)
         {
+            var validationResult = ValidateConnectionInfo(connectionInfo);
+            if (validationResult.IsValid == false)
+                return validationResult;
+
+            Properties.Settings.Default.GocdApiUri = connectionInfo.GocdApiUri;
+            Properties.Settings.Default.GocdWebUri = connectionInfo.GocdWebUri;
+            Properties.Settings.Default.IgnoreCertificateErrors = connectionInfo.IgnoreCertificateErrors;
+            Properties.Settings.Default.Password = connectionInfo.Password;
+            Properties.Settings.Default.PollingIntervalSeconds = connectionInfo.PollingIntervalSeconds;
+            Properties.Settings.Default.Username = connectionInfo.Username;
+            Properties.Settings.Default.Save();
+            Restart();
+
+            return validationResult;
+        }
+
+        public ValidationResult TestConnectionInfo(ConnectionInfo connectionInfo)
+        {
+            var validationResult = ValidateConnectionInfo(connectionInfo);
+            if (validationResult.IsValid == false)
+                return validationResult;
+
+            Result<List<Pipeline>> restResult = null;
+            using (var tempGocdServive = new GocdService(new RestClient(connectionInfo.GocdApiUri, connectionInfo.Username, connectionInfo.Password, connectionInfo.IgnoreCertificateErrors)))
+            {
+                restResult = tempGocdServive.GetPipelines();
+            }
+
+            if(restResult.IsValid == false)
+                validationResult.Add(restResult.ErrorMessage);
+             
+            return validationResult;
+        }
+
+        private ValidationResult ValidateConnectionInfo(ConnectionInfo connectionInfo)
+        {
             var validationResult = new ValidationResult();
 
-            if(connectionInfo.GocdApiUri.IsTrimmedNullOrEmpty() || Uri.TryCreate(connectionInfo.GocdApiUri, UriKind.Absolute, out _) == false)
+            if (connectionInfo.GocdApiUri.IsTrimmedNullOrEmpty() || Uri.TryCreate(connectionInfo.GocdApiUri, UriKind.Absolute, out _) == false)
                 validationResult.Add("You must supply a valid url for the Gocd Api.", nameof(connectionInfo.GocdApiUri));
 
             if (connectionInfo.GocdWebUri.IsTrimmedNullOrEmpty() || Uri.TryCreate(connectionInfo.GocdWebUri, UriKind.Absolute, out _) == false)
@@ -45,18 +81,6 @@ namespace GocdTray.App
 
             if (connectionInfo.PollingIntervalSeconds < 5)
                 validationResult.Add("Polling interval must be at least 5 seconds.", nameof(connectionInfo.PollingIntervalSeconds));
-
-            if (validationResult.IsValid == false)
-                return validationResult;
-
-            Properties.Settings.Default.GocdApiUri = connectionInfo.GocdApiUri;
-            Properties.Settings.Default.GocdWebUri = connectionInfo.GocdWebUri;
-            Properties.Settings.Default.IgnoreCertificateErrors = connectionInfo.IgnoreCertificateErrors;
-            Properties.Settings.Default.Password = connectionInfo.Password;
-            Properties.Settings.Default.PollingIntervalSeconds = connectionInfo.PollingIntervalSeconds;
-            Properties.Settings.Default.Username = connectionInfo.Username;
-            Properties.Settings.Default.Save();
-            Restart();
 
             return validationResult;
         }
