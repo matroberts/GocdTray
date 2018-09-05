@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using GocdTray.App.Abstractions;
@@ -142,7 +143,7 @@ namespace GocdTray.Ui.ViewModel
             }
         });
 
-        public ICommand TestConnection => new FuncCommand<object>(o =>
+        public ICommand TestConnection => new FuncCommand<object>(async o =>
         {
             TestConnectionState = TestConnectionState.Running;
             var connectionInfo = new ConnectionInfo()
@@ -155,7 +156,7 @@ namespace GocdTray.Ui.ViewModel
                 IgnoreCertificateErrors = IgnoreCertificateErrors,
             };
 
-            var result = serviceManager.TestConnectionInfo(connectionInfo);
+            var result = await Task.Run(() => serviceManager.TestConnectionInfo(connectionInfo));
             ErrorMessage = result.IsValid ? null : result.ToString();
             TestConnectionState = result.IsValid ? TestConnectionState.Passed : TestConnectionState.Failed;
         });
