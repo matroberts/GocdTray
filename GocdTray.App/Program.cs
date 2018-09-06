@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Deployment.Application;
 using System.IO;
 using System.Linq;
@@ -30,9 +31,24 @@ namespace GocdTray.App
                 {
                     Application.Run(new GocdTrayApplicationContext());
                 }
-                catch (Exception exc)
+                catch (Exception ex)
                 {
-                    MessageBox.Show(exc.Message, "Error");
+                    var date = DateTime.UtcNow;
+                    var folder = ApplicationDeployment.IsNetworkDeployed ? ApplicationDeployment.CurrentDeployment.DataDirectory : Path.GetDirectoryName(ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath);
+                    var filename = $"CrashReport-{date:yyyyMMddHHmmss}.txt";
+                    var path = Path.Combine(folder, filename);
+
+                    var body = $@"
+GocdTray Crash Report
+=====================
+Version : {Assembly.GetExecutingAssembly().GetName().Version}
+Date    : {date:s}
+ 
+{ex}
+";
+                    File.WriteAllText(path, body);
+                    var message = $"Error '{ex.Message}'{Environment.NewLine}{Environment.NewLine}Crash report written to '{path}'";
+                    MessageBox.Show(message, "GocdTray Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
