@@ -10,10 +10,8 @@ namespace GocdTray.Ui.ViewModel
     public class AboutViewModel : ViewModelBase
     {
         public string Version => Assembly.GetExecutingAssembly().GetName().Version.ToString();
-        public ICommand CloseClick => new FuncCommand<object>(o =>
-        {
-            Close();
-        });
+        public ICommand CloseClick => new FuncCommand<object>(o => Close());
+        public ICommand ThrowException => new FuncCommand<object>(o => throw new Exception("Test Exception thrown by UI"));
 
         public event EventHandler CloseRequest;
         protected void Close() => CloseRequest?.Invoke(this, EventArgs.Empty);
