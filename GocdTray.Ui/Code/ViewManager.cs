@@ -145,7 +145,7 @@ namespace GocdTray.Ui.Code
             e.Cancel = false;
             if (notifyIcon.ContextMenuStrip.Items.Count == 0)
             {
-                notifyIcon.ContextMenuStrip.Items.Add(CreateMenuItemWithHandler("Pipelines", "Show the status of the Go.cd pipelines", (sender1, e1) => ShowPipelineView()));
+                notifyIcon.ContextMenuStrip.Items.Add(CreateMenuItemWithHandler("Dashboard", "Show the status of the Go.cd pipelines", (sender1, e1) => ShowPipelineView()));
                 notifyIcon.ContextMenuStrip.Items.Add(CreateMenuItemWithHandler("Connection Info", "Configure Connection Information", (sender1, e1) => ShowConnectionInfoView()));
                 notifyIcon.ContextMenuStrip.Items.Add(CreateMenuItemWithHandler("About", "Show the About dialog", (sender1, e1) => ShowAboutView()));
                 notifyIcon.ContextMenuStrip.Items.Add(new ToolStripSeparator());
