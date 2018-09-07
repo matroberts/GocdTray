@@ -83,13 +83,19 @@ namespace GocdTray.Ui.Code
                 pipelineView = new PipelineView
                 {
                     DataContext = pipelineViewModel,
+                    ShowActivated = false
                 };
                 pipelineView.Closing += (sender, e) => pipelineView = null;
                 pipelineView.Show();
+                pipelineView.Topmost = true;
+                pipelineView.Topmost = false;
             }
             else
             {
-                pipelineView.Activate();
+                pipelineView.ShowActivated = false;
+                pipelineView.Show();
+                pipelineView.Topmost = true;
+                pipelineView.Topmost = false;
             }
         }
 
