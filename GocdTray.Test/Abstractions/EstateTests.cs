@@ -21,6 +21,20 @@ namespace GocdTray.Test.Abstractions
             Assert.That(estate.Pipelines, Is.Empty);
         }
 
+        [Test]
+        public void IfTheResultIsValid_ButThereAreNoPipelines_TheEstateIsPassed()
+        {
+            // Arrange
+            var result = Result<List<Pipeline>>.Valid(new List<Pipeline>());
+
+            // Act
+            var estate = new Estate(result);
+
+            // Assert
+            Assert.That(estate.Status, Is.EqualTo(EstateStatus.Passed));
+            Assert.That(estate.Pipelines, Is.Empty);
+        }
+
         [TestCase(StageStatus.Building,  StageStatus.Building,  EstateStatus.Building)]
         [TestCase(StageStatus.Building,  StageStatus.Failed,    EstateStatus.Failed)]
         [TestCase(StageStatus.Building,  StageStatus.Cancelled, EstateStatus.Failed)]

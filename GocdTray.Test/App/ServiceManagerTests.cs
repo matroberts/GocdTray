@@ -235,5 +235,78 @@ namespace GocdTray.Test.App
         }
 
         #endregion
+
+        #region PollAndUpdate
+
+        [Test]
+        public void PollAndUpdate_ShouldRaiseAnOnStatusChangedEvent_WhenItIsCalled()
+        {
+
+            // Arrange
+            var gocdServiceFactory = new GocdServiceFactoryFake();
+            gocdServiceFactory.GocdService.Pipelines = Result<List<Pipeline>>.Valid(new List<Pipeline>());
+            var service = new ServiceManager(gocdServiceFactory);
+            bool onStatusChangeCalled = false;
+            service.OnStatusChange += () => onStatusChangeCalled = true;
+
+            // Act
+            service.PollAndUpdate();
+
+            // Assert
+            Assert.That(onStatusChangeCalled, Is.True);
+        }
+
+        [TestCase(EstateStatus.NotConnected, EstateStatus.NotConnected, false)]
+        [TestCase(EstateStatus.NotConnected, EstateStatus.Building,     false)]
+        [TestCase(EstateStatus.NotConnected, EstateStatus.Failed,       false)]
+        [TestCase(EstateStatus.NotConnected, EstateStatus.Passed,       false)]
+        [TestCase(EstateStatus.Building,     EstateStatus.NotConnected, false)]
+        [TestCase(EstateStatus.Building,     EstateStatus.Building,     false)]
+        [TestCase(EstateStatus.Building,     EstateStatus.Failed,       true)]
+        [TestCase(EstateStatus.Building,     EstateStatus.Passed,       false)]
+        [TestCase(EstateStatus.Passed,       EstateStatus.NotConnected, false)]
+        [TestCase(EstateStatus.Passed,       EstateStatus.Building,     false)]
+        [TestCase(EstateStatus.Passed,       EstateStatus.Failed,       true)]
+        [TestCase(EstateStatus.Passed,       EstateStatus.Passed,       false)]
+        [TestCase(EstateStatus.Failed,       EstateStatus.NotConnected, false)]
+        [TestCase(EstateStatus.Failed,       EstateStatus.Building,     false)]
+        [TestCase(EstateStatus.Failed,       EstateStatus.Failed,       false)]
+        [TestCase(EstateStatus.Failed,       EstateStatus.Passed,       false)]
+        public void PollAndUpdate_ShouldSetTheLastEstateStatus_And_RaiseAnOnBuildFailedEvent_WhenTheBuilldStatusChangesToFailed(EstateStatus previousStatus, EstateStatus nextStatus, bool expectedOnBuildFailedCalled)
+        {
+            // Arrange
+            Result<List<Pipeline>> pipelines = null;
+            switch (nextStatus)
+            {
+                case EstateStatus.NotConnected:
+                    pipelines = Result<List<Pipeline>>.Invalid("error");
+                    break;
+                case EstateStatus.Failed:
+                    pipelines = Result<List<Pipeline>>.Valid(new List<Pipeline>(){new Pipeline(){PipelineInstances = {new PipelineInstance(){Stages = new List<Stage>(){new Stage(){Status = StageStatus.Failed}}}}}});
+                    break;
+                case EstateStatus.Building:
+                    pipelines = Result<List<Pipeline>>.Valid(new List<Pipeline>() { new Pipeline() { PipelineInstances = { new PipelineInstance() { Stages = new List<Stage>() { new Stage() { Status = StageStatus.Building } } } } } });
+                    break;
+                case EstateStatus.Passed:
+                    pipelines = Result<List<Pipeline>>.Valid(new List<Pipeline>() { new Pipeline() { PipelineInstances = { new PipelineInstance() { Stages = new List<Stage>() { new Stage() { Status = StageStatus.Passed } } } } } });
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(nextStatus), nextStatus, null);
+            }
+
+            var gocdServiceFactory = new GocdServiceFactoryFake {GocdService = {Pipelines = pipelines } };
+            var service = new ServiceManager(gocdServiceFactory) { LastEstateStatus = previousStatus };
+            bool onBuildFailedCalled = false;
+            service.OnBuildFailed += () => onBuildFailedCalled = true;
+
+            // Act
+            service.PollAndUpdate();
+
+            // Assert
+            Assert.That(service.LastEstateStatus, Is.EqualTo(nextStatus));
+            Assert.That(onBuildFailedCalled, Is.EqualTo(expectedOnBuildFailedCalled));
+        }
+
+        #endregion
     }
 }

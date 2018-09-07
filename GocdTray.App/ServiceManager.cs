@@ -13,13 +13,16 @@ namespace GocdTray.App
         private IGocdService gocdService;
         private DispatcherTimer pollingTimer;
         public event Action OnStatusChange;
+        public event Action OnBuildFailed;
 
         public ServiceManager(IGocdServiceFactory gocdServiceFactory)
         {
             this.gocdServiceFactory = gocdServiceFactory;
+            this.gocdService = gocdServiceFactory.Create(GetConnectionInfo());
         }
 
         public Estate Estate { get; set; } = new Estate(Result<List<Pipeline>>.Invalid("Initialising"));
+        public EstateStatus LastEstateStatus { get; set; } = EstateStatus.NotConnected;
         public ConnectionInfo GetConnectionInfo()
         {
             return new ConnectionInfo()
@@ -102,10 +105,13 @@ namespace GocdTray.App
             pollingTimer = new DispatcherTimer(TimeSpan.FromSeconds(connectionInfo.PollingIntervalSeconds), DispatcherPriority.Normal, (sender, args) => PollAndUpdate(), Dispatcher.CurrentDispatcher);
         }
 
-        private void PollAndUpdate()
+        public void PollAndUpdate()
         {
             Estate = new Estate(gocdService.GetPipelines());
             OnStatusChange?.Invoke();
+            if((LastEstateStatus == EstateStatus.Building || LastEstateStatus == EstateStatus.Passed) && Estate.Status == EstateStatus.Failed)
+                OnBuildFailed?.Invoke();
+            LastEstateStatus = Estate.Status;
         }
 
         public void Dispose()
