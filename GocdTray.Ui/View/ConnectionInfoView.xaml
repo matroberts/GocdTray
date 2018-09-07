@@ -63,10 +63,10 @@
                     <Style TargetType="Image">
                         <Style.Triggers>
                             <DataTrigger  Binding="{Binding TestConnectionState}" Value="{x:Static code:TestConnectionState.Passed}">
-                                <Setter Property="Source" Value="{converters:ImageFromFont Text={StaticResource IconCheck}, Brush={StaticResource ColorPassed}}"/>
+                                <Setter Property="Source" Value="{converters:ImageFromFont Text={StaticResource IconCheck}, Brush={StaticResource PassedColor}}"/>
                             </DataTrigger>
                             <DataTrigger  Binding="{Binding TestConnectionState}" Value="{x:Static code:TestConnectionState.Failed}">
-                                <Setter Property="Source" Value="{converters:ImageFromFont Text={StaticResource IconTimes}, Brush={StaticResource ColorFailed}}"/>
+                                <Setter Property="Source" Value="{converters:ImageFromFont Text={StaticResource IconTimes}, Brush={StaticResource FailedColor}}"/>
                             </DataTrigger>
                             <DataTrigger  Binding="{Binding TestConnectionState}" Value="{x:Static code:TestConnectionState.Running}">
                                 <Setter Property="Source" Value="{converters:ImageFromFont Text={StaticResource IconSpinner}, Brush={StaticResource TextColorPrimary}}"/>

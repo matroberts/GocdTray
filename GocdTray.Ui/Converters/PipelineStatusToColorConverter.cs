@@ -14,16 +14,19 @@ namespace GocdTray.Ui.Converters
     [ValueConversion(typeof(PipelineStatus), typeof(SolidColorBrush))]
     public class PipelineStatusToColorConverter : IValueConverter
     {
+        public SolidColorBrush BuildingColor { get; set; }
+        public SolidColorBrush PassedColor { get; set; }
+        public SolidColorBrush FailedColor { get; set; }
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             switch ((PipelineStatus)value)
             {
                 case PipelineStatus.Building:
-                    return new SolidColorBrush(Colors.Gold);
+                    return BuildingColor;
                 case PipelineStatus.Passed:
-                    return new SolidColorBrush(Colors.Green);
+                    return PassedColor;
                 case PipelineStatus.Failed:
-                    return new SolidColorBrush(Colors.Red);
+                    return FailedColor;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(value), value, null);
             }

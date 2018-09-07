@@ -5,9 +5,7 @@
                     xmlns:System="clr-namespace:System;assembly=mscorlib"
                     xmlns:converters="clr-namespace:GocdTray.Ui.Converters">
 
-    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-    <converters:PipelineStatusToColorConverter x:Key="PipelineStatusToColorConverter" />
-    <converters:PipelineSortOrderToSelectedOptionConverter x:Key="PipelineSortOrderToSelectedOptionConverter" />
+
 
     <!-- font awesome -->
     <FontFamily x:Key="FontAwesome">/GocdTray.Ui;Component/Fonts/FontAwesome.otf#Font Awesome 5 Free Solid</FontFamily>
@@ -21,20 +19,25 @@
     <!-- segoe-ui-symbol-font -->
     <System:String x:Key="WinChromeClose">&#xE8BB;</System:String>
 
-    <!-- ################### -->
-    <!--       Colors        -->
-    <!-- ################### -->
+
     <SolidColorBrush x:Key="TextColorPrimary" Color="#FAFAFA" />
     <SolidColorBrush x:Key="TextColorError" Color="#E81123" />
     <SolidColorBrush x:Key="BackgroundColorPrimary" Color="#282C31" />
     <SolidColorBrush x:Key="BackgroundColorSecondary" Color="#565A5F" />
     <SolidColorBrush x:Key="BackgroundColorHighlight" Color="#373B40" />
     <SolidColorBrush x:Key="CloseWindowButtonHoverColor" Color="#E81123" />
-    <!-- Note that these color are "hard coded" in the icons for the app -->
-    <SolidColorBrush x:Key="ColorBuilding" Color="#FFD800" />
-    <SolidColorBrush x:Key="ColorPassed" Color="#008000" />
-    <SolidColorBrush x:Key="ColorFailed" Color="#FF0000" />
-    <SolidColorBrush x:Key="ColorNotConnected" Color="#AEAEAE" />
+    <!-- Note that these color are also "hard coded" in the icons for the app -->
+    <SolidColorBrush x:Key="BuildingColor" Color="#FFD800" />
+    <SolidColorBrush x:Key="PassedColor" Color="#009900" />
+    <SolidColorBrush x:Key="FailedColor" Color="#FF0000" />
+    <SolidColorBrush x:Key="NotConnectedColor" Color="#AEAEAE" />
+
+    <!-- ################### -->
+    <!--      Converters     -->
+    <!-- ################### -->
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    <converters:PipelineStatusToColorConverter x:Key="PipelineStatusToColorConverter" BuildingColor="{StaticResource BuildingColor}" PassedColor="{StaticResource PassedColor}" FailedColor="{StaticResource FailedColor}"/>
+    <converters:PipelineSortOrderToSelectedOptionConverter x:Key="PipelineSortOrderToSelectedOptionConverter" />
 
     <!-- ################### -->
     <!--       Controls      -->
