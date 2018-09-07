@@ -29,8 +29,6 @@ namespace GocdTray.Ui.Code
         public ViewManager(IServiceManager serviceManager)
         {
             this.serviceManager = serviceManager;
-            serviceManager.OnStatusChange += Update;
-
             notifyIcon = new NotifyIcon(new Container())
             {
                 ContextMenuStrip = new ContextMenuStrip(),
@@ -44,6 +42,9 @@ namespace GocdTray.Ui.Code
             notifyIcon.MouseUp += NotifyIcon_MouseUp;
 
             pipelineViewModel = new PipelineViewModel(serviceManager);
+
+            serviceManager.OnStatusChange += Update;
+            serviceManager.OnBuildFailed += ShowPipelineView;
         }
 
         private Icon AppIcon
