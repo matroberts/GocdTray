@@ -63,6 +63,7 @@
     <Compile Include="Rest\HttpClientHandlerFakeWithFunc.cs" />
     <Compile Include="Rest\RestClientTests.cs" />
     <Compile Include="Ui\PipelineModelTests.cs" />
+    <Compile Include="Ui\SoundNotifierTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

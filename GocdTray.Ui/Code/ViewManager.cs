@@ -25,6 +25,7 @@ namespace GocdTray.Ui.Code
         private PipelineView pipelineView;
         private PipelineViewModel pipelineViewModel;
         private ConnectionInfoView connectionInfoView;
+        private SoundNotifier soundNotifier;
 
         public ViewManager(IServiceManager serviceManager)
         {
@@ -42,6 +43,7 @@ namespace GocdTray.Ui.Code
             notifyIcon.MouseUp += NotifyIcon_MouseUp;
 
             pipelineViewModel = new PipelineViewModel(serviceManager);
+            soundNotifier = new SoundNotifier(serviceManager);
 
             serviceManager.OnStatusChange += Update;
             serviceManager.OnBuildFailed += ShowPipelineView;

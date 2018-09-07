@@ -63,6 +63,7 @@
     </Compile>
     <Compile Include="Code\PasswordBoxWithBinding.cs" />
     <Compile Include="Code\PipelineSortOrder.cs" />
+    <Compile Include="Code\SoundNotifier.cs" />
     <Compile Include="Code\TestConnectionState.cs" />
     <Compile Include="Code\ViewManager.cs" />
     <Compile Include="Code\FuncCommand.cs" />
@@ -148,6 +149,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\NotConnected.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\SadTrombone.txt" />
+    <Content Include="Resources\SadTrombone.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
