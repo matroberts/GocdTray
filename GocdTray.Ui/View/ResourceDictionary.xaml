@@ -38,7 +38,6 @@
     <!--      Converters     -->
     <!-- ################### -->
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-    <converters:PipelineStatusToColorConverter x:Key="PipelineStatusToColorConverter" BuildingColor="{StaticResource BuildingColor}" PassedColor="{StaticResource PassedColor}" FailedColor="{StaticResource FailedColor}"/>
     <converters:PipelineSortOrderToSelectedOptionConverter x:Key="PipelineSortOrderToSelectedOptionConverter" />
 
     <!-- ################### -->

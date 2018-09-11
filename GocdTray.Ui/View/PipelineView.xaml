@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:converters="clr-namespace:GocdTray.Ui.Converters"
         xmlns:code="clr-namespace:GocdTray.Ui.Code"
+        xmlns:abstractions="clr-namespace:GocdTray.App.Abstractions;assembly=GocdTray.App.Abstractions"
         Title="Dashboard" Height="600" Width="350" ShowInTaskbar="False">
     <Window.Resources>
         <ResourceDictionary>
@@ -49,13 +50,25 @@
                 <DataGridTemplateColumn IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock FontFamily="{StaticResource FontAwesome}" Foreground="{Binding Status, Converter={StaticResource PipelineStatusToColorConverter}}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" Width="15">
+                            <TextBlock FontFamily="{StaticResource FontAwesome}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" Width="15">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
+                                        
                                         <Setter Property="Text" Value="{StaticResource IconSquare}"/>
                                         <Style.Triggers>
+                                            <!-- Icon -->
                                             <DataTrigger Binding="{Binding Paused}" Value="True">
                                                 <Setter Property="Text" Value="{StaticResource IconPause}"/>
+                                            </DataTrigger>
+                                            <!-- Color -->
+                                            <DataTrigger Binding="{Binding Status}" Value="{x:Static abstractions:PipelineStatus.Building}">
+                                                <Setter Property="Foreground" Value="{StaticResource BuildingColor}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Status}" Value="{x:Static abstractions:PipelineStatus.Passed}">
+                                                <Setter Property="Foreground" Value="{StaticResource PassedColor}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Status}" Value="{x:Static abstractions:PipelineStatus.Failed}">
+                                                <Setter Property="Foreground" Value="{StaticResource FailedColor}"/>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
