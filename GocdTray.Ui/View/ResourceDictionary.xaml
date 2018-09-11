@@ -16,11 +16,13 @@
     <System:String x:Key="IconCheck">&#xf00c;</System:String>
     <System:String x:Key="IconTimes">&#xf00d;</System:String>
     <System:String x:Key="IconSpinner">&#xf110;</System:String>
+    <System:String x:Key="IconPause">&#xf04c;</System:String>
     <!-- segoe-ui-symbol-font -->
     <System:String x:Key="WinChromeClose">&#xE8BB;</System:String>
 
 
     <SolidColorBrush x:Key="TextColorPrimary" Color="#FAFAFA" />
+    <SolidColorBrush x:Key="TextColorSecondary" Color="#AEAEAE" />
     <SolidColorBrush x:Key="TextColorError" Color="#E81123" />
     <SolidColorBrush x:Key="BackgroundColorPrimary" Color="#282C31" />
     <SolidColorBrush x:Key="BackgroundColorSecondary" Color="#565A5F" />
@@ -38,6 +40,7 @@
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <converters:PipelineStatusToColorConverter x:Key="PipelineStatusToColorConverter" BuildingColor="{StaticResource BuildingColor}" PassedColor="{StaticResource PassedColor}" FailedColor="{StaticResource FailedColor}"/>
     <converters:PipelineSortOrderToSelectedOptionConverter x:Key="PipelineSortOrderToSelectedOptionConverter" />
+    <converters:PipelineIcon x:Key="PipelineIcon" IconPaused="{StaticResource IconPause}" IconRunning="{StaticResource IconSquare}"/>
 
     <!-- ################### -->
     <!--       Controls      -->

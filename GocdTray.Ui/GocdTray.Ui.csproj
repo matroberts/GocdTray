@@ -68,6 +68,7 @@
     <Compile Include="Code\ViewManager.cs" />
     <Compile Include="Code\FuncCommand.cs" />
     <Compile Include="Converters\ImageFromFont.cs" />
+    <Compile Include="Converters\PipelineIcon.cs" />
     <Compile Include="Converters\PipelineSortOrderToSelectedOptionConverter.cs" />
     <Compile Include="Converters\PipelineStatusToColorConverter.cs" />
     <Compile Include="ViewModel\AboutViewModel.cs" />
