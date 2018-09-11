@@ -56,7 +56,18 @@
                 <DataGridTemplateColumn IsReadOnly="True"  Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Name}" Foreground="{StaticResource TextColorPrimary}" FontSize="15"/>
+                            <TextBlock Text="{Binding Name}" FontSize="15">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="{StaticResource TextColorPrimary}"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Paused}" Value="True">
+                                                <Setter Property="Foreground" Value="{StaticResource TextColorSecondary}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
