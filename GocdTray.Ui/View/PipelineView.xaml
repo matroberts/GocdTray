@@ -49,7 +49,18 @@
                 <DataGridTemplateColumn IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Paused, Converter={StaticResource PipelineIcon}}" FontFamily="{StaticResource FontAwesome}" Foreground="{Binding Status, Converter={StaticResource PipelineStatusToColorConverter}}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" Width="15"/>
+                            <TextBlock FontFamily="{StaticResource FontAwesome}" Foreground="{Binding Status, Converter={StaticResource PipelineStatusToColorConverter}}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" Width="15">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Text" Value="{StaticResource IconSquare}"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Paused}" Value="True">
+                                                <Setter Property="Text" Value="{StaticResource IconPause}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
