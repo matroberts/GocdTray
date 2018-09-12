@@ -43,7 +43,7 @@ namespace GocdTray.Ui.ViewModel
             switch (PipelineSortOrder)
             {
                 case PipelineSortOrder.BuildStatus:
-                    Pipelines = new ObservableCollection<Pipeline>(pls.OrderBy(p => p.Status).ThenBy(p => p.Name));
+                    Pipelines = new ObservableCollection<Pipeline>(pls.OrderBy(p => p.StatusAndPausedSortOrder).ThenBy(p => p.Name));
                     break;
                 case PipelineSortOrder.AtoZ:
                     Pipelines = new ObservableCollection<Pipeline>(pls.OrderBy(p => p.Name));
