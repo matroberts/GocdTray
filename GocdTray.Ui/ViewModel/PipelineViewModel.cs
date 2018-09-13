@@ -20,8 +20,6 @@ namespace GocdTray.Ui.ViewModel
             this.serviceManager = serviceManager;
             Pipelines = new ObservableCollection<UiPipeline>();
             SortCommand = new FuncCommand<PipelineSortOrder>(Sort);
-            OpenInBrowserCommand = new FuncCommand<UiPipeline>(OpenInBrowser);
-            ToggleDetailsVisibilityCommand = new FuncCommand<UiPipeline>(ToggleDetailsVisibility);
             this.serviceManager.OnStatusChange += Update;
         }
 
@@ -64,16 +62,8 @@ namespace GocdTray.Ui.ViewModel
             Update();
         }
 
-        public ICommand OpenInBrowserCommand { get; }
-        private void OpenInBrowser(UiPipeline pipeline)
-        {
-            Process.Start(pipeline.WebsiteUrl);
-        }
+        public ICommand OpenInBrowserCommand { get; } = new FuncCommand<UiPipeline>(pipeline => Process.Start(pipeline.WebsiteUrl));
 
-        public ICommand ToggleDetailsVisibilityCommand { get; }
-        private void ToggleDetailsVisibility(UiPipeline pipeline)
-        {
-            pipeline.IsExpanded = !pipeline.IsExpanded;
-        }
+        public ICommand ToggleDetailsVisibilityCommand { get; } = new FuncCommand<UiPipeline>(pipeline => pipeline.IsExpanded = !pipeline.IsExpanded);
     }
 }
