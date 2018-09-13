@@ -18,16 +18,17 @@ namespace GocdTray.Ui.ViewModel
         public PipelineViewModel(IServiceManager serviceManager)
         {
             this.serviceManager = serviceManager;
-            Pipelines = new ObservableCollection<Pipeline>();
+            Pipelines = new ObservableCollection<UiPipeline>();
             SortCommand = new FuncCommand<PipelineSortOrder>(Sort);
-            OpenInBrowserCommand = new FuncCommand<Pipeline>(OpenInBrowser);
+            OpenInBrowserCommand = new FuncCommand<UiPipeline>(OpenInBrowser);
+            ToggleDetailsVisibilityCommand = new FuncCommand<UiPipeline>(ToggleDetailsVisibility);
             this.serviceManager.OnStatusChange += Update;
         }
 
         public PipelineSortOrder PipelineSortOrder { get; set; } = PipelineSortOrder.BuildStatus;
 
-        private ObservableCollection<Pipeline> pipelines;
-        public ObservableCollection<Pipeline> Pipelines
+        private ObservableCollection<UiPipeline> pipelines;
+        public ObservableCollection<UiPipeline> Pipelines
         {
             get => pipelines;
             set
@@ -39,17 +40,17 @@ namespace GocdTray.Ui.ViewModel
 
         private void Update()
         {
-            var pls = serviceManager.Estate.Pipelines;
+            var pls = serviceManager.Estate.Pipelines.Select(p => new UiPipeline(p));
             switch (PipelineSortOrder)
             {
                 case PipelineSortOrder.BuildStatus:
-                    Pipelines = new ObservableCollection<Pipeline>(pls.OrderBy(p => p.StatusAndPausedSortOrder).ThenBy(p => p.Name));
+                    Pipelines = new ObservableCollection<UiPipeline>(pls.OrderBy(p => p.StatusAndPausedSortOrder).ThenBy(p => p.Name));
                     break;
                 case PipelineSortOrder.AtoZ:
-                    Pipelines = new ObservableCollection<Pipeline>(pls.OrderBy(p => p.Name));
+                    Pipelines = new ObservableCollection<UiPipeline>(pls.OrderBy(p => p.Name));
                     break;
                 case PipelineSortOrder.ZtoA:
-                    Pipelines = new ObservableCollection<Pipeline>(pls.OrderByDescending(p => p.Name));
+                    Pipelines = new ObservableCollection<UiPipeline>(pls.OrderByDescending(p => p.Name));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(PipelineSortOrder), PipelineSortOrder, null);
@@ -64,12 +65,18 @@ namespace GocdTray.Ui.ViewModel
         }
 
         public ICommand OpenInBrowserCommand { get; }
-        private void OpenInBrowser(Pipeline pipeline)
+        private void OpenInBrowser(UiPipeline pipeline)
         {
             Process.Start(GetPipelineUrl(pipeline));
         }
 
-        public string GetPipelineUrl(Pipeline pipeline)
+        public ICommand ToggleDetailsVisibilityCommand { get; }
+        private void ToggleDetailsVisibility(UiPipeline pipeline)
+        {
+            pipeline.IsExpanded = !pipeline.IsExpanded;
+        }
+
+        public string GetPipelineUrl(UiPipeline pipeline)
         {
             var baseUri = new Uri(serviceManager.GetConnectionInfo().GocdWebUri, UriKind.Absolute);
             return new Uri(baseUri, pipeline.WebsiteUrl).ToString();

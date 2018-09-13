@@ -65,6 +65,7 @@
     <Compile Include="Code\PipelineSortOrder.cs" />
     <Compile Include="Code\SoundNotifier.cs" />
     <Compile Include="Code\TestConnectionState.cs" />
+    <Compile Include="Code\UiPipeline.cs" />
     <Compile Include="Code\ViewManager.cs" />
     <Compile Include="Code\FuncCommand.cs" />
     <Compile Include="Converters\ImageFromFont.cs" />

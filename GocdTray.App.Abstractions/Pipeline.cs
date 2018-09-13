@@ -27,20 +27,6 @@ namespace GocdTray.App.Abstractions
                     return PipelineStatus.Passed;
             }
         }
-
-        public int StatusAndPausedSortOrder
-        {
-            get
-            {
-                if (Status == PipelineStatus.Failed)
-                    return 1;
-                if (Status == PipelineStatus.Building)
-                    return 2;
-                if (Paused == true)
-                    return 3;
-                return 4;
-            }
-        }
     }
 
     public enum PipelineStatus

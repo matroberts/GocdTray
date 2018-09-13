@@ -3,6 +3,7 @@ using System.Linq;
 using GocdTray.App;
 using GocdTray.App.Abstractions;
 using GocdTray.Test.App;
+using GocdTray.Ui.Code;
 using GocdTray.Ui.ViewModel;
 using NUnit.Framework;
 
@@ -21,7 +22,7 @@ namespace GocdTray.Test.Ui
 
             // Act
             var pipeline = new Pipeline { Name = "Pipeline", PipelineInstances = { new PipelineInstance() { Label = "23", Stages = { new Stage() { Name = "Stage", Run = 3 } } } } };
-            var websiteUrl = pipelineViewModel.GetPipelineUrl(pipeline);
+            var websiteUrl = pipelineViewModel.GetPipelineUrl(new UiPipeline(pipeline));
 
             // Assert
             Assert.That(websiteUrl, Is.EqualTo(result));

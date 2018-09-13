@@ -44,7 +44,18 @@
         <DataGrid x:Name="PipelineGrid" Grid.Row="1" ItemsSource="{Binding Pipelines}" SelectedItem="{Binding SelectedItem}" SelectionMode="Single" SelectionUnit="FullRow" IsTabStop="True" AutoGenerateColumns="False" IsReadOnly="True" >
             <DataGrid.InputBindings>
                 <MouseBinding Gesture="LeftDoubleClick" Command="{Binding OpenInBrowserCommand}" CommandParameter="{Binding ElementName=PipelineGrid, Path=SelectedItem}"/>
+                <MouseBinding Gesture="LeftClick" Command="{Binding ToggleDetailsVisibilityCommand}" CommandParameter="{Binding ElementName=PipelineGrid, Path=SelectedItem}"/>
             </DataGrid.InputBindings>
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow" BasedOn="{StaticResource {x:Type DataGridRow}}">
+                    <Setter Property="DetailsVisibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsExpanded}" Value="True">
+                            <Setter Property="DetailsVisibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
 
             <DataGrid.Columns>
                 <DataGridTemplateColumn IsReadOnly="True">
@@ -96,6 +107,11 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate >
+                    <TextBlock Text="{Binding PipelineGroupName}" Margin="10" />
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
         </DataGrid>
     </Grid>
 </Window>
