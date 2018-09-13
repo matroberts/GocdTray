@@ -40,17 +40,17 @@ namespace GocdTray.Ui.ViewModel
 
         private void Update()
         {
-            var pls = serviceManager.Estate.Pipelines.Select(p => new UiPipeline(p));
+            var uiPipelines = serviceManager.Estate.Pipelines.Select(p => new UiPipeline(p, serviceManager.GetConnectionInfo().GocdWebUri));
             switch (PipelineSortOrder)
             {
                 case PipelineSortOrder.BuildStatus:
-                    Pipelines = new ObservableCollection<UiPipeline>(pls.OrderBy(p => p.StatusAndPausedSortOrder).ThenBy(p => p.Name));
+                    Pipelines = new ObservableCollection<UiPipeline>(uiPipelines.OrderBy(p => p.StatusAndPausedSortOrder).ThenBy(p => p.Name));
                     break;
                 case PipelineSortOrder.AtoZ:
-                    Pipelines = new ObservableCollection<UiPipeline>(pls.OrderBy(p => p.Name));
+                    Pipelines = new ObservableCollection<UiPipeline>(uiPipelines.OrderBy(p => p.Name));
                     break;
                 case PipelineSortOrder.ZtoA:
-                    Pipelines = new ObservableCollection<UiPipeline>(pls.OrderByDescending(p => p.Name));
+                    Pipelines = new ObservableCollection<UiPipeline>(uiPipelines.OrderByDescending(p => p.Name));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(PipelineSortOrder), PipelineSortOrder, null);
@@ -67,19 +67,13 @@ namespace GocdTray.Ui.ViewModel
         public ICommand OpenInBrowserCommand { get; }
         private void OpenInBrowser(UiPipeline pipeline)
         {
-            Process.Start(GetPipelineUrl(pipeline));
+            Process.Start(pipeline.WebsiteUrl);
         }
 
         public ICommand ToggleDetailsVisibilityCommand { get; }
         private void ToggleDetailsVisibility(UiPipeline pipeline)
         {
             pipeline.IsExpanded = !pipeline.IsExpanded;
-        }
-
-        public string GetPipelineUrl(UiPipeline pipeline)
-        {
-            var baseUri = new Uri(serviceManager.GetConnectionInfo().GocdWebUri, UriKind.Absolute);
-            return new Uri(baseUri, pipeline.WebsiteUrl).ToString();
         }
     }
 }

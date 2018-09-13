@@ -62,7 +62,7 @@
     <Compile Include="Rest\GocdServiceTests.cs" />
     <Compile Include="Rest\HttpClientHandlerFakeWithFunc.cs" />
     <Compile Include="Rest\RestClientTests.cs" />
-    <Compile Include="Ui\PipelineModelTests.cs" />
+    <Compile Include="Ui\UiPipelineTests.cs" />
     <Compile Include="Ui\SoundNotifierTests.cs" />
   </ItemGroup>
   <ItemGroup>

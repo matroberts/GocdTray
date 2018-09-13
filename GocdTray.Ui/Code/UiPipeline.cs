@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using GocdTray.App.Abstractions;
 
@@ -7,10 +8,12 @@ namespace GocdTray.Ui.Code
     public class UiPipeline : INotifyPropertyChanged
     {
         private readonly Pipeline pipeline;
+        private readonly string websiteBaseUri;
 
-        public UiPipeline(Pipeline pipeline)
+        public UiPipeline(Pipeline pipeline, string websiteBaseUri)
         {
             this.pipeline = pipeline;
+            this.websiteBaseUri = websiteBaseUri;
         }
 
         private bool isExpanded;
@@ -30,7 +33,7 @@ namespace GocdTray.Ui.Code
         public bool Paused => pipeline.Paused;
         public string PausedBy => pipeline.PausedBy;
         public string PausedReason => pipeline.PausedReason;
-        public string WebsiteUrl => pipeline.WebsiteUrl;
+        public string WebsiteUrl => new Uri(new Uri(websiteBaseUri, UriKind.Absolute), pipeline.WebsiteUrl).ToString();
         public PipelineStatus Status => pipeline.Status;
 
         public int StatusAndPausedSortOrder

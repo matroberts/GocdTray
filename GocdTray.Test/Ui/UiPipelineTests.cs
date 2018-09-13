@@ -10,19 +10,17 @@ using NUnit.Framework;
 namespace GocdTray.Test.Ui
 {
     [TestFixture]
-    public class PipelineModelTests
+    public class UiPipelineTests
     {
         [TestCase("http://gocdserver/", "http://gocdserver/go/pipelines/Pipeline/23/Stage/3")]
         [TestCase("http://gocdserver", "http://gocdserver/go/pipelines/Pipeline/23/Stage/3")]
-        public void PipelineViewModel_ShouldFormTheWebsiteUrlCorrectly_IndependentlyOfTrailingSlashes(string baseUri, string result)
+        public void UiPipeline_ShouldFormTheWebsiteUrlCorrectly_IndependentlyOfTrailingSlashes(string baseUri, string result)
         {
             // Arrange
-            GocdTray.App.Properties.Settings.Default.GocdWebUri = baseUri;
-            var pipelineViewModel = new PipelineViewModel(new ServiceManager(new GocdServiceFactoryFake()));
+            var pipeline = new Pipeline { Name = "Pipeline", PipelineInstances = { new PipelineInstance() { Label = "23", Stages = { new Stage() { Name = "Stage", Run = 3 } } } } };
 
             // Act
-            var pipeline = new Pipeline { Name = "Pipeline", PipelineInstances = { new PipelineInstance() { Label = "23", Stages = { new Stage() { Name = "Stage", Run = 3 } } } } };
-            var websiteUrl = pipelineViewModel.GetPipelineUrl(new UiPipeline(pipeline));
+            var websiteUrl = new UiPipeline(pipeline, baseUri).WebsiteUrl;
 
             // Assert
             Assert.That(websiteUrl, Is.EqualTo(result));
