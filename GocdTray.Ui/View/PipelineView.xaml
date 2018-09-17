@@ -108,7 +108,7 @@
                 <DataGridTemplateColumn  Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Command="{Binding Path=DataContext.ToggleDetailsVisibilityCommand, RelativeSource= {RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" CommandParameter="{Binding}" BorderThickness="0">
+                            <Button Command="{Binding Path=DataContext.ToggleDetailsVisibilityCommand, RelativeSource= {RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" CommandParameter="{Binding}" BorderThickness="0" Background="Transparent">
                                 <TextBlock  FontFamily="{StaticResource FontAwesome}" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Width="18">
                                     <TextBlock.Style>
                                         <Style TargetType="TextBlock">
