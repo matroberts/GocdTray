@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using GocdTray.App.Abstractions;
@@ -9,20 +10,29 @@ namespace GocdTray.Ui.Code
     {
         private readonly Pipeline pipeline;
         private readonly string websiteBaseUri;
+        private PreservedState preservedState;
 
-        public UiPipeline(Pipeline pipeline, string websiteBaseUri)
+        public UiPipeline(Pipeline pipeline, Dictionary<string, PreservedState> preservedStates, string websiteBaseUri)
         {
             this.pipeline = pipeline;
             this.websiteBaseUri = websiteBaseUri;
+            if (preservedStates.ContainsKey(pipeline.Name))
+            {
+                preservedState = preservedStates[pipeline.Name];
+            }
+            else
+            {
+                preservedState = new PreservedState();
+                preservedStates[pipeline.Name] = preservedState;
+            }
         }
 
-        private bool isExpanded;
         public bool IsExpanded
         {
-            get => isExpanded;
+            get => preservedState.IsExpanded;
             set
             {
-                isExpanded = value;
+                preservedState.IsExpanded = value;
                 OnPropertyChanged(nameof(IsExpanded));
             }
         }

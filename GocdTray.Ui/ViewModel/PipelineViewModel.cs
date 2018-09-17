@@ -4,16 +4,15 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Input;
-using System.Windows.Media;
 using GocdTray.App.Abstractions;
 using GocdTray.Ui.Code;
-using GocdTray.Ui.Converters;
 
 namespace GocdTray.Ui.ViewModel
 {
     public class PipelineViewModel : ViewModelBase
     {
         private readonly IServiceManager serviceManager;
+        private Dictionary<string, PreservedState> preservedStates = new Dictionary<string, PreservedState>();
 
         public PipelineViewModel(IServiceManager serviceManager)
         {
@@ -38,7 +37,7 @@ namespace GocdTray.Ui.ViewModel
 
         private void Update()
         {
-            var uiPipelines = serviceManager.Estate.Pipelines.Select(p => new UiPipeline(p, serviceManager.GetConnectionInfo().GocdWebUri));
+            var uiPipelines = serviceManager.Estate.Pipelines.Select(p => new UiPipeline(p, preservedStates, serviceManager.GetConnectionInfo().GocdWebUri));
             switch (PipelineSortOrder)
             {
                 case PipelineSortOrder.BuildStatus:
