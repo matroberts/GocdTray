@@ -44,7 +44,6 @@
         <DataGrid x:Name="PipelineGrid" Grid.Row="1" ItemsSource="{Binding Pipelines}" SelectedItem="{Binding SelectedItem}" SelectionMode="Single" SelectionUnit="FullRow" IsTabStop="True" AutoGenerateColumns="False" IsReadOnly="True" >
             <DataGrid.InputBindings>
                 <MouseBinding Gesture="LeftDoubleClick" Command="{Binding OpenInBrowserCommand}" CommandParameter="{Binding ElementName=PipelineGrid, Path=SelectedItem}"/>
-                <MouseBinding Gesture="LeftClick" Command="{Binding ToggleDetailsVisibilityCommand}" CommandParameter="{Binding ElementName=PipelineGrid, Path=SelectedItem}"/>
             </DataGrid.InputBindings>
             <DataGrid.RowStyle>
                 <Style TargetType="DataGridRow" BasedOn="{StaticResource {x:Type DataGridRow}}">
@@ -103,6 +102,26 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn  Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Command="{Binding Path=DataContext.ToggleDetailsVisibilityCommand, RelativeSource= {RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" CommandParameter="{Binding}" BorderThickness="0">
+                                <TextBlock  FontFamily="{StaticResource FontAwesome}" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Width="18">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Text" Value="{StaticResource IconAngleRight}"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsExpanded}" Value="True">
+                                                    <Setter Property="Text" Value="{StaticResource IconAngleDown}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

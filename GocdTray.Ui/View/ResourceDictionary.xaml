@@ -17,6 +17,8 @@
     <System:String x:Key="IconTimes">&#xf00d;</System:String>
     <System:String x:Key="IconSpinner">&#xf110;</System:String>
     <System:String x:Key="IconPause">&#xf04c;</System:String>
+    <System:String x:Key="IconAngleRight">&#xf105;</System:String>
+    <System:String x:Key="IconAngleDown">&#xf107;</System:String>
     <!-- segoe-ui-symbol-font -->
     <System:String x:Key="WinChromeClose">&#xE8BB;</System:String>
 
