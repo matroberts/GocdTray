@@ -41,6 +41,7 @@ namespace GocdTray.Ui.Code
         public string PipelineGroupName => pipeline.PipelineGroupName;
         public bool Locked => pipeline.Locked;
         public bool Paused => pipeline.Paused;
+        public string PausedText => $"Paused{(PausedReason.IsTrimmedNullOrEmpty() ? "" : $" ({PausedReason})")} by {PausedBy}";
         public string PausedBy => pipeline.PausedBy;
         public string PausedReason => pipeline.PausedReason;
         public string WebsiteUrl => new Uri(new Uri(websiteBaseUri, UriKind.Absolute), pipeline.WebsiteUrl).ToString();

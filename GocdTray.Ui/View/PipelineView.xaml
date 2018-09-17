@@ -4,7 +4,7 @@
         xmlns:converters="clr-namespace:GocdTray.Ui.Converters"
         xmlns:code="clr-namespace:GocdTray.Ui.Code"
         xmlns:abstractions="clr-namespace:GocdTray.App.Abstractions;assembly=GocdTray.App.Abstractions"
-        Title="Dashboard" Height="600" Width="350" ShowInTaskbar="False">
+        Title="Dashboard" Height="600" Width="370" ShowInTaskbar="False">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -127,8 +127,22 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
             <DataGrid.RowDetailsTemplate>
-                <DataTemplate >
-                    <TextBlock Text="{Binding PipelineGroupName}" Margin="10" />
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding PausedText}" Foreground="{StaticResource TextColorPrimary}">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Paused}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <TextBlock Text="{Binding PipelineGroupName}" Margin="10" />
+                    </StackPanel>
                 </DataTemplate>
             </DataGrid.RowDetailsTemplate>
         </DataGrid>

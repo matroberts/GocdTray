@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using GocdTray.App;
 using GocdTray.App.Abstractions;
@@ -20,7 +21,7 @@ namespace GocdTray.Test.Ui
             var pipeline = new Pipeline { Name = "Pipeline", PipelineInstances = { new PipelineInstance() { Label = "23", Stages = { new Stage() { Name = "Stage", Run = 3 } } } } };
 
             // Act
-            var websiteUrl = new UiPipeline(pipeline, baseUri).WebsiteUrl;
+            var websiteUrl = new UiPipeline(pipeline, new Dictionary<string, PreservedState>(), baseUri).WebsiteUrl;
 
             // Assert
             Assert.That(websiteUrl, Is.EqualTo(result));
