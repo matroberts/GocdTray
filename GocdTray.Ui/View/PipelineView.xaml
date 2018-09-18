@@ -142,8 +142,17 @@
                         </TextBlock>
                         <DataGrid ItemsSource="{Binding PipelineInstances}" AutoGenerateColumns="False">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding Label}" Foreground="{StaticResource TextColorPrimary}"/>
-                                <DataGridTextColumn Binding="{Binding DisplayText}" Foreground="{StaticResource TextColorPrimary}"/>
+                                <DataGridTextColumn Binding="{Binding Label}" Foreground="{StaticResource TextColorPrimary}" Width="Auto"/>
+                                <DataGridTemplateColumn  Width="Auto">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Canvas Width="120" Height="10" >
+                                                <Rectangle Width="100" Height="10" Fill="Blue"  />
+                                            </Canvas>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Binding="{Binding DisplayText}" Foreground="{StaticResource TextColorPrimary}" Width="Auto"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </StackPanel>
