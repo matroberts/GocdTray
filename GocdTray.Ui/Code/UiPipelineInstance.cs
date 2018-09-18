@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using GocdTray.App.Abstractions;
 
 namespace GocdTray.Ui.Code
@@ -12,7 +13,7 @@ namespace GocdTray.Ui.Code
             this.pipelineInstance = pipelineInstance;
         }
 
-        public string DisplayText => $"Triggered by {pipelineInstance.TriggeredBy} {pipelineInstance.ScheduledAt.TimeAgo()}";
-        public string Label => pipelineInstance.Label;
+        public string DisplayText => $"Build {pipelineInstance.Label} triggered by {pipelineInstance.TriggeredBy} {pipelineInstance.ScheduledAt.TimeAgo()}";
+        public IEnumerable<Stage> Stages => pipelineInstance.Stages;
     }
 }

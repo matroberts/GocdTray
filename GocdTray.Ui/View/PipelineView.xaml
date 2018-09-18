@@ -142,17 +142,25 @@
                         </TextBlock>
                         <DataGrid ItemsSource="{Binding PipelineInstances}" AutoGenerateColumns="False">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding Label}" Foreground="{StaticResource TextColorPrimary}" Width="Auto"/>
+                                <DataGridTextColumn Binding="{Binding DisplayText}" Foreground="{StaticResource TextColorPrimary}" Width="Auto"/>
                                 <DataGridTemplateColumn  Width="Auto">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Canvas Width="120" Height="10" >
-                                                <Rectangle Width="100" Height="10" Fill="Blue"  />
-                                            </Canvas>
+                                            <ItemsControl ItemsSource="{Binding Stages}">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <UniformGrid Rows="1" />
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{StaticResource IconSquare}" FontFamily="{StaticResource FontAwesome}" FontSize="15" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="30" Height="10"/>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
-                                <DataGridTextColumn Binding="{Binding DisplayText}" Foreground="{StaticResource TextColorPrimary}" Width="Auto"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </StackPanel>
