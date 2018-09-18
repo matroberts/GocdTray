@@ -140,7 +140,13 @@
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
-                        <TextBlock Text="{Binding PipelineGroupName}" Margin="10" />
+                        <DataGrid ItemsSource="{Binding PipelineInstances}" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding Label}" Foreground="{StaticResource TextColorPrimary}"/>
+                                <DataGridTextColumn Binding="{Binding ScheduledAt}" Foreground="{StaticResource TextColorPrimary}"/>
+                                <DataGridTextColumn Binding="{Binding TriggeredBy}" Foreground="{StaticResource TextColorPrimary}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
                     </StackPanel>
                 </DataTemplate>
             </DataGrid.RowDetailsTemplate>

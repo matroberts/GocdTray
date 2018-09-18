@@ -46,6 +46,7 @@ namespace GocdTray.Ui.Code
         public string PausedReason => pipeline.PausedReason;
         public string WebsiteUrl => new Uri(new Uri(websiteBaseUri, UriKind.Absolute), pipeline.WebsiteUrl).ToString();
         public PipelineStatus Status => pipeline.Status;
+        public List<PipelineInstance> PipelineInstances => pipeline.PipelineInstances;
 
         public int StatusAndPausedSortOrder
         {
