@@ -47,6 +47,7 @@
       <Link>Properties\AssemblyInfo.common.cs</Link>
     </Compile>
     <Compile Include="ConnectionInfo.cs" />
+    <Compile Include="DateTimeExtensions.cs" />
     <Compile Include="EnumExtensions.cs" />
     <Compile Include="Estate.cs" />
     <Compile Include="IServiceManager.cs" />

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using GocdTray.App.Abstractions;
 
@@ -46,7 +47,7 @@ namespace GocdTray.Ui.Code
         public string PausedReason => pipeline.PausedReason;
         public string WebsiteUrl => new Uri(new Uri(websiteBaseUri, UriKind.Absolute), pipeline.WebsiteUrl).ToString();
         public PipelineStatus Status => pipeline.Status;
-        public List<PipelineInstance> PipelineInstances => pipeline.PipelineInstances;
+        public IEnumerable<UiPipelineInstance> PipelineInstances => pipeline.PipelineInstances.Select(pi => new UiPipelineInstance(pi));
 
         public int StatusAndPausedSortOrder
         {

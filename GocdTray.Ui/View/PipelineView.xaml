@@ -143,8 +143,7 @@
                         <DataGrid ItemsSource="{Binding PipelineInstances}" AutoGenerateColumns="False">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding Label}" Foreground="{StaticResource TextColorPrimary}"/>
-                                <DataGridTextColumn Binding="{Binding ScheduledAt}" Foreground="{StaticResource TextColorPrimary}"/>
-                                <DataGridTextColumn Binding="{Binding TriggeredBy}" Foreground="{StaticResource TextColorPrimary}"/>
+                                <DataGridTextColumn Binding="{Binding DisplayText}" Foreground="{StaticResource TextColorPrimary}"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </StackPanel>
