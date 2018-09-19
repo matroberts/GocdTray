@@ -41,7 +41,7 @@
                 </ContextMenu>
             </Button.ContextMenu>
         </Button>
-        <DataGrid x:Name="PipelineGrid" Grid.Row="1" ItemsSource="{Binding Pipelines}" SelectedItem="{Binding SelectedItem}" SelectionMode="Single" SelectionUnit="FullRow" IsTabStop="True" AutoGenerateColumns="False" IsReadOnly="True" >
+        <DataGrid x:Name="PipelineGrid" Grid.Row="1" ItemsSource="{Binding Pipelines}" SelectedItem="{Binding SelectedItem}" SelectionMode="Single" SelectionUnit="FullRow" IsTabStop="True" AutoGenerateColumns="False" IsReadOnly="True">
             <DataGrid.InputBindings>
                 <MouseBinding Gesture="LeftDoubleClick" Command="{Binding OpenInBrowserCommand}" CommandParameter="{Binding ElementName=PipelineGrid, Path=SelectedItem}"/>
             </DataGrid.InputBindings>
@@ -57,10 +57,12 @@
             </DataGrid.RowStyle>
 
             <DataGrid.Columns>
-                <DataGridTextColumn  FontFamily="{StaticResource FontAwesome}" FontSize="15" Width="15">
+                <DataGridTextColumn  FontFamily="{StaticResource FontAwesome}" FontSize="15" Width="18" MinWidth="1"><!-- The MinWidth=1 is important, if its not set to a non zero number you cant make the column narrow enough.-->
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="Margin" Value="0"/>
+                            <Setter Property="Padding" Value="0"/>
                             <Setter Property="Text" Value="{StaticResource IconSquare}"/>
                             <Style.Triggers>
                                 <!-- Icon -->
@@ -81,25 +83,19 @@
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
-                <DataGridTemplateColumn IsReadOnly="True"  Width="*">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Name}" FontSize="15">
-                                <TextBlock.Style>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="Foreground" Value="{StaticResource TextColorPrimary}"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Paused}" Value="True">
-                                                <Setter Property="Foreground" Value="{StaticResource TextColorSecondary}"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn  Width="Auto">
+                <DataGridTextColumn Binding="{Binding Name}" FontSize="15" Width="*">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Foreground" Value="{StaticResource TextColorPrimary}"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Paused}" Value="True">
+                                    <Setter Property="Foreground" Value="{StaticResource TextColorSecondary}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTemplateColumn Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Command="{Binding Path=DataContext.ToggleDetailsVisibilityCommand, RelativeSource= {RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" CommandParameter="{Binding}" BorderThickness="0" Background="Transparent">
