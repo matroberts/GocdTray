@@ -128,7 +128,7 @@
             <DataGrid.RowDetailsTemplate>
                 <DataTemplate>
                     <StackPanel>
-                        <TextBlock Text="{Binding PausedText}" Foreground="{StaticResource TextColorPrimary}">
+                        <TextBlock Text="{Binding PausedText}" Foreground="{StaticResource TextColorPrimary}" FontSize="15">
                             <TextBlock.Style>
                                 <Style TargetType="TextBlock">
                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -140,29 +140,32 @@
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
-                        <DataGrid ItemsSource="{Binding PipelineInstances}" AutoGenerateColumns="False">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding DisplayText}" Foreground="{StaticResource TextColorPrimary}" Width="Auto"/>
-                                <DataGridTemplateColumn  Width="Auto">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <ItemsControl ItemsSource="{Binding Stages}">
-                                                <ItemsControl.ItemsPanel>
-                                                    <ItemsPanelTemplate>
-                                                        <UniformGrid Rows="1" />
-                                                    </ItemsPanelTemplate>
-                                                </ItemsControl.ItemsPanel>
-                                                <ItemsControl.ItemTemplate>
-                                                    <DataTemplate>
-                                                        <TextBlock Text="{StaticResource IconSquare}" FontFamily="{StaticResource FontAwesome}" FontSize="15" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="30" Height="10"/>
-                                                    </DataTemplate>
-                                                </ItemsControl.ItemTemplate>
-                                            </ItemsControl>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                            </DataGrid.Columns>
-                        </DataGrid>
+                        <ItemsControl ItemsSource="{Binding PipelineInstances}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding DisplayText}" Foreground="{StaticResource TextColorPrimary}" FontSize="15"/>
+                                        <ItemsControl ItemsSource="{Binding Stages}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <UniformGrid Rows="1" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Canvas Background="Red" Height="10" Width="30" Margin="5"></Canvas>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
                     </StackPanel>
                 </DataTemplate>
             </DataGrid.RowDetailsTemplate>
