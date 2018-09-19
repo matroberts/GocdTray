@@ -57,35 +57,30 @@
             </DataGrid.RowStyle>
 
             <DataGrid.Columns>
-                <DataGridTemplateColumn IsReadOnly="True">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock FontFamily="{StaticResource FontAwesome}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" Width="15">
-                                <TextBlock.Style>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="Text" Value="{StaticResource IconSquare}"/>
-                                        <Style.Triggers>
-                                            <!-- Icon -->
-                                            <DataTrigger Binding="{Binding Paused}" Value="True">
-                                                <Setter Property="Text" Value="{StaticResource IconPause}"/>
-                                            </DataTrigger>
-                                            <!-- Color -->
-                                            <DataTrigger Binding="{Binding Status}" Value="{x:Static abstractions:PipelineStatus.Building}">
-                                                <Setter Property="Foreground" Value="{StaticResource BuildingColor}"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding Status}" Value="{x:Static abstractions:PipelineStatus.Passed}">
-                                                <Setter Property="Foreground" Value="{StaticResource PassedColor}"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding Status}" Value="{x:Static abstractions:PipelineStatus.Failed}">
-                                                <Setter Property="Foreground" Value="{StaticResource FailedColor}"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                <DataGridTextColumn  FontFamily="{StaticResource FontAwesome}" FontSize="15" Width="15">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="Text" Value="{StaticResource IconSquare}"/>
+                            <Style.Triggers>
+                                <!-- Icon -->
+                                <DataTrigger Binding="{Binding Paused}" Value="True">
+                                    <Setter Property="Text" Value="{StaticResource IconPause}"/>
+                                </DataTrigger>
+                                <!-- Color -->
+                                <DataTrigger Binding="{Binding Status}" Value="{x:Static abstractions:PipelineStatus.Building}">
+                                    <Setter Property="Foreground" Value="{StaticResource BuildingColor}"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Status}" Value="{x:Static abstractions:PipelineStatus.Passed}">
+                                    <Setter Property="Foreground" Value="{StaticResource PassedColor}"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Status}" Value="{x:Static abstractions:PipelineStatus.Failed}">
+                                    <Setter Property="Foreground" Value="{StaticResource FailedColor}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
                 <DataGridTemplateColumn IsReadOnly="True"  Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
