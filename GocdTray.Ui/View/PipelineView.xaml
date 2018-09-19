@@ -158,7 +158,27 @@
                                             </ItemsControl.ItemsPanel>
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
-                                                    <Border Background="Blue" Height="10" BorderThickness="0" Margin="0, 5, 10, 5"></Border>
+                                                    <Border Height="10" BorderThickness="0" Margin="0, 5, 10, 10" CornerRadius="1">
+                                                        <Border.Style>
+                                                            <Style TargetType="Border">
+                                                                <Setter Property="Background" Value="{StaticResource NotConnectedColor}"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding Status}" Value="{x:Static abstractions:StageStatus.Building}">
+                                                                        <Setter Property="Background" Value="{StaticResource BuildingColor}"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Status}" Value="{x:Static abstractions:StageStatus.Passed}">
+                                                                        <Setter Property="Background" Value="{StaticResource PassedColor}"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Status}" Value="{x:Static abstractions:StageStatus.Failed}">
+                                                                        <Setter Property="Background" Value="{StaticResource FailedColor}"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Status}" Value="{x:Static abstractions:StageStatus.Cancelled}">
+                                                                        <Setter Property="Background" Value="{StaticResource FailedColor}"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Border.Style>
+                                                    </Border>
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>
                                         </ItemsControl>
