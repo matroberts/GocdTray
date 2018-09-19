@@ -144,12 +144,12 @@
                                         <ItemsControl ItemsSource="{Binding Stages}">
                                             <ItemsControl.ItemsPanel>
                                                 <ItemsPanelTemplate>
-                                                    <UniformGrid Rows="1" Margin="0, 0, 8, 0"/>
+                                                    <UniformGrid Rows="1" Margin="0, 0, 10, 0"/>
                                                 </ItemsPanelTemplate>
                                             </ItemsControl.ItemsPanel>
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
-                                                    <Border Height="10" BorderThickness="0" Margin="0, 5, 10, 10" CornerRadius="1">
+                                                    <Border Height="10" BorderThickness="0" Margin="0, 8, 8, 8" CornerRadius="1">
                                                         <Border.Style>
                                                             <Style TargetType="Border">
                                                                 <Setter Property="Background" Value="{StaticResource NotConnectedColor}"/>
