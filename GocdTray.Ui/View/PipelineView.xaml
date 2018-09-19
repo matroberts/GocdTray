@@ -153,7 +153,7 @@
                                         <ItemsControl ItemsSource="{Binding Stages}">
                                             <ItemsControl.ItemsPanel>
                                                 <ItemsPanelTemplate>
-                                                    <UniformGrid Rows="1" />
+                                                    <UniformGrid Rows="1" Margin="0, 0, 8, 0"/>
                                                 </ItemsPanelTemplate>
                                             </ItemsControl.ItemsPanel>
                                             <ItemsControl.ItemTemplate>
