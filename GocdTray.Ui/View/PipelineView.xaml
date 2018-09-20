@@ -52,6 +52,9 @@
                         <DataTrigger Binding="{Binding IsExpanded}" Value="True">
                             <Setter Property="DetailsVisibility" Value="Visible"/>
                         </DataTrigger>
+                        <DataTrigger Binding="{Binding Paused}" Value="True">
+                            <Setter Property="Opacity" Value="0.6"/>
+                        </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </DataGrid.RowStyle>
@@ -65,11 +68,6 @@
                             <Setter Property="Padding" Value="0"/>
                             <Setter Property="Text" Value="{StaticResource IconSquare}"/>
                             <Style.Triggers>
-                                <!-- Icon -->
-                                <DataTrigger Binding="{Binding Paused}" Value="True">
-                                    <Setter Property="Text" Value="{StaticResource IconPause}"/>
-                                </DataTrigger>
-                                <!-- Color -->
                                 <DataTrigger Binding="{Binding Status}" Value="{x:Static abstractions:PipelineStatus.Building}">
                                     <Setter Property="Foreground" Value="{StaticResource BuildingColor}"/>
                                 </DataTrigger>
@@ -87,11 +85,6 @@
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="Foreground" Value="{StaticResource TextColorPrimary}"/>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding Paused}" Value="True">
-                                    <Setter Property="Foreground" Value="{StaticResource TextColorSecondary}"/>
-                                </DataTrigger>
-                            </Style.Triggers>
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
@@ -183,3 +176,4 @@
         </DataGrid>
     </Grid>
 </Window>
+
