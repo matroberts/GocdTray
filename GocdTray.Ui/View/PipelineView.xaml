@@ -19,7 +19,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Button Grid.Row="0" Click="Button_Click" ContextMenuService.IsEnabled="False" Width="40" Height="Auto" HorizontalAlignment="Left"  BorderThickness="0">
+        <Button Grid.Row="0" Click="Button_Click" ContextMenuService.IsEnabled="False" Width="40" Height="Auto" HorizontalAlignment="Left" HorizontalContentAlignment="Left"  BorderThickness="0">
             <TextBlock FontFamily="{StaticResource FontAwesome}" FontSize="16" Text="{StaticResource IconSortAmountDown}" />
             <Button.ContextMenu>
                 <ContextMenu>
