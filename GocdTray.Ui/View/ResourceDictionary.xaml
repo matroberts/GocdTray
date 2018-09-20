@@ -223,7 +223,7 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock  Grid.Column="0" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" Foreground="{StaticResource TextColorPrimary}" Text="{TemplateBinding Title}"/>
+                            <TextBlock  Grid.Column="0" Margin="23,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" Foreground="{StaticResource TextColorPrimary}" Text="{TemplateBinding Title}"/>
                             <Button Grid.Column="1" x:Name="btnClose" Style="{StaticResource CloseWindowButton}" Click="CloseClick" />
                         </Grid>
                     </Grid>
