@@ -4,7 +4,7 @@
         xmlns:converters="clr-namespace:GocdTray.Ui.Converters"
         xmlns:code="clr-namespace:GocdTray.Ui.Code"
         xmlns:abstractions="clr-namespace:GocdTray.App.Abstractions;assembly=GocdTray.App.Abstractions"
-        Title="Dashboard" Height="600" Width="370" ShowInTaskbar="False">
+        Title="Dashboard" Height="600" Width="380" ShowInTaskbar="False">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -109,9 +109,10 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
+
             <DataGrid.RowDetailsTemplate>
                 <DataTemplate>
-                    <StackPanel>
+                    <StackPanel Margin="0, 2, 0, 0">
                         <TextBlock Text="{Binding PausedText}" Foreground="{StaticResource TextColorPrimary}" FontSize="15">
                             <TextBlock.Style>
                                 <Style TargetType="TextBlock">
