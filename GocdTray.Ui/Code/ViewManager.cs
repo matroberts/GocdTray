@@ -39,14 +39,14 @@ namespace GocdTray.Ui.Code
             };
 
             notifyIcon.ContextMenuStrip.Opening += ContextMenuStrip_Opening;
-            notifyIcon.DoubleClick += (sender, e) => ShowPipelineView();
+            notifyIcon.DoubleClick += (sender, e) => ShowPipelineViewWithFocus();
             notifyIcon.MouseUp += NotifyIcon_MouseUp;
 
             pipelineViewModel = new PipelineViewModel(serviceManager);
             soundNotifier = new SoundNotifier(serviceManager);
 
             serviceManager.OnStatusChange += Update;
-            serviceManager.OnBuildFailed += ShowPipelineView;
+            serviceManager.OnBuildFailed += ShowPipelineViewNoFocus;
         }
 
         private Icon AppIcon
@@ -79,28 +79,32 @@ namespace GocdTray.Ui.Code
             notifyIcon.Text = AppText;
         }
 
-        private void ShowPipelineView()
+        private void ShowPipelineViewNoFocus()
         {
             if (pipelineView == null)
             {
-                pipelineView = new PipelineView
-                {
-                    DataContext = pipelineViewModel,
-                    ShowActivated = false
-                };
+                pipelineView = new PipelineView {DataContext = pipelineViewModel};
                 pipelineView.Closing += (sender, e) => pipelineView = null;
-                pipelineView.Show();
-                pipelineView.Topmost = true;
-                pipelineView.Topmost = false;
             }
-            else
-            {
-                pipelineView.ShowActivated = false;
-                pipelineView.Show();
-                pipelineView.Topmost = true;
-                pipelineView.Topmost = false;
-            }
+
+            pipelineView.ShowActivated = false;
+            pipelineView.Show();
+            pipelineView.Topmost = true;
+            pipelineView.Topmost = false;
         }
+
+        private void ShowPipelineViewWithFocus()
+        {
+            if (pipelineView == null)
+            {
+                pipelineView = new PipelineView { DataContext = pipelineViewModel };
+                pipelineView.Closing += (sender, e) => pipelineView = null;
+            }
+
+            pipelineView.Show();
+            pipelineView.Activate();
+        }
+
 
         private void ShowAboutView()
         {
@@ -145,7 +149,7 @@ namespace GocdTray.Ui.Code
             e.Cancel = false;
             if (notifyIcon.ContextMenuStrip.Items.Count == 0)
             {
-                notifyIcon.ContextMenuStrip.Items.Add(CreateMenuItemWithHandler("Dashboard", "Show the status of the Go.cd pipelines", (sender1, e1) => ShowPipelineView()));
+                notifyIcon.ContextMenuStrip.Items.Add(CreateMenuItemWithHandler("Dashboard", "Show the status of the Go.cd pipelines", (sender1, e1) => ShowPipelineViewWithFocus()));
                 notifyIcon.ContextMenuStrip.Items.Add(CreateMenuItemWithHandler("Connection Info", "Configure Connection Information", (sender1, e1) => ShowConnectionInfoView()));
                 notifyIcon.ContextMenuStrip.Items.Add(CreateMenuItemWithHandler("About", "Show the About dialog", (sender1, e1) => ShowAboutView()));
                 notifyIcon.ContextMenuStrip.Items.Add(new ToolStripSeparator());
