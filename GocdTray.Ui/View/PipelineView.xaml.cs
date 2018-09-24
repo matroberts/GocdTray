@@ -21,13 +21,16 @@ namespace GocdTray.Ui.View
             this.Left = SystemParameters.WorkArea.Width - this.Width;
         }
 
+        private bool isContextMenuOpen = false;
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            button.ContextMenu.IsEnabled = true;
+            isContextMenuOpen = !isContextMenuOpen;
+            button.ContextMenu.IsEnabled = isContextMenuOpen;
             button.ContextMenu.PlacementTarget = button;
             button.ContextMenu.Placement = PlacementMode.Bottom;
-            button.ContextMenu.IsOpen = true;
+            button.ContextMenu.IsOpen = isContextMenuOpen;
         }
     }
 }
