@@ -18,9 +18,9 @@ namespace GocdTray.App.Abstractions
             {
                 if (result.IsValid == false)
                     return EstateStatus.NotConnected;
-                else if (Pipelines.Any(i => i.Status == PipelineStatus.Failed))
+                else if (Pipelines.Any(i => i.Status == PipelineStatus.Failed && i.Paused==false)) // don't count paused builds in global status
                     return EstateStatus.Failed;
-                else if (Pipelines.Any(i => i.Status == PipelineStatus.Building))
+                else if (Pipelines.Any(i => i.Status == PipelineStatus.Building && i.Paused==false))
                     return EstateStatus.Building;
                 else
                     return EstateStatus.Passed;

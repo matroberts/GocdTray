@@ -77,5 +77,28 @@ namespace GocdTray.Test.Abstractions
             //Assert
             Assert.That(estate.Status, Is.EqualTo(estateStatus));
         }
+
+        [TestCase(StageStatus.Building,  false, EstateStatus.Building)]
+        [TestCase(StageStatus.Failed,    false, EstateStatus.Failed)]
+        [TestCase(StageStatus.Cancelled, false, EstateStatus.Failed)]
+        [TestCase(StageStatus.Passed,    false, EstateStatus.Passed)]
+        [TestCase(StageStatus.Unknown,   false, EstateStatus.Passed)]
+
+        [TestCase(StageStatus.Building,  true, EstateStatus.Passed)]
+        [TestCase(StageStatus.Failed,    true, EstateStatus.Passed)]
+        [TestCase(StageStatus.Cancelled, true, EstateStatus.Passed)]
+        [TestCase(StageStatus.Passed,    true, EstateStatus.Passed)]
+        [TestCase(StageStatus.Unknown,   true, EstateStatus.Passed)]
+        public void PausedPipelines_AreNotIncludedInTheGlobalStatusCalculation(StageStatus stageStatus, bool isPaused, EstateStatus estateStatus)
+        {
+            // Arrange
+            var pipeline = new Pipeline() { Paused = isPaused, PipelineInstances = { new PipelineInstance() { Stages = { new Stage() { Status = stageStatus } } } } };
+            var result = Result<List<Pipeline>>.Valid(new List<Pipeline> { pipeline });
+
+            // Act
+            var estate = new Estate(result);
+            //Assert
+            Assert.That(estate.Status, Is.EqualTo(estateStatus));
+        }
     }
 }
