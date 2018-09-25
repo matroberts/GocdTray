@@ -241,7 +241,6 @@ namespace GocdTray.Test.App
         [Test]
         public void PollAndUpdate_ShouldRaiseAnOnStatusChangedEvent_WhenItIsCalled()
         {
-
             // Arrange
             var gocdServiceFactory = new GocdServiceFactoryFake();
             gocdServiceFactory.GocdService.Pipelines = Result<List<Pipeline>>.Valid(new List<Pipeline>());
@@ -256,46 +255,68 @@ namespace GocdTray.Test.App
             Assert.That(onStatusChangeCalled, Is.True);
         }
 
-        [TestCase(EstateStatus.NotConnected, EstateStatus.NotConnected, false)]
-        [TestCase(EstateStatus.NotConnected, EstateStatus.Building,     false)]
-        [TestCase(EstateStatus.NotConnected, EstateStatus.Failed,       false)]
-        [TestCase(EstateStatus.NotConnected, EstateStatus.Passed,       false)]
-        [TestCase(EstateStatus.Building,     EstateStatus.NotConnected, false)]
-        [TestCase(EstateStatus.Building,     EstateStatus.Building,     false)]
-        [TestCase(EstateStatus.Building,     EstateStatus.Failed,       true)]
-        [TestCase(EstateStatus.Building,     EstateStatus.Passed,       false)]
-        [TestCase(EstateStatus.Passed,       EstateStatus.NotConnected, false)]
-        [TestCase(EstateStatus.Passed,       EstateStatus.Building,     false)]
-        [TestCase(EstateStatus.Passed,       EstateStatus.Failed,       true)]
-        [TestCase(EstateStatus.Passed,       EstateStatus.Passed,       false)]
-        [TestCase(EstateStatus.Failed,       EstateStatus.NotConnected, false)]
-        [TestCase(EstateStatus.Failed,       EstateStatus.Building,     false)]
-        [TestCase(EstateStatus.Failed,       EstateStatus.Failed,       false)]
-        [TestCase(EstateStatus.Failed,       EstateStatus.Passed,       false)]
-        public void PollAndUpdate_ShouldSetTheLastEstateStatus_And_RaiseAnOnBuildFailedEvent_WhenTheBuilldStatusChangesToFailed(EstateStatus previousStatus, EstateStatus nextStatus, bool expectedOnBuildFailedCalled)
+        [Test]
+        public void PollAndUpdate_KeepsThePreviousEstate_InLastEstate()
         {
             // Arrange
-            Result<List<Pipeline>> pipelines = null;
+            var gocdServiceFactory = new GocdServiceFactoryFake { GocdService = { Pipelines = new Result<List<Pipeline>>() } };
+
+            var estate = new Estate(Result<List<Pipeline>>.Invalid("error"));
+            var service = new ServiceManager(gocdServiceFactory) { Estate = estate };
+
+            // Act
+            service.PollAndUpdate();
+
+            // Assert
+            Assert.That(service.LastEstate, Is.SameAs(estate));
+        }
+
+        [TestCase(PipelineStatus.Building, PipelineStatus.Building, false)]
+        [TestCase(PipelineStatus.Building, PipelineStatus.Failed,   true)]
+        [TestCase(PipelineStatus.Building, PipelineStatus.Passed,   false)]
+        [TestCase(PipelineStatus.Passed,   PipelineStatus.Building, false)]
+        [TestCase(PipelineStatus.Passed,   PipelineStatus.Failed,   true)]
+        [TestCase(PipelineStatus.Passed,   PipelineStatus.Passed,   false)]
+        [TestCase(PipelineStatus.Failed,   PipelineStatus.Building, false)]
+        [TestCase(PipelineStatus.Failed,   PipelineStatus.Failed,   false)]
+        [TestCase(PipelineStatus.Failed,   PipelineStatus.Passed,   false)]
+        public void PollAndUpdate_RaiseAnOnBuildFailedEvent_WhenAPipelineStatusChangesToFailed(PipelineStatus previousStatus, PipelineStatus nextStatus, bool expectedOnBuildFailedCalled)
+        {
+            // Arrange
+            Result<List<Pipeline>> previousPipelines = null;
+            switch (previousStatus)
+            {
+                case PipelineStatus.Failed:
+                    previousPipelines = Result<List<Pipeline>>.Valid(new List<Pipeline>() { new Pipeline() { PipelineInstances = { new PipelineInstance() { Stages = new List<Stage>() { new Stage() { Status = StageStatus.Failed } } } } } });
+                    break;
+                case PipelineStatus.Building:
+                    previousPipelines = Result<List<Pipeline>>.Valid(new List<Pipeline>() { new Pipeline() { PipelineInstances = { new PipelineInstance() { Stages = new List<Stage>() { new Stage() { Status = StageStatus.Building } } } } } });
+                    break;
+                case PipelineStatus.Passed:
+                    previousPipelines = Result<List<Pipeline>>.Valid(new List<Pipeline>() { new Pipeline() { PipelineInstances = { new PipelineInstance() { Stages = new List<Stage>() { new Stage() { Status = StageStatus.Passed } } } } } });
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(previousStatus), previousStatus, null);
+            }
+
+            Result<List<Pipeline>> nextPipelines = null;
             switch (nextStatus)
             {
-                case EstateStatus.NotConnected:
-                    pipelines = Result<List<Pipeline>>.Invalid("error");
+                case PipelineStatus.Failed:
+                    nextPipelines = Result<List<Pipeline>>.Valid(new List<Pipeline>() { new Pipeline() { PipelineInstances = { new PipelineInstance() { Stages = new List<Stage>() { new Stage() { Status = StageStatus.Failed } } } } } });
                     break;
-                case EstateStatus.Failed:
-                    pipelines = Result<List<Pipeline>>.Valid(new List<Pipeline>(){new Pipeline(){PipelineInstances = {new PipelineInstance(){Stages = new List<Stage>(){new Stage(){Status = StageStatus.Failed}}}}}});
+                case PipelineStatus.Building:
+                    nextPipelines = Result<List<Pipeline>>.Valid(new List<Pipeline>() { new Pipeline() { PipelineInstances = { new PipelineInstance() { Stages = new List<Stage>() { new Stage() { Status = StageStatus.Building } } } } } });
                     break;
-                case EstateStatus.Building:
-                    pipelines = Result<List<Pipeline>>.Valid(new List<Pipeline>() { new Pipeline() { PipelineInstances = { new PipelineInstance() { Stages = new List<Stage>() { new Stage() { Status = StageStatus.Building } } } } } });
-                    break;
-                case EstateStatus.Passed:
-                    pipelines = Result<List<Pipeline>>.Valid(new List<Pipeline>() { new Pipeline() { PipelineInstances = { new PipelineInstance() { Stages = new List<Stage>() { new Stage() { Status = StageStatus.Passed } } } } } });
+                case PipelineStatus.Passed:
+                    nextPipelines = Result<List<Pipeline>>.Valid(new List<Pipeline>() { new Pipeline() { PipelineInstances = { new PipelineInstance() { Stages = new List<Stage>() { new Stage() { Status = StageStatus.Passed } } } } } });
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(nextStatus), nextStatus, null);
             }
 
-            var gocdServiceFactory = new GocdServiceFactoryFake {GocdService = {Pipelines = pipelines } };
-            var service = new ServiceManager(gocdServiceFactory) { LastEstateStatus = previousStatus };
+            var gocdServiceFactory = new GocdServiceFactoryFake { GocdService = { Pipelines = nextPipelines } };
+            var service = new ServiceManager(gocdServiceFactory) { Estate = new Estate(previousPipelines) };
             bool onBuildFailedCalled = false;
             service.OnBuildFailed += () => onBuildFailedCalled = true;
 
@@ -303,9 +324,16 @@ namespace GocdTray.Test.App
             service.PollAndUpdate();
 
             // Assert
-            Assert.That(service.LastEstateStatus, Is.EqualTo(nextStatus));
             Assert.That(onBuildFailedCalled, Is.EqualTo(expectedOnBuildFailedCalled));
         }
+
+        // Tests
+        // An onBuildFailedEventIsRaised_WhenAPipelineStatus_ChangesToFailed
+        // An onBuildFailedEventIsNotRaised_IfANewPipelineIsAdded_WhichIsFailed
+        // An onBuildFailedEventIsNotRaised_IfAFAiledBuild_IsUnPaused
+        // An onBuildFailedEventIsRaised_IfAPipelineFailed_EvenIfAnotherPipelineIsAlreadyFailed
+
+
 
         #endregion
     }
