@@ -22,7 +22,7 @@ namespace GocdTray.App
         }
 
         public Estate Estate { get; set; } = new Estate(Result<List<Pipeline>>.Invalid("Initialising"));
-        public Estate LastEstate { get; set; } = new Estate(Result<List<Pipeline>>.Invalid("Initialising"));
+        public Estate PreviousEstate { get; set; } = new Estate(Result<List<Pipeline>>.Invalid("Initialising"));
         public ConnectionInfo GetConnectionInfo()
         {
             return new ConnectionInfo()
@@ -107,11 +107,21 @@ namespace GocdTray.App
 
         public void PollAndUpdate()
         {
-            LastEstate = Estate;
+            PreviousEstate = Estate;
             Estate = new Estate(gocdService.GetPipelines());
             OnStatusChange?.Invoke();
-            if((LastEstate.Status == EstateStatus.Building || LastEstate.Status == EstateStatus.Passed) && Estate.Status == EstateStatus.Failed)
-                OnBuildFailed?.Invoke();
+            foreach (var pipeline in Estate.Pipelines)
+            {
+                var previousPipeline = PreviousEstate.Pipelines.FirstOrDefault(p => p.Name == pipeline.Name);
+                if(previousPipeline==null)
+                    continue;
+
+                if ((previousPipeline.Status == PipelineStatus.Building || previousPipeline.Status == PipelineStatus.Passed) && pipeline.Status == PipelineStatus.Failed)
+                {
+                    OnBuildFailed?.Invoke();
+                    break;
+                }
+            }
         }
 
         public void Dispose()
