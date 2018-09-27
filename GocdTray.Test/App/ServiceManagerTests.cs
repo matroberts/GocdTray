@@ -280,7 +280,7 @@ namespace GocdTray.Test.App
         [TestCase(PipelineStatus.Failed,   PipelineStatus.Building, false)]
         [TestCase(PipelineStatus.Failed,   PipelineStatus.Failed,   false)]
         [TestCase(PipelineStatus.Failed,   PipelineStatus.Passed,   false)]
-        public void PollAndUpdate_RaiseAnOnBuildFailedEvent_WhenAPipelineStatusChangesToFailed(PipelineStatus previousStatus, PipelineStatus nextStatus, bool expectedOnBuildFailedCalled)
+        public void PollAndUpdate_ShouldRaiseAnOnBuildFailedEvent_AndSetJustFailed_WhenAPipelineStatusChangesToFailed(PipelineStatus previousStatus, PipelineStatus nextStatus, bool expectedOnBuildFailedCalled)
         {
             // Arrange
             Result<List<Pipeline>> previousPipelines = null;
@@ -325,6 +325,7 @@ namespace GocdTray.Test.App
 
             // Assert
             Assert.That(onBuildFailedCalled, Is.EqualTo(expectedOnBuildFailedCalled));
+            Assert.That(service.Estate.Pipelines.Single(p => p.Name=="1").JustFailed, Is.EqualTo(expectedOnBuildFailedCalled));
         }
 
         [Test]
@@ -344,6 +345,7 @@ namespace GocdTray.Test.App
 
             // Assert
             Assert.That(onBuildFailedCalled, Is.False);
+            Assert.That(service.Estate.Pipelines.Single(p => p.Name == "2").JustFailed, Is.False);
         }
 
         [Test]
@@ -371,6 +373,7 @@ namespace GocdTray.Test.App
 
             // Assert
             Assert.That(numTimesOnBuildFailedCalled, Is.EqualTo(1));
+            Assert.That(service.Estate.Pipelines.Select(p => p.JustFailed), Has.All.True);
         }
 
         [Test]
@@ -398,6 +401,8 @@ namespace GocdTray.Test.App
 
             // Assert
             Assert.That(onBuildFailedCalled, Is.True);
+            Assert.That(service.Estate.Pipelines.Single(p => p.Name == "1").JustFailed, Is.False);
+            Assert.That(service.Estate.Pipelines.Single(p => p.Name == "2").JustFailed, Is.True);
         }
 
         [Test]
@@ -423,6 +428,7 @@ namespace GocdTray.Test.App
 
             // Assert
             Assert.That(onBuildFailedCalled, Is.False);
+            Assert.That(service.Estate.Pipelines.Single(p => p.Name == "1").JustFailed, Is.False);
         }
 
         #endregion

@@ -38,14 +38,6 @@ namespace GocdTray.Ui.Code
             }
         }
 
-        public bool JustFailed
-        {
-            get
-            {
-                return false;
-            }
-        }
-
         public string Name => pipeline.Name;
         public string PipelineGroupName => pipeline.PipelineGroupName;
         public bool Locked => pipeline.Locked;
@@ -53,6 +45,7 @@ namespace GocdTray.Ui.Code
         public string PausedText => $"Paused{(PausedReason.IsTrimmedNullOrEmpty() ? "" : $" ({PausedReason})")} by {PausedBy}";
         public string PausedBy => pipeline.PausedBy;
         public string PausedReason => pipeline.PausedReason;
+        public bool JustFailed => pipeline.JustFailed;
         public string WebsiteUrl => new Uri(new Uri(websiteBaseUri, UriKind.Absolute), pipeline.WebsiteUrl).ToString();
         public PipelineStatus Status => pipeline.Status;
         public IEnumerable<UiPipelineInstance> PipelineInstances => pipeline.PipelineInstances.Select(pi => new UiPipelineInstance(pi));

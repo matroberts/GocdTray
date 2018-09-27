@@ -118,10 +118,12 @@ namespace GocdTray.App
 
                 if ((previousPipeline.Status == PipelineStatus.Building || previousPipeline.Status == PipelineStatus.Passed) && pipeline.Status == PipelineStatus.Failed)
                 {
-                    OnBuildFailed?.Invoke();
-                    break;
+                    pipeline.JustFailed = true;
                 }
             }
+
+            if(Estate.Pipelines.Any(p => p.JustFailed))
+                OnBuildFailed?.Invoke();
         }
 
         public void Dispose()

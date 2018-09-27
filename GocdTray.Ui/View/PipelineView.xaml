@@ -64,8 +64,8 @@
                             <DataTrigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <ColorAnimation Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" To="{StaticResource BackgroundPulseColor}" FillBehavior="Stop" Duration="0:0:0.5" RepeatBehavior="0:0:3" AutoReverse="True" />
-                                        <DoubleAnimation Storyboard.TargetProperty="(Effect).(DropShadowEffect.Opacity)" To="1" FillBehavior="Stop" Duration="0:0:0.5" RepeatBehavior="0:0:3" AutoReverse="True" />
+                                        <ColorAnimation Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" To="{StaticResource BackgroundPulseColor}" FillBehavior="Stop" Duration="0:0:0.4" RepeatBehavior="0:0:3.2" AutoReverse="True" />
+                                        <DoubleAnimation Storyboard.TargetProperty="(Effect).(DropShadowEffect.Opacity)" To="1" FillBehavior="Stop" Duration="0:0:0.4" RepeatBehavior="0:0:3.2" AutoReverse="True" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </DataTrigger.EnterActions>
