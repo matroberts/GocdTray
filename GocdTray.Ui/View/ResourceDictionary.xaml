@@ -29,6 +29,7 @@
     <SolidColorBrush x:Key="BackgroundColorPrimary" Color="#282C31" />
     <SolidColorBrush x:Key="BackgroundColorSecondary" Color="#565A5F" />
     <SolidColorBrush x:Key="BackgroundColorHighlight" Color="#373B40" />
+    <Color x:Key="BackgroundPulseColor" >#33FFFFFF</Color><!--Opacity is first-->
     <SolidColorBrush x:Key="CloseWindowButtonHoverColor" Color="#E81123" />
     <!-- Note that these color are also "hard coded" in the icons for the app -->
     <SolidColorBrush x:Key="BuildingColor" Color="#FFD800" />
@@ -248,7 +249,7 @@
     </Style>
 
     <Style TargetType="DataGridRow">
-        <Setter Property="Background" Value="{StaticResource BackgroundColorPrimary}" />
+        <Setter Property="Background" Value="Transparent" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="true">
                 <Setter Property="Background" Value="{StaticResource BackgroundColorHighlight}" />

@@ -48,12 +48,27 @@
             <DataGrid.RowStyle>
                 <Style TargetType="DataGridRow" BasedOn="{StaticResource {x:Type DataGridRow}}">
                     <Setter Property="DetailsVisibility" Value="Collapsed"/>
+                    <Setter Property="Effect" >
+                        <Setter.Value>
+                            <DropShadowEffect BlurRadius="10" ShadowDepth="0" Color="White" Opacity="0"/>
+                        </Setter.Value>
+                    </Setter>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding IsExpanded}" Value="True">
                             <Setter Property="DetailsVisibility" Value="Visible"/>
                         </DataTrigger>
                         <DataTrigger Binding="{Binding Paused}" Value="True">
                             <Setter Property="Opacity" Value="0.6"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding JustFailed}" Value="True">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" To="{StaticResource BackgroundPulseColor}" FillBehavior="Stop" Duration="0:0:0.5" RepeatBehavior="0:0:3" AutoReverse="True" />
+                                        <DoubleAnimation Storyboard.TargetProperty="(Effect).(DropShadowEffect.Opacity)" To="1" FillBehavior="Stop" Duration="0:0:0.5" RepeatBehavior="0:0:3" AutoReverse="True" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.EnterActions>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>

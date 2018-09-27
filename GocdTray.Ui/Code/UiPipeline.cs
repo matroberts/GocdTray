@@ -38,6 +38,14 @@ namespace GocdTray.Ui.Code
             }
         }
 
+        public bool JustFailed
+        {
+            get
+            {
+                return false;
+            }
+        }
+
         public string Name => pipeline.Name;
         public string PipelineGroupName => pipeline.PipelineGroupName;
         public bool Locked => pipeline.Locked;
